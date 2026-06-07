@@ -1,0 +1,24 @@
+<script>
+   /* Построим 10 заголовков таким образом, чтобы каждый следующий был на 15px больше
+    предыдущего и каждый заголовок имеет рандомный цвет.*/
+
+    let i = 1;//счетчик заголовков
+    let data = "";//в этой переменной будем хранить все заголовки
+    let fontSize = 20;
+
+
+    while(i <= 10){
+        let red = parseInt(Math.random() * 255);
+        let green = parseInt(Math.random() * 255);
+        let blue = parseInt(Math.random() * 255);
+        
+        let randomColor = `rgb(${red},${green},${blue})`;
+       
+        data += `<h3 style='font-size:${fontSize}px;color:${randomColor};'>Элемент №${i}</h3>`;
+        fontSize += 15;
+        i++;
+    }
+
+    document.write(data);
+
+</script>

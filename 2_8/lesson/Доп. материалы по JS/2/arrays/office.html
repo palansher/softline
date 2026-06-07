@@ -1,0 +1,27 @@
+<script>
+    let persons = [
+        {
+            fio:'Иванов',
+            salary:100000
+        },
+        {
+            fio:'Петров',
+            salary:200000
+        },
+        {
+            fio:'Сидоров',
+            salary:150000
+        }
+    ]
+
+    let sumSalaries = 0;
+    for(let person of persons){
+        console.log(`Сотрудник ${person.fio} имеет оклад ${person.salary}`);
+        sumSalaries += person.salary;
+    }
+    console.log(`Директору компании для оплаты ${persons.length} сотрудника нужно готовить: ${sumSalaries}`);
+/*
+    Получить информацию о имени сотрудника для которого предоставляем премию 10%.
+    Найти сотрудника с введенным ФИО и выдать премию. Вывести информацию с учетом изменений
+*/
+</script>

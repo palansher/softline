@@ -1,0 +1,30 @@
+<script>
+    //Подход классический в JS к ООП
+
+   // Функция конструктор - это функция, которая заполняем объект свойствами
+   // this - это ссылка на объект, для которого вызывается функция конструктор
+
+    function Car(title,price){
+        this.title = title;
+        this.price = price;
+        this.year = new Date().getFullYear();
+
+        this.showInfo = function(){
+            console.log(`Автомобиль ${this.title} стоит ${this.price}`);
+        }
+    }
+
+    let car1 = new Car('Audi',1000);
+    let car2 = new Car('bmw',1200);
+    let car3 = new Car('VW',900);
+
+
+    let cars = [car1,car2,car3];
+
+    for(let car of cars){
+        car.showInfo();
+    }
+
+
+
+</script>

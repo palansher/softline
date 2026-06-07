@@ -1,0 +1,49 @@
+<script>
+    function buildBody(type,color){
+        return `Строим кузов типа: ${type}, цвет: ${color}`;
+    }
+
+    function buildEngine(type){
+        return `Строим двигатель типа: ${type}`;
+    }
+
+    function buildAkp(type){
+        return `Строим коробку передач типа: ${type}`;
+    }
+
+    let order = {
+        body:{
+            color:'Белый',
+            type:'Седан'
+        },
+        engine:'Бензиновый',
+        akp:'Автомат'
+        }
+
+    
+
+
+    function car(order = {}){
+        let info = "Наш автомобиль состоит из элементов:\n";
+        info += buildBody(order.body.type,order.body.color);
+        info += "\n";
+        info += buildEngine(order.engine);
+        info += "\n";
+        info += buildAkp(order.akp);
+        
+
+        console.log(info);
+
+    }
+
+    car(order);
+
+
+/*Создать функцию для создания автомобиля и функции для создания
+всех элементов автомобиля:
+У автомобиля есть кузов(тип,цвет), двигатель(type), коробка(type).
+Функция для создания автомобиля - createCar(order). В параметре
+order - это объект, который включает в себя всю информацию о автомобиле.
+*/
+
+</script>

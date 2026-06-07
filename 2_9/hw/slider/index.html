@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Слайдер</title>
+    <style>
+        #slider {
+            width: 500px;
+            height: 300px;
+            border: 2px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        #slider img {
+            max-width: 100%;
+            height: auto;
+            /* 
+            Если картинки разного размера, добавьте в CSS для #slider img свойство object-fit: cover;, 
+            чтобы они не искажались при отображении в блоке фиксированного размера. */
+            /* object-fit: cover; */
+        }
+    </style>
+</head>
+<body>
+
+    <div id="slider">
+        <img id="slide-img" src="image1.jpg" alt="Слайд">
+    </div>
+
+    <script>
+        const images = ['image1.jpg', 'image2.jpg', 'image3.jpg'];
+        let currentIndex = 0;
+        const imgElement = document.getElementById('slide-img');
+
+        function changeSlide() {
+            currentIndex++;
+            
+            // Если дошли до конца массива, возвращаемся к началу
+            if (currentIndex >= images.length) {
+                currentIndex = 0;
+            }
+            
+            // Меняем атрибут src у картинки
+            imgElement.src = images[currentIndex];
+        }
+
+        // Запускаем интервал: смена каждые 3000 мс (3 секунды)
+        setInterval(changeSlide, 3000);
+    </script>
+</body>
+</html>

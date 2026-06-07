@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        function f(color = 'orange'){
+            document.querySelector('h1').style.color = color;
+        }
+    </script>
+</head>
+<body>
+    <h1>Тестовый заголовок</h1>
+    <button onclick="f()">OK</button>
+    <select onchange="f(value)">
+        <option value="red">Красный</option>
+        <option value="blue">Синий</option>
+    </select>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<script>
+    class Person{
+        constructor(id,fio,salary){
+            this.id = id;
+            this.fio = fio;
+            this.salary = salary;
+        }
+
+        getInfo(){
+            return `Сотрудник ${this.fio} имеет оклад ${this.salary}`;
+        }
+    }
+/*
+Конструктор это метод, который вызывается автоматически при создании объекта через оператор new.
+Его цель - заполнить объект свойствами*/
+
+let person1 = new Person(1,'Иванов',1000);
+let person2 = new Person(2,'Петров',2000);
+let person3 = new Person(3,'Иванов',1500);
+
+let persons = [person1,person2,person3];
+for(let p of persons){
+    console.log(p.getInfo());
+}
+
+</script>

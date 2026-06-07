@@ -1,0 +1,34 @@
+<script>
+    let persons = [
+        {
+            fio: 'Иванов',
+            salary: 100000
+        },
+        {
+            fio: 'Петров',
+            salary: 200000
+        },
+        {
+            fio: 'Сидоров',
+            salary: 150000
+        }
+    ]
+    let sumSalary = 0;
+    for (let p of persons) {
+        console.log(`Сотрудник ${p.fio} зарабатывает ${p.salary}`);
+        sumSalary += p.salary;
+    }
+    console.log(`Сумма всех зарплат: ${sumSalary}`);
+
+
+    let fioPrem = prompt('Введите фамилию сотрудника для назначения премии в размере 10%.');
+    if (fioPrem != '') {
+        for (let p of persons) {
+            if (p.fio == fioPrem) {
+                p.salary *= 1.1;
+                alert(`Сотруднику ${p.fio} повышена зарплата до ${p.salary.toFixed(0)}`);
+            }
+        }
+    }
+
+</script>

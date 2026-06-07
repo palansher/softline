@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        window.onload = ()=>{
+            let form = document.querySelector('form');
+            let errors = [];
+            let block = document.querySelector('#errors');
+            form.onsubmit = e =>{
+                if (errors.length > 0){
+                    errors = [];
+                    block.innerHTML = '';
+                }
+                e.preventDefault();
+                let fio = document.querySelector('#fio').value; //получили введенное значение
+
+                if (fio.length == 0){
+                    errors.push('ФИО не заполнен!');
+                }
+
+                 let age = document.querySelector('#age').value;
+                 if (age.length == 0){
+                    errors.push('Возраст не заполнен!');
+                }else{
+                     age = +age;
+                     if(isNaN(age)){
+                         errors.push('Возраст введен некорректно!');
+                     }
+                 }
+
+                if(errors.length > 0) {
+
+                    errors.forEach((error, i) => {
+                        block.innerHTML += `${i + 1}) ${error}<br>`;
+                    })
+                }else{
+                    alert('Форма заполнена корректно! Отправляем данные!');
+                    form.submit();
+                }
+
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="errors"></div>
+    <form action="server">
+        <p>Введите имя</p>
+        <input type="text" id="fio">
+
+        <p>Введите возраст</p>
+        <input type="text" id="age"><br><br>
+
+        <input type="submit" value="Отправить">
+    </form>
+</body>
+</html>

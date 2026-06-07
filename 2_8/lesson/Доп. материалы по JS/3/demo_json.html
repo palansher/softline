@@ -1,0 +1,19 @@
+<script>
+    let userStr = '{"name":"Иван","age":25}';
+
+    //Для преобразования к объекту JS используйте: JSON.parse(строка json)
+
+    let user = JSON.parse(userStr);
+    user.address = {
+        'city':'Москва',
+        'postalCode':'3535462'
+    }
+
+    //Преобразуем оъект JS в строку JSON - используйте JSON.stringify
+
+
+    let jsonUser = JSON.stringify(user,null,4);
+    console.log(jsonUser);
+
+
+</script>

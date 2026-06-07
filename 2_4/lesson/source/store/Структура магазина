@@ -1,0 +1,5 @@
+Item(id,title,price,category) - описание товара каталога
+Category(id,title) - Категория товара
+ItemCart(id,quantity) - Товар корзины
+Cart(cart_items) - Корзина покупок
+Catalog(items) - Каталог товаров

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table{
+            width: 500px;
+            border:1px solid gray;
+            text-align: center;
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+
+        td{
+             border:1px solid gray;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        let table = "<table>";
+        let maxStr = 100;
+        let i = 1;//счетчик строк
+        while(i <= maxStr){
+            table += "<tr>";
+            let j = 1;//счетчик ячеек для каждой строки
+            while(j <= 10){
+                let red = parseInt(Math.random() * 255);
+                let green = parseInt(Math.random() * 255);
+                let blue = parseInt(Math.random() * 255);
+                
+                let randomColor = `rgb(${red},${green},${blue})`;
+                table += `<td style='color:${randomColor};'>${i * j}</td>`;
+                j++;
+            }
+            table += "</tr>";
+            i++;
+        } 
+        table += "</table>";
+        document.write(table);
+    </script>
+</body>
+</html>

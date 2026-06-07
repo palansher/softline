@@ -1,0 +1,35 @@
+<script>
+    /*1) Создать список предметов ученика. Спросить - какой предмет не нравится ученику,
+    удалить его из списка и вывести снова список предметов, где нет нелюбимых предметов*/
+
+    let subjects = ['Математика','Информатика','Физика','История'];
+
+    let answer = prompt(`Введите названия предметов через запятую, которые Вам не нравятся: ${subjects.join(', ')}`);
+
+    if(answer == ''){
+        alert('Вам нравятся все предметы, это похвально!');
+    }else{
+        if(answer.includes(',')){//таким способом ищем в строке запятую
+             let dislikeSubjects = answer.split(',');//получили массив нелюбимых предметов
+             for (let sub of dislikeSubjects){//sub - это каждый нелюбимый предмет
+                let indexRemovedSubject = subjects.indexOf(sub);
+                if(indexRemovedSubject == -1){
+                    alert('Вы ввели предмет, которого не сущетсвует в исходном списке!');
+                    break;
+                }else{
+                   subjects.splice(indexRemovedSubject,1);//удаляем 1 элемент с найденного индекса
+                }
+             }
+             
+        }else{//если ввел всего 1 предмет
+            let indexRemovedSubject = subjects.indexOf(answer);//нашли индекс предмета, который он ввел
+            if(indexRemovedSubject == -1){
+                alert('Вы ввели несуществующий предмет');
+            }else{
+                subjects.splice(indexRemovedSubject,1);
+            }
+        }
+        alert('Список любимых предметов:' + subjects);
+       
+    }
+</script>

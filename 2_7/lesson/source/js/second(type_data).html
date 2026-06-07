@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        let x = 10;
+        // alert(x / 0); //infinity
+        // let y = x + "2";
+        // alert(y);
+
+        // let age = parseInt(prompt('Введите Ваш возраст'));//30
+        // let age = parseFloat(prompt('Введите Ваш возраст'));//преобразование к вещественному числу
+        let age = +prompt('Введите Ваш возраст');//преобразование к вещественному числу
+        if(!isNaN(age)) {
+            age = age + 2;
+            alert(age);
+        }else {
+            alert('Ввели некорректное значение');
+        }
+
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

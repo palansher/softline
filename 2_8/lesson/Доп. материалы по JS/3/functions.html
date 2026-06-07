@@ -1,0 +1,71 @@
+<script>
+    function getSum(a,b){
+        return a + b;
+    }
+
+    //Функциональное выражение
+    let sum = function(a,b){
+        return a + b;
+    }
+
+    //alert(sum(2,3));
+
+    function calc(a,b,c){
+        alert(a(b,c));
+    }
+
+    //calc(sum,3,4);
+
+   // Стрелочные функции
+
+   let showSum = (a,b) => a + b;
+
+   //Если у функции нет аргументов:
+   let f = () => console.log('Функция без аргументов');
+
+   //alert(showSum(2,3));
+
+   let calc2 = (a,b) => {
+       if(a % 2 == 0 && b % 2 == 0){
+           return a + b;
+       }
+       return a * b;
+   }
+
+   //alert(calc2(2,3))
+
+  // Примеры использования стрелочных функций в методах массива
+
+  //Пример 1
+   
+  /*let langs = ['JS','PHP','Python','Java'];
+
+   langs.forEach((item,index) => console.log(`${index + 1}) ${item}`));
+   */
+
+
+   //Пример 2
+
+   let cars = [
+        {title:'Audi',price:1000},
+        {title:'BMW',price:1200},
+        {title:'VW',price:900}
+   ]
+
+   //cars.forEach(item => console.log(`Автомобиль ${item.title} стоит ${item.price}`));
+
+   //Создание фильтрации массива
+
+  /* let updatedCars = cars.filter(item => item.price >= 1000 && item.price < 1200);
+   updatedCars.forEach(item => console.log(`Автомобиль ${item.title} стоит ${item.price}`));*/
+
+   //Преобразование одного массива в другой массив
+
+   /*let infoCars = cars.map(car => `Автомобиль ${car.title} стоит ${car.price}`);
+   console.log(infoCars);*/
+
+   let langs = ['JS','PHP','Python','Java'];
+   //Преобразуем массив языков программирования в массив длин этих языков программирования
+   let sizeLangs = langs.map(item => item.length);
+   console.log(sizeLangs);
+</script>

@@ -1,0 +1,24 @@
+{
+    "staff": [
+        {
+            "person": "Ivanovchenko",
+            "salary": 500
+        },
+        {
+            "person": "Petrovchenko",
+            "salary": 900
+        },
+        {
+            "person": "Sidorovchenko",
+            "salary": 1000
+        },
+        {
+            "person": "Semenovchenko",
+            "salary": 100
+        },
+        {
+            "person": "Viktorovchenko",
+            "salary": 900.0
+        }
+    ]
+}

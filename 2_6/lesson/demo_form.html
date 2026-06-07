@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form action="server" method="POST" enctype="multipart/form-data">
+        <p>Выберите файл</p>
+        <input type="file" multiple name="photo" accept="image/*">
+        <hr>
+
+        <label for="x">Введите имя</label><br>
+        <input type="text" name="fio" id="x"> <!-- однострочное текстовое поле -->
+        <hr>
+        <label for="info">Расскажите о себе</label><br>
+        <textarea name="info" id="info" cols="50" rows="10"></textarea>
+        <hr>
+        <p>Выберите город в котором проживаете</p>
+        <input type="radio" name="city" value="Москва">Москва <br>
+        <input type="radio" name="city" value="Саратов">Саратов <br>
+        <input type="radio" name="city" value="Волгорад">Волгорад <br>
+
+        <p>Выберите языки программирования, которые знаете</p>
+<!--         <label for="p">Python</label>-->
+<!--         <input id="p" type="checkbox" name="langs" value="Python">-->
+         <input type="checkbox" name="langs" value="Python">
+         <input type="checkbox" name="langs" value="JS">JS <br>
+         <input type="checkbox" name="langs" value="Java">Java <br>
+
+        <p>Ваш стаж работы</p>
+        <select name="experience">
+            <option value="Менее 3 лет">Менее 3 лет</option>
+            <option value="3 года">3 года</option>
+            <option value="Более 3 лет">Более 3 лет</option>
+        </select>
+
+        <p>Выберите дату рождени</p>
+        <input type="date" name="bd">
+
+        <p>Ваш возраст</p>
+        <input  style="width: 50px;" type="number" name="age" max="100"><br><br>
+
+        <input type="submit" value="Отправить">
+    </form>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        table{
+            width: 800px;
+            margin: 0 auto;
+            text-align:center;
+            border: 1px solid gray;
+            border-collapse: collapse;
+        }
+        td,th{
+            width:50px;
+            border: 1px solid gray;
+            padding: 20px;
+        }
+
+        .new_price{
+            color:green;
+            font-weight: bold;
+            font-size: 30px;
+        }
+
+        .old_price{
+            color:red;
+            text-decoration: line-through;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <h1>Каталог товаров</h1>
+    <table>
+        <tr>
+            <th>Номер товара</th>
+            <th style="padding-left:120px;">Название товара</th>
+            <th>Стоимость товара</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Audi</td>
+            <td>1000</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>BMW</td>
+            <td>
+                <span class="old_price">1400</span>
+                <span class="new_price">1200</span>
+            </td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>VW</td>
+            <td>
+                <span class="old_price">900</span>
+                <span class="new_price">800</span>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

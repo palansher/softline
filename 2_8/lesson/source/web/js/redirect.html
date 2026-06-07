@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        window.onload = ()=>{
+            let link = document.querySelector('a');
+            link.onclick = e =>{
+                e.preventDefault();//отмена действия по умолчанию
+                // alert('Перехода на яндекс не будет!');
+                location.href = 'https://mail.ru';
+            }
+        }
+    </script>
+</head>
+<body>
+    <a href="http://yandex.ru">Перейти в поисковик</a>
+</body>
+</html>

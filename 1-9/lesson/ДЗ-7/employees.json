@@ -1,0 +1,32 @@
+[
+    {
+        "first_name": "Алиса",
+        "last_name": "Иванова",
+        "position": "Специалист по рискам",
+        "salary": 210000
+    },
+    {
+        "first_name": "Алексей",
+        "last_name": "Алексеевич",
+        "position": "Программист",
+        "salary": 385000
+    },
+    {
+        "first_name": "Дарья",
+        "last_name": "Тимофеева",
+        "position": "Руководитель проектов",
+        "salary": 200000
+    },
+    {
+        "first_name": "Александр",
+        "last_name": "Медведев",
+        "position": "Специалист",
+        "salary": 100000
+    },
+    {
+        "first_name": "Михаил",
+        "last_name": "Иванов",
+        "position": "Руководитель отдела",
+        "salary": 274000.0
+    }
+]

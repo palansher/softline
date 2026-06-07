@@ -1,0 +1,32 @@
+<script>
+    /*
+    Проверка ученика на знание таблицы умножения. Необходимо задавать 5 случайных примеров
+    и если допущено более 2 ошибок, то не зачет.
+    */
+
+    let i = 0; //счетчик цикла
+    let countErrors = 0;//счетчик ошибок
+    while(i < 5){//задаем в цикле 5 рандомных вопросов
+        let a = parseInt(Math.random() * 10);
+        let b = parseInt(Math.random() * 10);
+        let right = a * b;
+        let answer = +prompt(`${a} * ${b} = ?`);
+        if(!isNaN(answer)){//если в ответе стоит число, то начинаем проверять
+            if (answer != right){
+                countErrors++;
+                if(countErrors == 3){
+                    alert("Незачет");
+                    break;
+                }
+            }
+        }else{
+            alert('Вы ввели не число!');
+            continue;//отменяем переход к следующему вопросу, сбрасываем цикл
+        }
+        i++;
+    }
+
+    if (countErrors < 3){
+        alert('Зачет');
+    }
+</script>

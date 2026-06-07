@@ -1,0 +1,22 @@
+<script>
+    let price = (Math.random() * (2000 - 300) + 300).toFixed(0);//получили цену от 300 до 2000
+
+    //Если цена больше 500р. то скидка 5%, а если цена больше 1000р. то скидка 10%
+
+    console.log('Исходная цена: ' + price);
+
+    let discaunt = 0;//пусть скидки изначально нет
+
+    if(price > 500 && price <= 1000){
+        console.log('Предоставляется скдика в 5%');
+        discaunt = 5;
+    }else if(price > 1000){
+        console.log('Предоставляется скдика в 10%');
+        discaunt = 10;
+    }
+
+    price -= price * discaunt / 100;
+
+    console.log(`Конечная стоимость товара: ${price}`);
+
+</script>

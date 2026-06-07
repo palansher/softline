@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        function getRandomColor(){
+            let r = parseInt(Math.random() * 255);
+            let g = parseInt(Math.random() * 255);
+            let b = parseInt(Math.random() * 255);
+            return `rgb(${r},${g},${b})`;
+        }
+
+        function createItems(){
+            let block = document.createElement('div');//<div></div>
+            for(let i = 1;i <= 10;i++){
+                // block.innerHTML += `<h1>Элемент №${i}</h1>`;
+                let item = document.createElement('h1');
+                item.innerText = `Элемент №${i}`;
+                item.style.color = getRandomColor();
+                block.append(item);
+            }
+            // document.getElementById("content").append(block);
+            document.querySelector("#content").append(block);
+
+        }
+</script>
+</head>
+<body onload="createItems()">
+    <div id="content"></div>
+
+</body>
+</html>

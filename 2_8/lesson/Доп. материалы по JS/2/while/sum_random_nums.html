@@ -1,0 +1,11 @@
+<script>
+    let i = 1, s = 0, numbers = '';
+    while (i <= 10) {
+        let rnd = parseInt(Math.random() * 10);
+        s += rnd;
+        numbers += `${rnd} `;
+        i++;
+    }
+
+    alert(`Числа: ${numbers}\nСумма = ${s}`);
+</script>

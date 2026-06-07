@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+        window.onload = () => {
+            let headers = document.querySelectorAll('h1');
+            for (let i = 0,size = 20; i < headers.length; i++,size += 10) {
+                headers[i].style.fontSize = size + 'px';
+                headers[i].onclick = e=>{
+                    // this.remove();
+                    console.log(e);
+                    e.target.style.color = 'red';
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1 onclick="alert('Клик по элементу 1')">Элемент №1</h1>
+    <h1>Элемент №2</h1>
+    <h1>Элемент №3</h1>
+    <h1>Элемент №4</h1>
+    <h1>Элемент №5</h1>
+    <h1>Элемент №6</h1>
+    <h1>Элемент №7</h1>
+</body>
+</html>

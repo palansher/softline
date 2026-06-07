@@ -1,0 +1,15 @@
+<script>
+    let numberDay = parseInt(Math.random() * 7 + 1);//получили номер дня от 1 по 7
+
+    let isWorkDay = numberDay > 0 && numberDay < 6;
+
+    let isWeekend = numberDay == 6 || numberDay == 7;
+
+    console.log(`День №${numberDay} будний день? Ответ: ${isWorkDay}`);
+    console.log(`День №${numberDay} выходной день? Ответ: ${isWeekend}`);
+
+    
+
+
+
+</script>

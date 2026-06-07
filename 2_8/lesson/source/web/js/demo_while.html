@@ -1,0 +1,16 @@
+<meta charset="UTF-8">
+<script>
+    let headers = "";
+    let size = 16;
+    let colors = ['red','blue','green','yellow','orange'];
+
+    let i = 1;
+    while (i <= 10){
+        let randomColor = colors[parseInt(Math.random() * colors.length)];
+        headers += `<h1 style="color: ${randomColor};font-size: ${size}px;">Элемент №${i}</h1>`
+        size += 5;
+        i++;
+    }
+    document.write(headers);
+
+</script>

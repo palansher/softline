@@ -1,0 +1,84 @@
+<script>
+    function buildBase(type){
+        return 'Строим фундамент типа: ' + type;
+    }
+
+    function buildWindow(type){
+        return 'Строим окно для дома из материала ' + type;
+    }
+
+    function buildDoor(type,size){
+        return 'Строим дверь для дома, тип двери: ' + type + ', размер двери: ' + size;
+    }
+    function buildRoof(type){
+        return 'Строим крышу для дома из материала ' + type;
+    }
+
+
+    let order = {
+        base:'Ленточный',
+        windows:{
+            count:10,
+            type:'Пластик'
+        },
+        doors:[{
+            type:'Межкомнатная',
+            size:'206 х 90'
+        },
+        {
+            type:'Межкомнатная',
+            size:'206 х 90'
+        },
+        {
+            type:'Межкомнатная',
+            size:'206 х 90'
+        },
+        {
+            type:'Межкомнатная',
+            size:'206 х 90'
+        },
+        {
+            type:'Наружная',
+            size:'220 х 110'
+        }],
+        roof:'Металлочерепица'
+    }
+
+    
+
+
+    function home(order = {}){
+        let info = "Наш дом имеет следующую структуру:\n";
+        info += buildBase(order.base);
+        info += "\n";
+
+        //Строим окна
+
+        let windows = order.windows;
+        for(let i = 1;i <= windows.count;i++){
+            info += `Окно №${i}:\n${buildWindow(windows.type)}\n`;
+        }
+
+        let doors = order.doors;
+        
+        for(let door of doors){
+            info += `${buildDoor(door.type,door.size)}\n`
+        }
+
+        info += buildRoof(order.roof);
+
+        console.log(info);
+
+    }
+
+    home(order);
+
+
+/*Создать функцию для создания автомобиля и функции для создания
+всех элементов автомобиля:
+У автомобиля есть кузов(тип,цвет), двигатель(type), коробка(type).
+Функция для создания автомобиля - createCar(order). В параметре
+order - это объект, который включает в себя всю информацию о автомобиле.
+*/
+
+</script>

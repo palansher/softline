@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function f(v){
+            alert(v);
+        }
+
+        window.onload = function(){
+            document.querySelector('a').onclick = function(e){
+                 e.preventDefault();
+            }
+        }
+       
+    </script>
+</head>
+<body>
+    <select onchange="f(value)" name="" id="">
+        <option value="1">Элемент 1</option>
+        <option value="2">Элемент 2</option>
+        <option value="3">Элемент 3</option>
+    </select>
+
+    <a href="https://yandex.ru">Поисковик</a>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!--<?xml version="1.0" encoding="utf-8" ?>-->
+<!--<items>-->
+<!--     <item id="1">-->
+<!--           <title>Audi</title>-->
+<!--           <price>1000</price>-->
+<!--     </item>-->
+<!--     <item id="2">-->
+<!--           <title>BMW</title>-->
+<!--           <price>1200</price>-->
+<!--     </item>-->
+<!--</items>-->
+
+<!--Создать 3 книги. У кажой книги есть id,title, автор. Причем авторов может быть несколько.-->
+
+<?xml version="1.0" encoding="utf-8" ?>
+<items>
+    <item id="1">
+        <authors>
+            <author>Иванов И.В.</author>
+        </authors>
+        <title>Название 1</title>
+    </item>
+    <item id="2">
+        <authors>
+            <author>Петров А.С.</author>
+            <author>Сидоров В.В.</author>
+        </authors>
+        <title>Название 2</title>
+
+    </item>
+    <item id="3">
+        <authors>
+            <author>Огнев А.С.</author>
+        </authors>
+        <title>Название 3</title>
+    </item>
+</items>

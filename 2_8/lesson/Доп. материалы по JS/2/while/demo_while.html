@@ -1,0 +1,16 @@
+<script>
+    //Выводим список элементов от 1 до 10 
+
+    let i = 1;
+    let list = "<ul>";
+        
+    while(i <= 30){
+        let color = i % 2 == 0 ? "red" : "blue";
+        list += `<li style="color:${color};">Элемент №${i}</li>`;
+        i++;
+    }
+
+    list += "</ul>";
+
+    document.write(list);
+</script>

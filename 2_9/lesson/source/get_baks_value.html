@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        window.onload = function(){
+            let block = document.querySelector('div');
+            fetch('https://www.cbr-xml-daily.ru/daily_json.js')
+                .then(text => text.json())
+                .then(obj => 
+                  block.innerHTML = `Курс доллара: ${obj.Valute.USD.Value}`);
+                
+        }
+    </script>
+
+</head>
+<body>
+    <div></div>
+</body>
+</html>

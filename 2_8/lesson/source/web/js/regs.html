@@ -1,0 +1,13 @@
+<meta charset="UTF-8">
+<script>
+    // В JS есть 2 способа создания рег. выражений
+    // 1) const rule = new RegExp('Шаблон с рег. выражением','флаги')
+    // 2) /рег. выражение/флаги
+
+    const info = 'Язык JavaScript называется из-за популярности языка Java';
+
+    let rule = /java/i;
+    alert(rule.test(info) ? 'Найдено совпадение!' : 'Не найдено!');
+
+
+</script>

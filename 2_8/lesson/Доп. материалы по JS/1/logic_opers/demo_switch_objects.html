@@ -1,0 +1,32 @@
+<script>
+    let page1 = {
+        title:'Главная',
+        content:'Содержимое главной страницы...',
+        author:'Администратор'
+    }
+    let page2 = {
+        title:'Контакты',
+        content:'Как с нами можно связаться...',
+        author:'Администратор2'
+    }
+    let page3 = {
+        title:'Раздел1',
+        content:'Содержимое страницы раздел1...',
+        author:'Автор2'
+    }
+
+    let namePage = prompt('Введите название страницы (Главная, Контакты, Раздел1): ');
+    switch(namePage){
+        case 'Главная':
+            console.log(`Cодержание страницы ${page1.title} :${page1.content} \nАвтор ${page1.author}`);
+            break;
+        case 'Контакты':
+           console.log(`Cодержание страницы ${page2.title} :${page2.content} \nАвтор ${page2.author}`);
+            break;
+        case 'Раздел1':
+           console.log(`Cодержание страницы ${page3.title} :${page3.content} \nАвтор ${page3.author}`);
+            break;
+        default:
+            console.log(`Страница ${namePage} не найдена`);
+    }
+</script>

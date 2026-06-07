@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-4.0.0.min.js"></script>
+    <script>
+        window.onload = function(){
+            $('button').click(function(){
+                alert(`Вы ввели: ${$('#x').val()}`);
+            })
+        }
+    </script>
+
+</head>
+<body>
+    <div>
+        <input type="text" id="x">
+        <button>OK</button>
+    </div>
+    <button onclick="$('div').show(3000)">Показать</button>
+    <button onclick="$('div').hide(3000)">Скрыть</button>
+</body>
+</html>

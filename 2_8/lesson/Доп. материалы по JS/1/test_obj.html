@@ -1,0 +1,15 @@
+<script>
+    let fio = prompt('Введите ФИО');
+    let currentYear = new Date().getFullYear();//текущий год
+    let yearOfBirth = parseInt(Math.random() * (currentYear - 1980) + 1980);//получили случайный год рождения
+    let ageUser = currentYear - yearOfBirth;//new Date().getFullYear() - это текущий год
+
+    //Создаем объект с двумя свойствами
+    let user = {
+        name:fio,
+        age:ageUser
+    }
+
+    console.log(`Пользователь ${user.name} имеет возраст ${user.age}, год рождения: ${yearOfBirth}`)
+
+</script>

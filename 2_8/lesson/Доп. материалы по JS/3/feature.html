@@ -1,0 +1,54 @@
+<script>
+    //1) String.protype.replaceAll
+    //let numberPhones = '+79113333333,+79113113334,+79113223335';
+    //console.log(numberPhones.replaceAll('+7','8'));
+
+    //2) Логическое присваивание
+    let a = true,b = false;
+    a ||= b// a = a || b
+
+    //3) Разделители в числе
+
+    const MONEY = 10_000_000;
+    //alert(MONEY);
+
+   // 4) Группировка объектов
+
+  /* const langs = [
+        {name:'JS',type:'frontend'},
+        {name:'PHP',type:'backend'},
+        {name:'REACT',type:'frontend'}
+   ]
+
+   const group = Object.groupBy(langs,({type}) => type);
+
+   console.log(group);*/
+
+
+//   5) Метод at
+/*
+const mas = [10,20,30];
+alert(mas.at(-1));//30
+*/
+//6) Метод массива findLast
+/*
+const mas = [10,20,30,20];
+alert(mas.findLastIndex(item => item == 20));
+*/
+
+/*
+6) Обработка ошибок
+
+Если в коде во время выполнения может появляться ошибка - этот код нужно делать внутри оператора
+try. Если ошибка происходит, то JS переходит к выполнению инструкций в блоке catch
+*/
+    try{
+        let userStr = '{"name":"Иван",age":25}';
+        let user = JSON.parse(userStr);
+    }catch(error){
+        console.log(error.message);
+    }
+    
+    alert('Инструкция после ошибки конвертации');
+
+</script>

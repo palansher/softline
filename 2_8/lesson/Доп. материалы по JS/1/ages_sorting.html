@@ -1,0 +1,24 @@
+<script>
+    let age1 = parseInt(Math.random() * (50 - 20) + 20); 
+    let age2 = parseInt(Math.random() * (50 - 20) + 20);
+    let age3 = parseInt(Math.random() * (50 - 20) + 20);
+
+    //Цель - вывести возраста в порядке возрастания
+
+    /*
+    let minAge = Math.min(age1,age2,age3);
+    let maxAge = Math.max(age1,age2,age3);
+    let middleAge = age1 + age2 + age3 - minAge - maxAge;
+    console.log(minAge,middleAge,maxAge);*/
+
+   // Вариант №2
+
+    let ages = [age1,age2,age3];
+    ages.sort()
+    console.log(ages);
+
+
+
+
+
+</script>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+    <h1>Тестовый заголовок</h1>
+    <div></div>
+<script>
+        // Пример на тернарный оператор
+        // let currentDay = new Date().getDay();
+        // alert(currentDay > 0 && currentDay < 6 ? 'Будний день' : 'Выходной день');
+
+        // Пример на switch/case
+        let colors = ['red','blue','orange'];
+        let randomIndex = parseInt(Math.random() * colors.length);
+        randomColor = colors[randomIndex];
+
+        switch (randomColor){
+            case 'red':
+                console.log('Поменяли цвет на красный');
+                break;
+            case 'blue':
+                console.log('Поменяли цвет на синий');
+                break;
+            case 'orange':
+                console.log('Поменяли цвет на оранжевый');
+                break;
+        }
+        document.querySelector('h1').style.color = randomColor;
+
+        let items = [{
+            id:1,
+            title:'Товар1',
+            price:100
+        },{
+            id:2,
+            title:'Товар2',
+            price:200
+        }]
+
+        let info = "";
+        for(let item of items){
+           info += `Товар ${item.title} стоит ${item.price}<br>`;
+        }
+        // document.write(info)
+        document.querySelector('div').innerHTML = info;
+
+
+
+    </script>
+</body>
+</html>

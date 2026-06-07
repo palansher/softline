@@ -1,0 +1,22 @@
+<script>
+    //Цель - вывести информацию для вкладчика о ежегодной прибыли от депозита
+
+    let money = +prompt('Какую сумму планируете положить на депозит?');
+    let oldMoney = money;
+    let years = +prompt('На сколько лет Вы планируете сделать вклад');
+    let rate = years <= 3 ? 15 : 20;//процентная ставка зависит от количества лет вклада
+
+    let info = `<h1 style='color:red;'>Сумма вклада: ${money}, ставка: ${rate}, срок вклада: ${years}</h1><hr>`;
+
+
+
+    for(let i = 1;i <= years;i++){//i - это счетчик лет
+        let profit = parseFloat((money * rate / 100).toFixed(2));//прибыль за текущий год
+        money += profit;//сумма с учетом прибыли за текущий год
+        info += `<h2>Клиент за ${i} год заработал ${profit}, сумма на счете: ${money}</h2>`
+    }
+
+    info += `<h1 style='color:green;'>Вы заработали за ${years} лет: ${money - oldMoney}р.</h1>`
+
+    document.write(info);
+</script>

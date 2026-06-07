@@ -1,0 +1,18 @@
+<meta charset="utf-8">
+<script>
+    let user = '{"name":"Иван","age":25,"isAdmin":true}';
+
+    // Для преобразования json в объект JS используйте parse:
+    let userObj = JSON.parse(user);
+    userObj.info = {
+        'address':'Москва...',
+        'phone':'+792342343'
+    }
+
+    // console.log(userObj);
+
+    // Для преобразования объекта в строку json используйте stringify класса JSON
+    let strUser = JSON.stringify(userObj,null,4);
+    console.log(strUser);
+
+</script>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        table{
+            width: 100%;
+            border:1px solid gray;
+            border-collapse: collapse; /*убираем сдвоенные рамки*/
+        }
+        td{
+            border:1px solid gray;
+            text-align: center;
+            vertical-align: top;
+        }
+
+
+        #middle{
+            height: 550px;
+        }
+
+        #footer{
+            height: 150px;
+        }
+        li{
+            text-align: left;
+        }
+         body{
+            /*background-color:azure;*/
+            background-image: url("images/fon.jpg");
+        }
+         #header_items{
+             border:0px;
+             width: 100%;
+
+         }
+
+         #header_items td{
+              border:0px;
+         }
+         #logo{
+             padding:10px;
+         }
+    </style>
+</head>
+<body>
+    <table>
+        <tr id="header">
+            <td colspan="3">
+                <table id="header_items">
+                    <tr>
+                        <td>
+                            <img src="https://resizer.mail.ru/p/50fc6ea4-b5de-5b86-b505-d6e354f40c1d/AQA4jjXl4YNYikz82W3TH2lEfYO19GGiti-io_CO1duBBlIS4DLrap74cVlAwANay0H5PIh3xSAYmOXM1ehGshZy8JE.jpg" alt="" id="logo">
+                        </td>
+                        <td>
+                            <h1>Тестовый сайт</h1>
+                        </td>
+                        <td>
+                            <ul>
+                                <li>+7(917)111-11-11</li>
+                                <li>+7(917)111-11-22</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr id="middle">
+            <td style="width: 300px;">
+                <h1>Главное меню</h1>
+                <ul>
+                    <li>
+                        <a href="#">Главная страница</a>
+                    </li>
+                    <li>
+                        <a href="#">Услуги</a>
+                    </li>
+                    <li>
+                        <a href="#">Контакты</a>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <h1>Содержимое страницы</h1>
+            </td>
+            <td style="width: 200px;">
+                <h1>Баннеры</h1>
+            </td>
+        </tr>
+        <tr id="footer">
+            <td colspan="3">
+                <h1>Подвал сайта</h1>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

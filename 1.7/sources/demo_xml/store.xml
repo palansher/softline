@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<store>
+    <book price="1000">
+        <author>Иванов</author>
+        <title>Основы Python</title>
+    </book>
+    <book price="1200">Основы фреймворка Django</book>
+</store>

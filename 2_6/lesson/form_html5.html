@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Современная форма обратной связи</title>
+</head>
+<body>
+    <form action="server" method="post" enctype="multipart/form-data">
+        <article>
+            <h1>Отправка заявки на вакансию JS разработчика</h1>
+        </article>
+        <fieldset> <!--Группа элементов-->
+            <legend>Персональные данные</legend><!--Заголовок группы элементов формы-->
+            <label for="fullName">* Фамилия, имя, отчество</label>
+            <br><br>
+            <input type="text" name="fio" size="40" id="fullName">
+            <br><br>
+            <label for="birthDate">Дата рождения:</label>
+            <input type="date" name="date" id="birthDate">
+            <br><br>
+            <label for="gender">Пол</label>
+            <br>
+            <input type="radio" name="gender" id="gender" value="m">Мужской &nbsp;
+            <input type="radio" name="gender" id="gender2" value="w">Женский
+        </fieldset><br><br>
+        <fieldset>
+            <legend>Данные для регистрации на сайте работодателя</legend>
+            <label for="e-mail">* Адрес электронной почты</label>
+            <br><br>
+            <input type="email" name="e-mail" id="e-mail" size="40" required="required">
+            <br><br>
+            <label for="password">* Пароль для личного кабинета</label>
+            <br><br>
+            <input type="password" id="password" required="required" size="40" minlength="6">
+            <br><br>
+            <label for="passwordConfirm">* Подтверждение пароля</label>
+            <br><br>
+            <input type="password" required="required" id="passwordConfirm" size="40">
+        </fieldset>
+        <br><br>
+        <fieldset>
+            <legend>Общая информация</legend>
+            <label for="city">Выбор города проживания</label>
+            <br><br>
+            <select name="city" id="city">
+                <option value="Москва">Москва</option>
+                <option value="Казань">Казань</option>
+                <option value="Волгоград">Волгоград</option>
+            </select>
+            <br><br>
+            <legend>Компетенции выбора</legend>
+            <label for="x">REACT</label>
+            <input type="checkbox" value="REACT" id="x"> <br>
+            <label for="y">VUE</label>
+            <input type="checkbox" value="VUE" id="y"> <br>
+            <label for="z">Angular</label>
+            <input type="checkbox" value="Angular" id="z"><br>
+            <br><br>
+            <label for="add_info">Дополнительная информация</label><br><br>
+            <textarea name="info" id="add_info" cols="40"></textarea> <br><br>
+            <label for="f">Выберите резюме</label>
+            <input type="file" name="my_file" id="f" multiple accept="application/pdf">
+        </fieldset>
+        <hr>
+        <input type="submit" value="Отправить" name="submit">
+        <hr>
+        *Поля, отмеченные * обязательны для заполнения
+    </form>
+</body>
+</html>
