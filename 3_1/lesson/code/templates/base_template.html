@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock %} - Добрый день!</title>
+</head>
+<body>
+    <nav>
+      <a href="/">Главная страница</a>
+      <a href="/contacts">Контакты</a>
+    </nav>
+    <hr>
+    <div id="content">
+        {% block content %} {% endblock %}
+    </div>
+</body>
+</html>

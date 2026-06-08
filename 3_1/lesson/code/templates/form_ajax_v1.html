@@ -1,0 +1,30 @@
+<script src="https://code.jquery.com/jquery-4.0.0.min.js"></script>
+
+<script>
+    window.onload = ()=> {
+        $('button').click(function () {
+            let n1 = $('#n1').val();
+            let n2 = $('#n2').val();
+            $.ajax({
+                type: "POST",
+                url: "",
+                data: "a=" + n1 + "&b=" + n2,
+                success: function (answer) {
+                    $('div').html(`<h1>Ответ: ${answer}</h1>`)
+                }
+            });
+        })
+    }
+</script>
+
+<div></div>
+
+<p>Введите 1 число</p>
+<input type="text" id="n1">
+
+<p>Введите 2 число</p>
+<input type="text" id="n2">
+
+<br><br>
+
+<button>Найти сумму</button>

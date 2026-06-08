@@ -27,8 +27,16 @@ class Application:
             elif score in (3, 4):
                 print(f"Пароль набрал {score}/5 баллов. Его можно улучшить.")
                 choice: str = (
-                    input("Хотите повторить попытку ввода? (да/нет): ").strip().lower()
+                    input("Хотите повторить попытку ввода или выйти? (да/yes/д/y/exit): ")
+                    .strip()
+                    .lower()
                 )
+                
+                # if choice == ("exit"):
+                #     print("Окей, завершем работу.\n")
+                    # continue 2
+                    # self.app_exit()
+                    
                 if choice in ("да", "yes", "д", "y"):
                     print("Окей, давайте улучшим.\n")
                     continue

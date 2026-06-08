@@ -1,0 +1,33 @@
+<script src="https://code.jquery.com/jquery-4.0.0.min.js"></script>
+
+<script>
+    window.onload = ()=> {
+        let form =  $('form');
+        form.submit(function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                type: "POST",
+                url: "",
+                data: form.serialize(),
+                success: function (answer) {
+                    $('div').html(`<h1>Ответ: ${answer}</h1>`)
+                }
+            });
+        })
+    }
+</script>
+
+<div></div>
+<form method="post">
+<p>Введите 1 число</p>
+<input type="text" id="n1" name="a">
+
+<p>Введите 2 число</p>
+<input type="text" id="n2" name="b">
+
+<br><br>
+
+<input type="submit" value="Найти сумму">
+
+</form>
