@@ -1,6 +1,7 @@
 from password_validator import PasswordValidator
 from user_manager import UserManager
 
+
 class Application:
     """Главный класс приложения, отвечающий за интерфейс и меню."""
 
@@ -13,35 +14,41 @@ class Application:
 
         Returns:
             str | None: Возвращает одобренный пароль или None,
-                        если пользователь отказался дорабатывать пароль.
+                        если пользователь отменил ввод (нажал Enter).
         """
         while True:
-            password: str = input("Введите пароль: ")
+            # Выбор одной строкой: подсказка + действие по умолчанию (Enter)
+            password: str = input(
+                "Введите пароль (или нажмите Enter для отмены): "
+            ).strip()
+
+            # Если строка пустая — возврат без изменения
+            if not password:
+                print("Операция отменена пользователем.\n")
+                return None
+
             score: int = PasswordValidator.calculate_score(password)
 
             if score <= 2:
-                print(f"Пароль отклонен. Он является слабым (Баллов: {score}/5).")
+                print(
+                    f"Пароль отклонен. Он является слабым (Баллов: {score}/5)."
+                )
                 print("Попробуйте еще раз.\n")
                 continue
 
             elif score in (3, 4):
-                print(f"Пароль набрал {score}/5 баллов. Его можно улучшить.")
+                print(
+                    f"Пароль набрал {score}/5 баллов. Его можно улучшить."
+                )
                 choice: str = (
-                    input("Хотите повторить попытку ввода или выйти? (да/yes/д/y/exit): ")
+                    input("Хотите повторить попытку ввода? (да/д/yes/y/нет): ")
                     .strip()
                     .lower()
                 )
-                
-                # if choice == ("exit"):
-                #     print("Окей, завершем работу.\n")
-                    # continue 2
-                    # self.app_exit()
-                    
-                if choice in ("да", "yes", "д", "y"):
+                if choice in ("да", "д", "yes", "y"):
                     print("Окей, давайте улучшим.\n")
                     continue
                 else:
-                    # Пользователь отказался улучшать, пароль принимается
                     return password
             else:
                 print("Отлично! Это сильный пароль (5 из 5).")
@@ -50,35 +57,55 @@ class Application:
     def handle_add_user(self) -> None:
         """Логика добавления нового пользователя."""
         while True:
-            login: str = input("Введите идентификатор пользователя (логин): ").strip()
+            # для отмены нажать Enter на пустом логине
+            login: str = input(
+                "Введите логин (или нажмите Enter для отмены): "
+            ).strip()
+
             if not login:
-                print("Логин не может быть пустым.\n")
-                continue
+                print("Регистрация отменена.\n")
+                return  # Возврат в главное меню
 
             if self.user_manager.user_exists(login):
                 print("Этот идентификатор уже существует. Выберите другой.\n")
                 continue
             break
 
+        # Вызываем ввод пароля
         password: str | None = self._request_valid_password()
-        if password:
-            self.user_manager.add_user(login, password)
-            print(f"Пользователь '{login}' успешно добавлен.\n")
+
+        # ловит None от нажатия Enter
+        if password is None:
+            return
+
+        self.user_manager.add_user(login, password)
+        print(f"Пользователь '{login}' успешно добавлен.\n")
 
     def handle_change_password(self) -> None:
         """Логика изменения существующего пароля."""
-        login: str = input("Введите логин пользователя для смены пароля: ").strip()
+        login: str = input(
+            "Введите логин для смены пароля (или нажмите Enter для отмены): "
+        ).strip()
+
+        if not login:
+            print("Смена пароля отменена.\n")
+            return
 
         if not self.user_manager.user_exists(login):
             print("Ошибка: такого пользователя не существует.\n")
             return
 
-        print(f"Пользователь '{login}' найден. Введите новый пароль.")
+        print(f"Пользователь '{login}' найден.")
+
+        # Вызываем ввод пароля
         new_password: str | None = self._request_valid_password()
 
-        if new_password:
-            self.user_manager.update_password(login, new_password)
-            print(f"Пароль для пользователя '{login}' успешно обновлен.\n")
+        # возвращает в главное меню если словили None от нажатия Enter
+        if new_password is None:
+            return
+
+        self.user_manager.update_password(login, new_password)
+        print(f"Пароль для пользователя '{login}' успешно обновлен.\n")
 
     def handle_show_users(self) -> None:
         """Вывод списка логинов без паролей."""
