@@ -1,4 +1,4 @@
-import datetime
+# import datetime
 
 from flask import Flask, request,render_template,redirect
 
@@ -8,7 +8,7 @@ app = Flask(__name__)
 def home():
     if request.method == 'GET':
         return render_template('form_poiskovik.html')
-    poisk_value = request.form.get('poisk')
+    poisk_value = request.form.get('poisk', "No value")
     if poisk_value == 'Yandex':
         data = request.form.get('query')
         if data:
@@ -17,3 +17,4 @@ def home():
     return redirect(poisk_value)
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=8083)
+   
