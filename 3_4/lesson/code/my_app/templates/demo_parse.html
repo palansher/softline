@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h2>Обход списка городов</h2>
+    {% for city in cities %}
+        <p>{{ forloop.counter }}. {{ city }}</p>
+    {% endfor %}
+    <h2>Обход словаря</h2>
+    {% for key,value in item.items %}
+        <p>{{ key }} - {{ value }}</p>
+    {% endfor %}
+    <h2>Список словарей</h2>
+    {% for car in cars %}
+        {% if car.price >= 1000 %}
+            <h3>{{ car.title }} стоит {{ car.price }}</h3>
+        {% endif %}
+    {% endfor %}
+</body>
+</html>

@@ -1,6 +1,5 @@
-from flask import Flask, render_template, request,redirect
-
-from connect_db import cursor, connection
+from flask import Flask, render_template, request, redirect, jsonify
+from connect_db import *
 
 app = Flask(__name__)
 
@@ -10,12 +9,22 @@ def catalog():
     cursor.execute(sql)
     data = cursor.fetchall()
     if 'success' in request.args and request.args['success']:
-        return render_template('index.html', success=True,items=data)
+        return render_template('index.html', success=True, items=data)
     return render_template('index.html', items=data)
+
+@app.route('/item/<int:item_id>')
+def item_detail(item_id):
+    sql = 'select * from item where item_id = %s'
+    cursor.execute(sql, (item_id,))
+    item = cursor.fetchone()
+    if item:
+        return render_template('item_detail.html', item=item)
+    else:
+        return "Товар не найден", 404
 
 @app.route('/add_cart')
 def add_cart():
-    id = request.args.get('id', "")
+    id = request.args.get('id')
     if id.isdigit():
         id = int(id)
         sql = f'select id from cart where id={id}'
@@ -36,5 +45,6 @@ def cart():
     cursor.execute(sql)
     data = cursor.fetchall()
     return render_template('cart.html', items=data)
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=8087)

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ item.title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/catalog.css') }}">
+    <style>
+        .item-detail {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .item-image {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .item-image img {
+            max-width: 300px;
+            height: auto;
+            border-radius: 8px;
+        }
+        .item-title {
+            text-align: center;
+            color: #333;
+        }
+        .item-description {
+            margin: 20px 0;
+            line-height: 1.6;
+        }
+        .item-price {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e74c3c;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #3498db;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        .add-to-cart-btn {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 12px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .add-to-cart-btn:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <a href="/" class="back-link">← Назад к каталогу</a>
+
+    <div class="item-detail">
+        <h1 class="item-title">{{ item.title }}</h1>
+
+        <div class="item-image">
+            <img src="{{ url_for('static', filename='images/' + item.photo) }}" alt="{{ item.title }}">
+        </div>
+
+        <div class="item-description">
+            <p>{{ item.info }}</p>
+        </div>
+
+        <div class="item-price">
+            {{ item.price }} у.е.
+        </div>
+
+        <a href="/add_cart?id={{ item.item_id }}">
+            <button class="add-to-cart-btn">Добавить в корзину</button>
+        </a>
+    </div>
+</body>
+</html>

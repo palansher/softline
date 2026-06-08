@@ -1,0 +1,67 @@
+Для работы со статик файлами:
+1) В настройках прописываем:
+STATIC_URL = '/static/'
+STATICFILES_DIR = [os.path.join(BASE_DIR,'static')]
+
+2) В шаблоне, где используем статические данные:
+{% load static %}
+
+3) Для импорта CSS используем:
+<link rel="stylesheet" href="{% static '/css/style.css' %}">
+Для импорта JS:
+<script src="{% static '/js/script.js' %}"></script>
+Для вывода фото:
+<img src="{% static '/images/' %}{{ photo }}">
+
+----------Работа с базой данных---------
+1) Установка модуля для работы с СУБД pip install psycopg2
+2) В файле settings внести изменения в профиль базы данных
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": 'test',
+        "USER": 'postgres',
+        "PASSWORD": 'postgres',
+        "HOST": 'localhost',
+        "PORT": 5433
+    }
+}
+
+3) Для теста создайте базу на основе свойства NAME в профиле выше и запустите запрос ниже для создания таблицы
+
+CREATE TABLE person (
+    id_person SERIAL PRIMARY KEY,
+    fio VARCHAR(100) NOT NULL,
+    salary DECIMAL(10,2) NOT NULL,
+    department VARCHAR(50),
+    hire_date DATE DEFAULT CURRENT_DATE
+);
+
+-- Наполнение таблицы тестовыми данными
+INSERT INTO person (fio, salary, department, hire_date) VALUES
+    ('Иванов И.И.', 50000.00, 'IT', '2020-01-15'),
+    ('Петров П.П.', 45000.00, 'Бухгалтерия', '2019-03-20'),
+    ('Сидоров С.С.', 55000.00, 'IT', '2021-06-10'),
+    ('Кузнецова Е.В.', 48000.00, 'HR', '2018-11-05'),
+    ('Смирнов А.А.', 52000.00, 'Маркетинг', '2022-02-28'),
+    ('Васильева О.К.', 47000.00, 'Бухгалтерия', '2020-09-12'),
+    ('Николаев Д.С.', 51000.00, 'IT', '2019-07-22'),
+    ('Орлова М.И.', 49000.00, 'HR', '2021-04-18'),
+    ('Федоров В.П.', 53000.00, 'Маркетинг', '2018-12-03'),
+    ('Жукова Л.Н.', 46000.00, 'Бухгалтерия', '2022-01-08');
+
+-- Проверка данных
+SELECT * FROM person ORDER BY id_person;
+
+4) Создаем модель с описанием структуры таблицы
+class Car(models.Model):
+    name = models.CharField(max_length=50)
+    price = models.IntegerField()
+
+5) На основе модели необходимо создать миграцию. Миграции нужны, чтобы на основе модели была создана таблица.
+Для создания миграции используем команду:
+python manage.py makemigrations
+
+6) После команды выше будет создан файл с миграцией. Чтобы этот файл запустить и на его основе создать
+таблицу используем команду
+python manage.py migrate
