@@ -6,7 +6,8 @@ connection = psycopg2.connect(
     user="postgres",
     password="postgres",
     database="flask_shop",
-    port="5433"
+    port="5433" # 5432 - default port
+     
 )
 
 with connection:
