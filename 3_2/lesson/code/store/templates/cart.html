@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Каталог товаров</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/catalog.css') }}">
+    <style>
+        table{
+            border: 1px solid gray;
+            width: 1000px;
+            border-collapse: collapse;
+        }
+        td,th{
+            border: 1px solid gray;
+            padding: 10px;
+            text-align: center;
+        }
+        h1{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Корзина покупок</h1>
+    (<a href="/">Каталог товаров</a>)
+            <table>
+                <tr>
+                    <th>Название</th>
+                    <th>Цена за 1 ед</th>
+                    <th>Количество</th>
+                    <th>Общая стоимость</th>
+                </tr>
+                 {% for item in items %}
+                    <tr>
+                         <td>{{ item.title }}</td>
+                         <td>{{ item.price }}</td>
+                         <td>{{ item.quantity }}</td>
+                         <td>{{ item.quantity * item.price }}</td>
+                    </tr>
+                 {% endfor %}
+            </table>
+
+
+
+</body>
+</html>

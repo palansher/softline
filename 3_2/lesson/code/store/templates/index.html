@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Каталог товаров</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/catalog.css') }}">
+</head>
+<body>
+<a href="/cart">Корзина</a>
+    {% if success %}<h2>Товар успешно добавлен в корзину</h2>{% endif %}
+    {% for item in items %}
+        <div class="products-grid">
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <img width="200" src="{{ url_for('static',filename='images/' + item.photo) }}" alt="">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">{{ item.title }}</h3>
+                        <p class="product-description">{{ item.info }}</p>
+                        <div class="product-footer">
+                            <span class="product-price">{{ item.price }} у.е.</span>
+                            <a href="/add_cart?id={{ item.item_id }}">
+                                <button class="add-to-cart">В корзину</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+</div>
+    {% endfor %}
+
+</body>
+</html>
