@@ -4,12 +4,6 @@ list:
 .ONESHELL:
 SHELL := /bin/bash
 
-pg-up:
-	@cd .infra/postgres
-	docker compose up -d
-
-pg-shell:
-	docker exec -it postgres-learn-py bash
-
-pg-console:
-	docker exec -it postgres-learn-py psql -U postgres
+pg-create-db-structure:
+	@cd db
+	bash create-db-structure.sh
