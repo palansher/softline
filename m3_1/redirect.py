@@ -11,7 +11,9 @@ def home():
     if poisk_value == "Yandex":
         data = request.form.get("query")
         if data:
-            url = "https://www.yandex.ru/search?text={}".format(data)
+            # url = "https://www.yandex.ru/search?text={}".format(data)
+            # современный способ:
+            url = f"https://www.yandex.ru/search?text={data}"
             return redirect(url)
     return redirect(poisk_value)
 
