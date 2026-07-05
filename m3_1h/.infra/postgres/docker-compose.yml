@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:18.4-trixie
+    container_name: postgres_learn
+    restart: always
+    environment:
+      # Пароль для главного админа (пользователь 'postgres' создастся автоматически)
+      POSTGRES_PASSWORD: admin
+      # POSTGRES_DB: shop_db_hw3_1
+    ports:
+      - "5432:5432"
+    # чтобы ошибки ipv6 не мозолили глаза
+    # command: ["postgres", "-c", "listen_addresses=0.0.0.0"]
+    volumes:
+      # Главный volume для хранения данных (по новому стандарту v18)
+      - postgres_learn_data:/var/lib/postgresql
+      # Монтируем скрипт инициализации в папку автозапуска контейнера
+      - ./init-scripts/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+
+volumes:
+  postgres_learn_data:
