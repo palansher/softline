@@ -11,14 +11,14 @@
                 url: "",
                 data: form.serialize(),
                 success: function (answer) {
-                    $('div').html(`<h1>Ответ: ${answer}</h1>`)
+                    $('#result').html(`<h1>Ответ: ${answer}</h1>`)
                 }
             });
         })
     }
 </script>
 
-<div></div>
+<div id="result"></div>
 <form method="post">
 <p>Введите 1 число</p>
 <input type="text" id="n1" name="a">
