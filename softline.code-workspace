@@ -6,7 +6,6 @@
 	],
 	"settings": {
 		"code-runner.executorMap": {
-
 			"javascript": "node",
 			"java": "cd $dir && javac $fileName && java $fileNameWithoutExt",
 			"c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
@@ -14,7 +13,9 @@
 			"cpp": "cd $dir && g++ $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
 			"objective-c": "cd $dir && gcc -framework Cocoa $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
 			"php": "php",
-			"python": "set PYTHONIOENCODING=utf8 && python -u",
+			//"python": "set PYTHONIOENCODING=utf8 && python -u",
+			// ИСПРАВЛЕНО ТУТ: для Linux по SSH добавляем экспорт PYTHONPATH перед запуском
+            "python": "set PYTHONIOENCODING=utf8 && export PYTHONPATH=$PYTHONPATH:. && python -u",
 			"perl": "perl",
 			"perl6": "perl6",
 			"ruby": "ruby",
@@ -65,6 +66,11 @@
 			"pkl": "cd $dir && pkl eval -f yaml $fileName -o $fileNameWithoutExt.yaml",
 			"gleam": "gleam run -m $fileNameWithoutExt"
 		},
-		"terminal.integrated.shellIntegration.enabled": false
+		"terminal.integrated.shellIntegration.enabled": false,
+		
+		// пригодится, если вы в будущем решите использовать встроенную в VS Code кнопку Run, а не Code Runner
+		"python.envFile": "${workspaceFolder}/.env",
+		
+		"python.analysis.useNearestConfiguration": true
 	}
 }
