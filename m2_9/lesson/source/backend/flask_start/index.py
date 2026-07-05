@@ -4,11 +4,11 @@ from flask import Flask,request
 
 app = Flask(__name__)
 
-# http://127.0.0.1:8080/test/Иван/25
 @app.route('/')
 def index():
     return '<h1>Добрый день! Это ответ сервера!</h1>'
 
+# http://127.0.0.1:8080/test/Иван/25
 @app.route('/test/<string:fio>/<int:age>')
 def test(fio, age):
     return f"""

@@ -13,9 +13,16 @@
 			"cpp": "cd $dir && g++ $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
 			"objective-c": "cd $dir && gcc -framework Cocoa $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
 			"php": "php",
-			//"python": "set PYTHONIOENCODING=utf8 && python -u",
+			// "python": "set PYTHONIOENCODING=utf8 && python -u",
 			// ИСПРАВЛЕНО ТУТ: для Linux по SSH добавляем экспорт PYTHONPATH перед запуском
-            "python": "set PYTHONIOENCODING=utf8 && export PYTHONPATH=$PYTHONPATH:. && python -u",
+            // "python": "set PYTHONIOENCODING=utf8 && export PYTHONPATH=$PYTHONPATH:. && python -u",
+			
+			/*
+			Поскольку Code Runner всегда стартует из корня открытой в VS Code папки (/home/vp/code/learn-python), относительный путь .venv/bin/python 
+			укажет точно на интерпретатор вашего виртуального окружения. 
+			Теперь и пути (PYTHONPATH), и все установленные через pip сторонние пакеты (вроде Flask) будут подтягиваться без сбоев в любой подпапке проекта.
+			*/
+			"python": "set PYTHONIOENCODING=utf8 && export PYTHONPATH=$PYTHONPATH:. && .venv/bin/python -u",
 			"perl": "perl",
 			"perl6": "perl6",
 			"ruby": "ruby",
@@ -71,6 +78,7 @@
 		// пригодится, если вы в будущем решите использовать встроенную в VS Code кнопку Run, а не Code Runner
 		"python.envFile": "${workspaceFolder}/.env",
 		
-		"python.analysis.useNearestConfiguration": true
+		"python.analysis.useNearestConfiguration": true,
+		"code-runner.runInTerminal": true
 	}
 }
