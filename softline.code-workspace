@@ -79,6 +79,7 @@
 		"python.envFile": "${workspaceFolder}/.env",
 		
 		"python.analysis.useNearestConfiguration": true,
-		"code-runner.runInTerminal": true
+		"code-runner.runInTerminal": true,
+		"editor.guides.bracketPairs": true
 	}
 }
