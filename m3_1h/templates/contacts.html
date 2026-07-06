@@ -1,0 +1,32 @@
+{% extends 'base-template.html' %}
+
+{% block title %} DriveX — Контакты {% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+   <div class="col-md-8 col-lg-6">
+      <div class="card p-4 shadow-sm border-0 rounded-4">
+         <h2 class="text-center mb-4 fw-bold">Обратная связь</h2>
+         <p class="text-center text-muted mb-4">Оставьте заявку, и наш менеджер свяжется с вами. Или позвоните нам: <a
+               href="tel:+78007775555" class="fw-bold text-dark">+7(800)777-5555</a></p>
+
+         <form id="contact-form">
+            <div class="mb-3">
+               <label for="userName" class="form-label">Ваше имя</label>
+               <input type="text" class="form-control" id="userName" placeholder="Иван" required>
+            </div>
+            <div class="mb-3">
+               <label for="userPhone" class="form-label">Номер телефона</label>
+               <input type="tel" class="form-control" id="userPhone" placeholder="+7 (999) 000-00-00" required>
+            </div>
+            <div class="mb-3">
+               <label for="userMessage" class="form-label">Сообщение (необязательно)</label>
+               <textarea class="form-control" id="userMessage" rows="3"
+                  placeholder="Какой автомобиль вас интересует?"></textarea>
+            </div>
+            <button type="submit" class="btn btn-warning w-100 fw-bold py-2">Отправить заявку</button>
+         </form>
+      </div>
+   </div>
+</div>
+{% endblock %}

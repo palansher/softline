@@ -10,10 +10,10 @@
          проходит строжайший технический контроль и предпродажную подготовку.</p>
       <p class="text-muted">Индивидуальный подход к каждому клиенту, выгодные условия кредитования и премиальный сервис
          — это то, что отличает нас от других.</p>
-      <a href="catalog.html" class="btn btn-warning btn-lg mt-3 px-4 fw-bold text-dark">Открыть каталог</a>
+      <a href="{{ url_for('catalog') }}" class="btn btn-warning btn-lg mt-3 px-4 fw-bold text-dark">Открыть каталог</a>
    </div>
    <div class="col-lg-6">
-      <img src="static/img/background.jpg" alt="DriveX Showroom" class="img-fluid rounded-4 shadow-lg">
+      <img src="{{ url_for('static', filename='img/background.jpg') }}" alt="DriveX Showroom" class="img-fluid rounded-4 shadow-lg">
    </div>
 </div>
 {% endblock %}

@@ -8,9 +8,14 @@ app = Flask(__name__)
 def index() -> str:
     return render_template('main.html')
 
-# @app.route('/contacts')
-# def contacts() -> str:
-#     return render_template('contacts.html')
+@app.route('/contacts')
+def contacts() -> str:
+    return render_template('contacts.html')
+
+@app.route('/catalog')
+def catalog() -> str:
+    # return render_template('contacts.html')
+    return "Пусто"
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=8082)
