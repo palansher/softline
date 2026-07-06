@@ -1,5 +1,7 @@
 # ДЗ 3.1
 
+код урока в l26_05_18
+
 Разбор ДЗ в видео 3.4 <https://my.mts-link.ru/j/AcademySL/pp_python-devsecops/record-new/19410065662>
 на 05:54
 
