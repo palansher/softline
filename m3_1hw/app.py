@@ -14,18 +14,24 @@ def contacts() -> str:
     return render_template("contacts.html")
 
 
-# @app.route("/catalog")
+
 # def catalog() -> str:
 #     return render_template("catalog.html")
 
+@app.route("/catalog")
 def catalog():
-    sql = 'select * from item'
+
+    sql = "SELECT * FROM v_catalog_display ORDER BY price DESC;"
     cursor.execute(sql)
     data = cursor.fetchall()
-    if 'success' in request.args and request.args['success']:
-        return render_template('catalog.html', success=True,items=data)
-    return render_template('index.html', items=data)
+    return render_template("catalog.html", items=data)
 
+@app.template_filter('format_price')
+def format_price(value):
+    if value is None:
+        return "0 ₽"
+    # Форматируем число с разделением тысяч пробелами, без копеек
+    return f"{int(value):,}".replace(",", " ") + " ₽"
 
 # <p class="text-muted">{{ car.full_info | linebreaksbr }}</p>
 # фильтр linebreaksbr автоматически заменит обычные переносы строк на теги <br>
