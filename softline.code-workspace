@@ -80,6 +80,24 @@
 		
 		"python.analysis.useNearestConfiguration": true,
 		"code-runner.runInTerminal": true,
-		"editor.guides.bracketPairs": true
+		"editor.guides.bracketPairs": true,
+		"sqltools.format": {},
+		"pgFormatter.commaBreak": true,
+		"pgFormatter.commaEnd": false,
+		"pgFormatter.formatType": false,
+		"pgFormatter.keepNewline": true,
+		"pgFormatter.noGrouping": true,
+		"sqltools.connections": [
+			{
+				"ssh": "Disabled",
+				"previewLimit": 50,
+				"server": "vm-perepechenko01.brg.loc",
+				"port": 5432,
+				"driver": "PostgreSQL",
+				"name": "docker shop_db_hw3_1",
+				"database": "shop_db_hw3_1",
+				"username": "postgres"
+			}
+		]
 	}
 }
