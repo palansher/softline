@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DriveX — Контакты</title>
+    <title>DriveX — Каталог</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
@@ -19,9 +19,9 @@
             
             <nav class="mb-3 mb-md-0">
                 <ul class="nav">
-                    <li class="nav-item"><a href="/" class="nav-link text-white-50 px-3">Главная</a></li>
-                    <li class="nav-item"><a href="catalog.html" class="nav-link text-white-50 px-3">Каталог</a></li>
-                    <li class="nav-item"><a href="/contacts" class="nav-link text-white active-link px-3">Контакты</a></li>
+                    <li class="nav-item"><a href="index.html" class="nav-link text-white-50 px-3">Главная</a></li>
+                    <li class="nav-item"><a href="catalog.html" class="nav-link text-white active-link px-3">Каталог</a></li>
+                    <li class="nav-item"><a href="contacts.html" class="nav-link text-white-50 px-3">Контакты</a></li>
                 </ul>
             </nav>
 
@@ -33,30 +33,10 @@
 
     <main class="flex-grow-1 my-5">
         <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-8 col-lg-6">
-                    <div class="card p-4 shadow-sm border-0 rounded-4">
-                        <h2 class="text-center mb-4 fw-bold">Обратная связь</h2>
-                        <p class="text-center text-muted mb-4">Оставьте заявку, и наш менеджер свяжется с вами. Или позвоните нам: <a href="tel:+78007775555" class="fw-bold text-dark">+7(800)777-5555</a></p>
-                        
-                        <form id="contact-form">
-                            <div class="mb-3">
-                                <label for="userName" class="form-label">Ваше имя</label>
-                                <input type="text" class="form-control" id="userName" placeholder="Иван" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="userPhone" class="form-label">Номер телефона</label>
-                                <input type="tel" class="form-control" id="userPhone" placeholder="+7 (999) 000-00-00" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="userMessage" class="form-label">Сообщение (необязательно)</label>
-                                <textarea class="form-control" id="userMessage" rows="3" placeholder="Какой автомобиль вас интересует?"></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-warning w-100 fw-bold py-2">Отправить заявку</button>
-                        </form>
-                    </div>
+            <h2 class="text-center mb-5 fw-bold position-relative section-title">Каталог автомобилей</h2>
+            
+            <div id="catalog-container" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                 </div>
-            </div>
         </div>
     </main>
 

@@ -1,21 +1,22 @@
-import datetime
-
 from flask import Flask, render_template
 
 app = Flask(__name__)
 
-@app.route('/')
+
+@app.route("/")
 def index() -> str:
-    return render_template('main.html')
+    return render_template("main.html")
 
-@app.route('/contacts')
+
+@app.route("/contacts")
 def contacts() -> str:
-    return render_template('contacts.html')
+    return render_template("contacts.html")
 
-@app.route('/catalog')
+
+@app.route("/catalog")
 def catalog() -> str:
-    # return render_template('contacts.html')
-    return "Пусто"
+    return render_template("catalog.html")
 
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=8082)
+
+if __name__ == "__main__":
+    app.run(debug=True, host="0.0.0.0", port=8082)
