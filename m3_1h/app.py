@@ -17,6 +17,8 @@ def contacts() -> str:
 def catalog() -> str:
     return render_template("catalog.html")
 
+# <p class="text-muted">{{ car.full_info | linebreaksbr }}</p>
+# фильтр linebreaksbr автоматически заменит обычные переносы строк на теги <br>
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=8082)
