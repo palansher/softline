@@ -15,8 +15,7 @@
 			"php": "php",
 			// "python": "set PYTHONIOENCODING=utf8 && python -u",
 			// ИСПРАВЛЕНО ТУТ: для Linux по SSH добавляем экспорт PYTHONPATH перед запуском
-            // "python": "set PYTHONIOENCODING=utf8 && export PYTHONPATH=$PYTHONPATH:. && python -u",
-			
+			// "python": "set PYTHONIOENCODING=utf8 && export PYTHONPATH=$PYTHONPATH:. && python -u",
 			/*
 			Поскольку Code Runner всегда стартует из корня открытой в VS Code папки (/home/vp/code/learn-python), относительный путь .venv/bin/python 
 			укажет точно на интерпретатор вашего виртуального окружения. 
@@ -74,14 +73,16 @@
 			"gleam": "gleam run -m $fileNameWithoutExt"
 		},
 		"terminal.integrated.shellIntegration.enabled": false,
-		
 		// пригодится, если вы в будущем решите использовать встроенную в VS Code кнопку Run, а не Code Runner
 		"python.envFile": "${workspaceFolder}/.env",
-		
 		"python.analysis.useNearestConfiguration": true,
 		"code-runner.runInTerminal": true,
 		"editor.guides.bracketPairs": true,
-		"sqltools.format": {},
+		"sqltools.format": {
+			"linesBetweenQueries": 2,
+			"convertKeywordsTo": "upper", // Ключевые слова КРУПНЫМ шрифтом
+			"spacesAroundOperators": true
+		},
 		"pgFormatter.commaBreak": true,
 		"pgFormatter.commaEnd": false,
 		"pgFormatter.formatType": false,
@@ -96,8 +97,15 @@
 				"driver": "PostgreSQL",
 				"name": "docker shop_db_hw3_1",
 				"database": "shop_db_hw3_1",
-				"username": "postgres"
+				"username": "postgres",
+				"password": "admin"
 			}
+		],
+		"sqlfluff.executablePath": "${workspaceFolder}/.venv/bin/sqlfluff",
+		"sqlfluff.excludeRules": [
+			"RF04",
+			"LT05",
+			"AM04"
 		]
 	}
 }

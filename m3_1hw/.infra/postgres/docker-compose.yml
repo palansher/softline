@@ -1,7 +1,7 @@
 services:
   db:
     image: postgres:18.4-trixie
-    container_name: postgres_learn
+    container_name: postgres-learn-py
     restart: always
     environment:
       # Пароль для главного админа (пользователь 'postgres' создастся автоматически)
@@ -10,7 +10,7 @@ services:
     ports:
       - "5432:5432"
     # чтобы ошибки ipv6 не мозолили глаза
-    # command: ["postgres", "-c", "listen_addresses=0.0.0.0"]
+    command: ["postgres", "-c", "listen_addresses=0.0.0.0"]
     volumes:
       # Главный volume для хранения данных (по новому стандарту v18)
       - postgres_learn_data:/var/lib/postgresql

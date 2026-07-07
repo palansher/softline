@@ -27,9 +27,13 @@
                         <a href="{{ url_for('index') }}"
                             class="nav-link px-3 {% if request.endpoint == 'index' %}text-white active-link{% else %}text-white-50{% endif %}">Главная</a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a href="{{ url_for('catalog') }}"
                             class="nav-link px-3 {% if request.endpoint == 'catalog' %}text-white active-link{% else %}text-white-50{% endif %}">Каталог</a>
+                    </li> -->
+                    <li class="nav-item">
+                        <a href="{{ url_for('catalog') }}"
+                            class="nav-link px-3 {% if request.endpoint in ['catalog', 'car_detail'] %}text-white active-link{% else %}text-white-50{% endif %}">Каталог</a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ url_for('contacts') }}"

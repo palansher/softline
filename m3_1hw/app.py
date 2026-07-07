@@ -1,5 +1,8 @@
-from flask import Flask, render_template, request
-from connect_db import cursor
+from flask import Flask, render_template
+from psycopg2.extras import RealDictCursor
+
+# from connect_db import cursor  # , connection
+from connect_db import connection  # Импортируем соединение вместо курсора
 
 app = Flask(__name__)
 
@@ -22,8 +25,14 @@ def contacts() -> str:
 def catalog():
 
     sql = "SELECT * FROM v_catalog_display ORDER BY price DESC;"
-    cursor.execute(sql)
-    data = cursor.fetchall()
+    # cursor.execute(sql)
+
+    # Создаем локальный курсор для конкретного запроса
+    with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+        cursor.execute(sql)
+        data = cursor.fetchall()
+
+    # Здесь курсор уже автоматически и безопасно закрылся
     return render_template("catalog.html", items=data)
 
 
@@ -31,8 +40,11 @@ def catalog():
 def car_detail(car_id: int):
     # Запрашиваем из VIEW конкретную машину по id
     sql = "SELECT * FROM v_catalog_display WHERE car_id = %s;"
-    cursor.execute(sql, (car_id,))
-    car = cursor.fetchone()
+
+    # Создаем локальный курсор для конкретного просмотра машины
+    with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+        cursor.execute(sql, (car_id,))
+        car = cursor.fetchone()
 
     # Если машина не найдена (например, ввели неверный ID в URL), отдаем ошибку 404
     if not car:
@@ -49,8 +61,21 @@ def format_price(value):
     return f"{int(value):,}".replace(",", " ") + " ₽"
 
 
-# <p class="text-muted">{{ car.full_info | linebreaksbr }}</p>
-# фильтр linebreaksbr автоматически заменит обычные переносы строк на теги <br>
+"""
+Поскольку Flask работает в многопоточном режиме (debug=True), он постоянно держит коннект к базе.
+В конце каждого HTTP-запроса транзакцию нужно обязательно закрывать (commit или rollback), чтобы снимать блокировки.
+Это специальный хук Flask, который будет автоматически закрывать транзакции после каждого отданного ответа
+"""
+
+# @app.teardown_appcontext
+# def shutdown_session(exception=None):
+#     """Автоматически закрывает/откатывает транзакцию после каждого запроса"""
+#     if connection:
+#         try:
+#             # Откатываем транзакцию, чтобы освободить таблицы от LOCK
+#             connection.rollback()
+#         except Exception:
+#             pass
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=8082)

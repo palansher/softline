@@ -9,5 +9,8 @@ connection = psycopg2.connect(
     port="5432",
 )
 
-with connection:
-    cursor = connection.cursor(cursor_factory=RealDictCursor)
+# Включаем автоматическое закрытие одиночных запросов - защищает от зависших локов
+connection.autocommit = True
+
+# with connection: # конфликтует с connection.autocommit
+cursor = connection.cursor(cursor_factory=RealDictCursor)

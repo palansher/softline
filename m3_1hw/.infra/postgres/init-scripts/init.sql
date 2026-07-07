@@ -9,6 +9,6 @@ CREATE DATABASE shop_db_hw3_1;
 -- 3. Навешиваем права на саму базу
 GRANT ALL PRIVILEGES ON DATABASE shop_db_hw3_1 TO shop_admin;
 
--- 4. Переключаемся на созданную базу и даем права на работу со схемами (очень важно для Postgres 15+)
+-- 4. Переключаемся на созданную базу и даем права на работу со схемами
 \c shop_db_hw3_1
 GRANT ALL ON SCHEMA public TO shop_admin;

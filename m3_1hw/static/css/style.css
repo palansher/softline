@@ -5,7 +5,8 @@
 
 /* Стилизация активной ссылки в меню */
 .nav-link.active-link {
-    color: #ffc107 !important; /* bootstrap-warning цвет */
+    color: #ffc107 !important;
+    /* bootstrap-warning цвет */
     font-weight: 600;
     border-bottom: 2px solid #ffc107;
 }
@@ -17,7 +18,7 @@
 
 .card-car:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.15) !important;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15) !important;
 }
 
 /* Ограничение высоты изображений в каталоге для единообразия */
@@ -42,4 +43,19 @@
     background-color: #ffc107;
     margin: 10px auto 0 auto;
     border-radius: 2px;
+}
+
+/* Эффект наведения на название модели в каталоге */
+.link-warning-hover {
+    transition: color 0.2s ease;
+}
+
+.link-warning-hover:hover {
+    color: #ffc107 !important;
+    /* Цвет плавно меняется на фирменный warning */
+}
+
+/* Настройка межстрочного интервала для full_info */
+.leading-relaxed {
+    line-height: 1.7;
 }

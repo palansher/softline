@@ -1,0 +1,26 @@
+[sqlfluff]
+dialect = postgres
+templater = jinja
+# Игнорируем ошибку слишком длинных строк (актуально для full_info)
+# ignore = parsing, lexing
+
+# Полностью отключаем проверку длинных строк (layout.long_lines)
+# А также исключаем структуру кода inside dollar-quoted strings, если нужно
+# exclude_rules = layout.long_lines
+exclude_rules = layout.long_lines
+
+
+[sqlfluff:indentation]
+# Настройки отступов, чтобы он не ломал структуру при переносе строк в INSERT
+indented_joins = false
+
+
+# [sqlfluff:rules:layout.long_lines]
+# Отключаем строгое ограничение на длину строки для всего файла
+# ignore_words = '*'
+
+
+# На случай, если exclude_rules где-то переопределится, 
+# выставляем лимит длины строки в бесконечность (0 или очень большое число)
+# max_line_length = 0
+
