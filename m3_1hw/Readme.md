@@ -21,20 +21,20 @@ docker compose down -v
 
 ## Как выглядит результат
 
-![Главная](hw-result/DriveX-—-Главная.png)
+![Главная](hw-result/DriveX-—-Главная.jpg)
 
 ---
 
-![Контакты](hw-result/DriveX-—-Контакты.png)
+![Контакты](hw-result/DriveX-—-Контакты.jpg)
 
 ---
 
-![Каталог](hw-result/DriveX-—-Каталог.png)
+![Каталог](hw-result/DriveX-—-Каталог.jpg)
 
 ---
 
-![Откатываем карточку товара](hw-result/open-card.png)
+![Откатываем карточку товара](hw-result/open-card.jpg)
 
 ---
 
-![Карточка товара](hw-result/DriveX-—-BMW-M5-Competition.png)
+![Карточка товара](hw-result/DriveX-—-BMW-M5-Competition.jpg)
