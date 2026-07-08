@@ -1,0 +1,68 @@
+{% extends 'main/base.html' %}
+
+{% block title %}{{ category.name }} — ЭлектроМаркет{% endblock %}
+
+{% block content %}
+<style>
+    .product-item { display: flex; flex-direction: column; }
+    .product-action { padding: 12px 0 4px; display: flex; justify-content: center; align-items: center; gap: 10px; }
+    .btn-cart-full { width: 100%; }
+    .stock-tag { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 99px; }
+    .stock-ok { background: rgba(52,211,153,0.1); color: #34d399; }
+    .stock-low { background: rgba(251,191,36,0.1); color: #fbbf24; }
+    .stock-out { background: rgba(248,113,113,0.1); color: #f87171; }
+</style>
+
+<h2>{{ category.name }}</h2>
+<a href="{% url 'main:product_list' %}" class="btn btn-outline" style="margin-bottom: 8px;">&larr; Все категории</a>
+
+<div class="product-grid">
+    {% for product in products %}
+        <div class="product-item">
+            <a href="{% url 'main:product_detail' product.slug %}" class="product-link">
+                <div class="card">
+                    {% if product.image_data %}
+                        <img src="{% url 'main:product_image_db' product.id %}" class="card-img" alt="{{ product.name }}">
+                    {% elif product.image %}
+                        <img src="{{ product.image.url }}" class="card-img" alt="{{ product.name }}">
+                    {% else %}
+                        <div class="card-img">📷</div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">{{ product.description|truncatewords:12 }}</p>
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:8px;">
+                            <span class="price">{{ product.price }} BYN</span>
+                            {% if product.stock_quantity > 10 %}
+                                <span class="stock-tag stock-ok">✓ В наличии</span>
+                            {% elif product.stock_quantity > 0 %}
+                                <span class="stock-tag stock-low">⚠ {{ product.stock_quantity }} шт.</span>
+                            {% else %}
+                                <span class="stock-tag stock-out">Нет в наличии</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <div class="product-action">
+                {% if product.stock_quantity > 0 %}
+                    {% if user.is_authenticated %}
+                        <form action="{% url 'cart:cart_add' product.id %}" method="post" style="display: inline;">
+                            {% csrf_token %}
+                            <input type="hidden" name="quantity" value="1">
+                            <input type="hidden" name="override" value="False">
+                            <button type="submit" class="btn btn-primary btn-cart-full">В корзину</button>
+                        </form>
+                    {% else %}
+                        <a href="{% url 'main:user_login' %}?next={{ request.path }}" class="btn btn-primary btn-cart-full">Войти для покупки</a>
+                    {% endif %}
+                {% else %}
+                    <span class="btn btn-outline btn-cart-full" style="opacity:0.4;cursor:not-allowed;">Распродано</span>
+                {% endif %}
+            </div>
+        </div>
+    {% empty %}
+        <div class="alert alert-warning" style="grid-column: 1 / -1;">В этой категории пока нет товаров.</div>
+    {% endfor %}
+</div>
+{% endblock %}

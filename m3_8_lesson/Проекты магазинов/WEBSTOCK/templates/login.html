@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Вход</h2>
+<form method="post">
+    <div><label>Телефон:</label> <input type="tel" name="phone" required></div>
+    <div><label>Пароль:</label> <input type="password" name="password" required></div>
+    <button type="submit" class="btn">Войти</button>
+    <a href="{{ url_for('register') }}">Регистрация</a>
+</form>
+{% endblock %}

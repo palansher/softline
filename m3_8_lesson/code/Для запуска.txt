@@ -1,0 +1,13 @@
+http://127.0.0.1:5000/rpc 
+
+Метод POST
+
+{
+  "jsonrpc": "2.0",
+  "method": "multiple",
+  "params": {
+    "a": 10,
+    "b": 5
+  },
+  "id": 1
+}

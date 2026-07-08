@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Заказ №{{ order.id }}</h1>
+<p>Покупатель: {{ order.customer_name }} ({{ order.phone }})</p>
+<p>Дата: {{ order.order_date.strftime('%d.%m.%Y %H:%M') }}</p>
+<p>Статус: {{ order.status }}</p>
+<p>Сумма: {{ order.total_amount }} руб.</p>
+<h3>Товары:</h3>
+<table>
+    <thead><tr><th>Товар</th><th>Цена</th><th>Кол-во</th><th>Сумма</th></tr></thead>
+    <tbody>
+        {% for item in items %}
+        <tr>
+            <td>{{ item.name }}</td><td>{{ item.price }} руб.</td>
+            <td>{{ item.quantity }}</td><td>{{ item.price * item.quantity }} руб.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{{ url_for('admin_orders') }}" class="btn btn-secondary">Назад</a>
+{% endblock %}

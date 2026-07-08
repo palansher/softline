@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Заявки от покупателей</h1>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Имя</th>
+            <th>VIN</th>
+            <th>Сообщение</th>
+            <th>Дата</th>
+            <th>Статус</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for f in feedbacks %}
+        <tr>
+            <td>{{ f.id }}</td>
+            <td>{{ f.name }}</td>
+            <td>{{ f.vin or '—' }}</td>
+            <td>{{ f.message[:100] }}{% if f.message|length > 100 %}...{% endif %}</td>
+            <td>{{ f.created_at.strftime('%d.%m.%Y %H:%M') }}</td>
+            <td>{{ f.status }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary">Назад</a>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Мои заказы — ЭлектроМаркет{% endblock %}
+
+{% block content %}
+<style>
+    .order-card {
+        background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
+        padding: 20px 24px; margin-bottom: 16px; display: flex; justify-content: space-between;
+        align-items: center; flex-wrap: wrap; gap: 16px; transition: all 0.2s;
+    }
+    .order-card:hover { border-color: var(--accent); box-shadow: 0 4px 20px rgba(108,92,231,0.12); }
+    .order-id { font-size: 18px; font-weight: 700; color: #fff; }
+    .order-date { color: var(--text-muted); font-size: 13px; margin-top: 4px; }
+    .order-items-count { color: var(--text-secondary); font-size: 14px; }
+    .status-badge {
+        display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px;
+        border-radius: 99px; font-size: 13px; font-weight: 600;
+    }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .status-pending     { background: rgba(245,158,11,0.12); color: #fbbf24; }
+    .status-pending .status-dot  { background: #f59e0b; }
+    .status-processing  { background: rgba(59,130,246,0.12); color: #60a5fa; }
+    .status-processing .status-dot { background: #3b82f6; }
+    .status-shipped     { background: rgba(139,92,246,0.12); color: #a78bfa; }
+    .status-shipped .status-dot   { background: #8b5cf6; }
+    .status-delivered   { background: rgba(16,185,129,0.12); color: #34d399; }
+    .status-delivered .status-dot { background: #10b981; }
+    .status-cancelled   { background: rgba(239,68,68,0.12); color: #f87171; }
+    .status-cancelled .status-dot { background: #ef4444; }
+</style>
+
+<h2>📦 Мои заказы</h2>
+
+{% if orders %}
+    {% for order in orders %}
+        <a href="{% url 'orders:order_detail' order.id %}" class="order-card" style="text-decoration:none;color:inherit;">
+            <div>
+                <div class="order-id">Заказ #{{ order.id }}</div>
+                <div class="order-date">{{ order.created|date:"d E Y, H:i" }} &bull; {{ order.address }}</div>
+                <div class="order-items-count" style="margin-top:4px;">
+                    {{ order.items.count }} {{ order.items.count|pluralize:"товар,твара,товаров" }}
+                </div>
+            </div>
+            <div style="text-align:right;">
+                <div class="status-badge status-{{ order.status }}">
+                    <span class="status-dot"></span>
+                    {{ order.get_status_display }}
+                </div>
+                <div style="margin-top:8px;font-size:20px;font-weight:800;color:var(--green);">
+                    {{ order.total_price }} ₽
+                </div>
+            </div>
+        </a>
+    {% endfor %}
+{% else %}
+    <div class="alert alert-warning" style="padding:48px;text-align:center;">
+        <div style="font-size:48px;margin-bottom:12px;">📦</div>
+        <h4 style="color:#fff;margin-bottom:8px;">У вас пока нет заказов</h4>
+        <p style="color:var(--text-secondary);">Оформите первый заказ и он появится здесь</p>
+        <a href="{% url 'main:product_list' %}" class="btn btn-primary" style="margin-top:16px;">В каталог</a>
+    </div>
+{% endif %}
+{% endblock %}

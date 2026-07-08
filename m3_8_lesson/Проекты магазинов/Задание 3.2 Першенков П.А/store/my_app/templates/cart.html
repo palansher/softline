@@ -1,0 +1,38 @@
+{% extends 'base_template.html' %}
+{% load static %}
+{% load mathfilters %}
+<!--Контент-->
+{% block content %}
+<body>
+    <h1>Корзина покупок</h1> <br>
+    {% if user.username %}
+    <p>Вы вошли как {{ user.username }}!</p>
+    {% else %}
+    <p>Вы не вошли</p>
+    {% endif %}
+    {% if user %}
+    <div class="row mb-3 text-center">
+        <div class="col-md-3 themed-grid-col">Название</div>
+        <div class="col-md-3 themed-grid-col">Цена за 1 ед</div>
+        <div class="col-md-3 themed-grid-col">Количество</div>
+        <div class="col-md-3 themed-grid-col">Общая стоимость</div>
+    </div>
+    {% for item in items %}
+    <div class="row mb-3 text-center">
+        <div class="col-md-3 themed-grid-col">{{ item.title }}</div>
+        <div class="col-md-3 themed-grid-col">{{ item.price }}</div>
+        <div class="col-md-3 themed-grid-col">{{ item.quantity }}</div>
+        <div class="col-md-3 themed-grid-col">{{ item.price|mul:item.quantity }}</div>
+    </div>
+    {% endfor %}
+    <br>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Заказать">
+    </form>
+    {% else %}
+    <p>Войдите чтобы просмотреть корзину</p>
+    {% endif %}
+</body>
+{% endblock %}

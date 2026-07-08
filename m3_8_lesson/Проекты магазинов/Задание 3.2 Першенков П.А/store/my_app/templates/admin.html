@@ -1,0 +1,28 @@
+{% extends 'base_template.html' %}
+{% load static %}
+{% load mathfilters %}
+<!--Контент-->
+{% block content %}
+<body>
+    <h1>Заказы</h1> <br>
+    <div class="row mb-3 text-center">
+        <div class="col-md-2 themed-grid-col">Имя</div>
+        <div class="col-md-2 themed-grid-col">Телефон</div>
+        <div class="col-md-2 themed-grid-col">Название</div>
+        <div class="col-md-2 themed-grid-col">Цена за 1 ед</div>
+        <div class="col-md-2 themed-grid-col">Количество</div>
+        <div class="col-md-2 themed-grid-col">Общая стоимость</div>
+    </div>
+    {% for item in items %}
+    <div class="row mb-3 text-center">
+        <div class="col-md-2 themed-grid-col">{{ item.user_name }}</div>
+        <div class="col-md-2 themed-grid-col">{{ item.user_phone }}</div>
+        <div class="col-md-2 themed-grid-col">{{ item.title }}</div>
+        <div class="col-md-2 themed-grid-col">{{ item.price }}</div>
+        <div class="col-md-2 themed-grid-col">{{ item.quantity }}</div>
+        <div class="col-md-2 themed-grid-col">{{ item.price|mul:item.quantity }}</div>
+    </div>
+    {% endfor %}
+    <br>
+</body>
+{% endblock %}

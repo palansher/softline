@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Панель управления</h1>
+<table>
+    <tr><th>Товаров</th><td>{{ total_products }}</td></tr>
+    <tr><th>Покупателей</th><td>{{ total_customers }}</td></tr>
+    <tr><th>Заказов</th><td>{{ total_orders }}</td></tr>
+    <tr><th>Выручка</th><td>{{ total_revenue }} руб.</td></tr>
+</table>
+<p>
+    <a href="{{ url_for('admin_products') }}" class="btn">Управление товарами</a>
+    <a href="{{ url_for('admin_customers') }}" class="btn">Покупатели</a>
+    <a href="{{ url_for('admin_orders') }}" class="btn">Заказы</a>
+    <a href="{{ url_for('admin_feedbacks') }}" class="btn">Заявки</a>
+    <a href="{{ url_for('logout') }}" class="btn btn-danger">Выйти</a>
+</p>
+{% endblock %}

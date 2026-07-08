@@ -1,0 +1,92 @@
+{% extends 'main/base.html' %}
+
+{% block title %}{{ product.name }} — ЭлектроМаркет{% endblock %}
+
+{% block content %}
+<style>
+    .detail-wrapper {
+        display: flex; gap: 32px; max-width: 900px; margin: 24px auto 0;
+        background: var(--bg-card); border-radius: 16px; padding: 32px;
+        border: 1px solid var(--border); box-shadow: var(--shadow);
+    }
+    .detail-image { min-width: 340px; width: 45%; border-radius: 12px; overflow: hidden; flex-shrink: 0; }
+    .detail-image img { width: 100%; height: auto; border-radius: 12px; display: block; }
+    .detail-placeholder {
+        height: 300px; background: var(--bg-secondary); display: flex; align-items: center; justify-content: center;
+        color: var(--text-muted); border-radius: 12px; font-size: 48px;
+    }
+    .detail-info { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+    .detail-info h2 { font-size: 28px; margin-bottom: 6px; }
+    .detail-category { color: var(--accent-hover); font-size: 14px; margin-bottom: 16px; display: inline-block; }
+    .detail-description { line-height: 1.7; color: var(--text-secondary); margin-bottom: 24px; white-space: pre-line; }
+    .detail-price { font-size: 34px; font-weight: 800; color: var(--green); margin-bottom: 8px; }
+
+    .stock-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 99px; font-size: 13px; font-weight: 600; margin-bottom: 20px; }
+    .stock-ok { background: rgba(52,211,153,0.1); color: #34d399; }
+    .stock-low { background: rgba(251,191,36,0.1); color: #fbbf24; }
+    .stock-out { background: rgba(248,113,113,0.1); color: #f87171; }
+
+    @media (max-width: 768px) {
+        .detail-wrapper { flex-direction: column; }
+        .detail-image { min-width: unset; width: 100%; }
+    }
+</style>
+
+<div style="padding-top: 20px;">
+    <div style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
+        <a href="{% url 'main:category_detail' product.category.slug %}" class="btn btn-outline">&larr; {{ product.category.name }}</a>
+        <a href="{% url 'main:product_list' %}" class="btn btn-outline">Все категории</a>
+    </div>
+
+    <div class="detail-wrapper">
+        <div class="detail-image">
+            {% if product.image_data %}
+                <img src="{% url 'main:product_image_db' product.id %}" alt="{{ product.name }}">
+            {% elif product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            {% else %}
+                <div class="detail-placeholder">📷</div>
+            {% endif %}
+        </div>
+
+        <div class="detail-info">
+            <h2>{{ product.name }}</h2>
+            <a href="{% url 'main:category_detail' product.category.slug %}" class="detail-category">{{ product.category.name }}</a>
+
+            <!-- Склад -->
+            {% if product.stock_quantity > 10 %}
+                <span class="stock-badge stock-ok">● В наличии: {{ product.stock_quantity }} шт.</span>
+            {% elif product.stock_quantity > 0 %}
+                <span class="stock-badge stock-low">⚠ Осталось всего {{ product.stock_quantity }} шт.</span>
+            {% else %}
+                <span class="stock-badge stock-out">✕ Нет в наличии</span>
+            {% endif %}
+
+            {% if product.description %}
+                <div class="detail-description">{{ product.description|linebreaks }}</div>
+            {% endif %}
+
+            <div class="detail-price">{{ product.price }} &nbsp;₽</div>
+
+            {% if user.is_authenticated %}
+                {% if product.stock_quantity > 0 %}
+                    <form action="{% url 'cart:cart_add' product.id %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="quantity" value="1">
+                        <input type="hidden" name="override" value="False">
+                        <button type="submit" class="btn btn-primary" style="padding: 13px 32px; font-size: 16px;">🛒 Добавить в корзину</button>
+                    </form>
+                {% else %}
+                    <span class="btn btn-outline" style="opacity:0.5;cursor:not-allowed;padding:13px 32px;font-size:16px;">Распродано</span>
+                {% endif %}
+            {% else %}
+                {% if product.stock_quantity > 0 %}
+                    <a href="{% url 'main:user_login' %}?next={{ request.path }}" class="btn btn-primary" style="padding: 13px 32px; font-size: 16px;">Войдите, чтобы купить</a>
+                {% else %}
+                    <span class="btn btn-outline" style="opacity:0.5;cursor:not-allowed;padding:13px 32px;font-size:16px;">Распродано</span>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

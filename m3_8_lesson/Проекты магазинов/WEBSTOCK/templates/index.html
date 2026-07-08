@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Товары</h1>
+<div>
+    {% for product in products %}
+    <div class="card">
+        <a href="{{ url_for('product_detail', product_id=product.id) }}">
+            <img src="{{ url_for('static', filename=product.image_url) }}" alt="{{ product.name }}">
+        </a>
+        <h3>{{ product.name }}</h3>
+        <p>{{ product.description[:80] }}...</p>
+        <p><strong>{{ product.price }} руб.</strong></p>
+        <a href="{{ url_for('product_detail', product_id=product.id) }}" class="btn">Подробнее</a>
+        <a href="{{ url_for('add_to_cart', product_id=product.id) }}" class="btn btn-success">В корзину</a>
+    </div>
+    {% endfor %}
+</div>
+<!-- ФОРМА ОБРАТНОЙ СВЯЗИ (внизу страницы) -->
+<hr style="margin: 40px 0;">
+<div style="background: #f9f9f9; padding: 20px; border-radius: 5px; margin-top: 30px;">
+    <h2>Не нашли нужную запчасть?</h2>
+    <p>Оставьте заявку, и мы подберём её для вас!</p>
+    <form method="post" action="{{ url_for('feedback') }}">
+        <div><label>Ваше имя*:</label> <input type="text" name="name" required style="width: 100%; padding: 8px;"></div>
+        <div style="margin-top: 10px;"><label>VIN-код автомобиля (необязательно):</label> <input type="text" name="vin" style="width: 100%; padding: 8px;"></div>
+        <div style="margin-top: 10px;"><label>Описание запчасти*:</label> <textarea name="message" rows="4" required style="width: 100%; padding: 8px;"></textarea></div>
+        <button type="submit" class="btn btn-success" style="margin-top: 10px;">Отправить запрос</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,3 @@
+docker build -t flask-app .
+
+docker run -d -p 5005:5005 --name flask-container flask-app

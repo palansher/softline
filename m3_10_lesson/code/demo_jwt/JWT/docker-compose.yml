@@ -1,0 +1,70 @@
+
+
+# Определение сервисов
+services:
+  # Auth сервис (генерация токенов)
+  auth-service:
+    # Сборка образа из папки auth_service
+    build:
+      context: ./auth_service
+      dockerfile: Dockerfile
+    # Имя контейнера
+    container_name: jwt-auth-service
+    # Маппинг портов (хост:контейнер)
+    ports:
+      - "5001:5001"
+    # Переменные окружения
+    environment:
+      # Секретный ключ из .env файла
+      - JWT_SECRET=${JWT_SECRET}
+      # Режим Flask
+      - FLASK_ENV=${FLASK_ENV}
+    # Сеть для связи между сервисами
+    networks:
+      - jwt-network
+    # Перезапуск при падении
+    restart: unless-stopped
+    # Health check для проверки здоровья
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Data сервис (защищённые данные)
+  data-service:
+    # Сборка образа из папки data_service
+    build:
+      context: ./data_service
+      dockerfile: Dockerfile
+    # Имя контейнера
+    container_name: jwt-data-service
+    # Маппинг портов (хост:контейнер)
+    ports:
+      - "5002:5002"
+    # Переменные окружения
+    environment:
+      # Секретный ключ из .env файла (должен совпадать!)
+      - JWT_SECRET=${JWT_SECRET}
+      # Режим Flask
+      - FLASK_ENV=${FLASK_ENV}
+    # Сеть для связи между сервисами
+    networks:
+      - jwt-network
+    # Зависимость от auth-service
+    depends_on:
+      - auth-service
+    # Перезапуск при падении
+    restart: unless-stopped
+    # Health check для проверки здоровья
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5002/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+# Определение сетей
+networks:
+  # Изолированная сеть для сервисов
+  jwt-network:
+    driver: bridge

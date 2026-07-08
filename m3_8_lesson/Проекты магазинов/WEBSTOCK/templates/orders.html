@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Мои заказы</h1>
+{% if orders %}
+    {% for order in orders %}
+    <div class="card">
+        <h3>Заказ №{{ order.id }} от {{ order.order_date.strftime('%d.%m.%Y %H:%M') }} ({{ order.status }})</h3>
+        <p>Сумма: {{ order.total_amount }} руб.</p>
+        <h4>Товары:</h4>
+        <ul>
+            {% for item in order['items'] %}   <!-- ИСПРАВЛЕНО -->
+                <li>{{ item.name }} x {{ item.quantity }} = {{ item.price * item.quantity }} руб.</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endfor %}
+{% else %}
+<p>У вас ещё нет заказов.</p>
+{% endif %}
+{% endblock %}

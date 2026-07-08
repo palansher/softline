@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %}Заказ #{{ order.id }}{% endblock %}
+
+{% block content %}
+<a href="/admin/" class="btn btn-outline-secondary mb-4">
+  <i class="bi bi-arrow-left"></i> Назад к заказам
+</a>
+
+<div class="row g-4">
+  <div class="col-md-5">
+    <div class="card shadow-sm">
+      <div class="card-header bg-dark text-white">
+        <h5 class="mb-0"><i class="bi bi-receipt"></i> Заказ #{{ order.id }}</h5>
+      </div>
+      <div class="card-body">
+        <table class="table table-borderless mb-0">
+          <tr>
+            <td class="text-muted">Покупатель:</td>
+            <td class="fw-bold">{{ order.login }}</td>
+          </tr>
+          <tr>
+            <td class="text-muted">Телефон:</td>
+            <td class="fw-bold text-primary">
+              <i class="bi bi-telephone"></i>
+              {{ order.order_phone or order.user_phone or '—' }}
+            </td>
+          </tr>
+          <tr>
+            <td class="text-muted">Cart ID:</td>
+            <td>{{ order.cart_id or '—' }}</td>
+          </tr>
+          <tr>
+            <td class="text-muted">Дата:</td>
+            <td>{{ order.created_at.strftime('%d.%m.%Y %H:%M:%S') }}</td>
+          </tr>
+          <tr>
+            <td class="text-muted">Итого:</td>
+            <td class="fw-bold fs-5 text-success">
+              {{ "%.2f"|format(order.total_price) }} ₽
+            </td>
+          </tr>
+          <tr>
+            <td class="text-muted">Статус:</td>
+            <td>
+              <form action="/admin/order/{{ order.id }}/status"
+                    method="POST" class="d-flex gap-2">
+                <select name="status" class="form-select form-select-sm">
+                  <option value="new"        {{ 'selected' if order.status=='new' }}>Новый</option>
+                  <option value="processing" {{ 'selected' if order.status=='processing' }}>В обработке</option>
+                  <option value="shipped"    {{ 'selected' if order.status=='shipped' }}>Отправлен</option>
+                  <option value="delivered"  {{ 'selected' if order.status=='delivered' }}>Доставлен</option>
+                  <option value="cancelled"  {{ 'selected' if order.status=='cancelled' }}>Отменён</option>
+                </select>
+                <button class="btn btn-sm btn-primary">
+                  <i class="bi bi-check-lg"></i>
+                </button>
+              </form>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-7">
+    <div class="card shadow-sm">
+      <div class="card-header bg-dark text-white">
+        <h5 class="mb-0"><i class="bi bi-box-seam"></i> Товары в заказе</h5>
+      </div>
+      <table class="table mb-0">
+        <thead>
+          <tr><th>Товар</th><th>Цена</th><th>Кол-во</th><th>Сумма</th></tr>
+        </thead>
+        <tbody>
+          {% for item in items %}
+          <tr>
+            <td class="fw-bold">{{ item.product_name }}</td>
+            <td>{{ "%.2f"|format(item.product_price) }} ₽</td>
+            <td>{{ item.quantity }} шт.</td>
+            <td class="fw-bold text-primary">{{ "%.2f"|format(item.subtotal) }} ₽</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr class="table-success">
+            <td colspan="3" class="text-end fw-bold fs-5">Итого:</td>
+            <td class="fw-bold fs-5">{{ "%.2f"|format(order.total_price) }} ₽</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

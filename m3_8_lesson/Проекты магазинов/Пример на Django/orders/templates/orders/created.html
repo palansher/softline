@@ -1,0 +1,14 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Заказ оформлен{% endblock %}
+
+{% block content %}
+<div class="success-box">
+    <div style="font-size: 56px; margin-bottom: 12px;">✅</div>
+    <h2 style="margin-bottom: 8px;">Спасибо за заказ!</h2>
+    <p style="color: var(--text-secondary); font-size: 16px; line-height: 1.6;">
+        Ваш заказ успешно сохранён под номером <strong style="color: var(--green);">#{{ order.id }}</strong>.
+    </p>
+    <a href="{% url 'orders:order_history' %}" class="btn btn-primary" style="margin-top: 20px;">Мои заказы</a>
+</div>
+{% endblock %}

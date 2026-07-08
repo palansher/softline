@@ -1,0 +1,62 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Ваша корзина{% endblock %}
+
+{% block content %}
+<h2>🛒 Ваша корзина</h2>
+{% if cart %}
+<div class="table-wrapper">
+    <table>
+        <thead>
+            <tr>
+                <th>Товар</th>
+                <th>Количество</th>
+                <th>Удалить</th>
+                <th>Цена за шт.</th>
+                <th>Всего</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart %}
+                {% with product=item.product %}
+                <tr>
+                    <td><a href="{% url 'main:product_detail' product.slug %}">{{ product.name }}</a></td>
+                    <td>
+                        <form action="{% url 'cart:cart_add' product.id %}" method="post" style="display: flex; align-items: center;">
+                            {% csrf_token %}
+                            {{ item.update_quantity_form.quantity }}
+                            {{ item.update_quantity_form.override }}
+                            <button type="submit" class="btn btn-outline" style="padding: 4px 10px; font-size: 12px;">Обновить</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="{% url 'cart:cart_remove' product.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">🗑</button>
+                        </form>
+                    </td>
+                    <td>{{ item.price }} ₽</td>
+                    <td style="font-weight: 700;">{{ item.total_price }} ₽</td>
+                </tr>
+                {% endwith %}
+            {% endfor %}
+            <tr class="total-row">
+                <td colspan="4" style="color: #fff;">Итого к оплате:</td>
+                <td>{{ cart.get_total_price }} ₽</td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="display: flex; justify-content: space-between; margin-top: 20px; gap: 12px; flex-wrap: wrap;">
+        <a href="{% url 'main:product_list' %}" class="btn btn-outline">← Продолжить покупки</a>
+        <a href="{% url 'orders:order_create' %}" class="btn btn-success" style="width: auto; padding: 12px 28px;">Оформить заказ →</a>
+    </div>
+</div>
+{% else %}
+<div class="alert alert-warning" style="padding: 48px; text-align: center;">
+    <div style="font-size: 48px; margin-bottom: 12px;">🛒</div>
+    <h4 style="color: #fff; margin-bottom: 8px;">Корзина пуста</h4>
+    <p style="color: var(--text-secondary);">Добавьте товары, чтобы оформить заказ</p>
+    <a href="{% url 'main:product_list' %}" class="btn btn-primary" style="margin-top: 16px;">В каталог</a>
+</div>
+{% endif %}
+{% endblock %}

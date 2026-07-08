@@ -1,0 +1,20 @@
+{% extends 'base_template.html' %}
+{% load static %}
+<!--Контент-->
+{% block content %}
+
+<div class="container my-5 col-md-9">
+    <div class="position-relative p-5 text-center text-muted bg-body border border-dashed rounded-5">
+        <h1 class="text-body-emphasis">{{ item.title }}</h1>
+        <p class="col-lg-6 mx-auto mb-4">{{ item.price }} у.е.</p>
+        <img src="{% static '/pictures/' %}{{ item.photo }}" style="width: 50%; height: auto;" alt="ar">
+        <p class="col-lg-6 mx-auto mb-4">{{ item.info }}</p>
+        {% if user %}
+        <a href="/add_cart?id={{ item.item_id }}" type="button" class="w-100 btn btn-lg btn-outline-primary">Заказать</a>
+        {% else %}
+        <a href="/login" type="button" class="w-100 btn btn-lg btn-outline-primary">Войдите чтобы заказать</a>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

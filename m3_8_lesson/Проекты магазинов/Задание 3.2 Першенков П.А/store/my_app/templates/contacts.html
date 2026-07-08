@@ -1,0 +1,16 @@
+{% extends 'base_template.html' %}
+<!--Контент-->
+{% block content %}
+<!--форма-->
+<div class="container my-5 col-md-9">
+    <h3>Напишите нам</h3><br>
+    <form action="server" method="POST" enctype="multipart/form-data">
+        <label for="x">Введите email</label><br>
+        <input type="text" name="mail" id="x"> <!-- однострочное текстовое поле -->
+        <hr>
+        <label for="info">Ваше обращение</label><br>
+        <textarea name="info" id="info" cols="50" rows="10"></textarea>
+    </form>
+        <input type="submit" value="Отправить">
+</div>
+{% endblock %}

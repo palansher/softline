@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Оформление заказа</h1>
+{% if cart_items %}
+<h3>Ваш заказ:</h3>
+<table>
+    <thead><tr><th>Товар</th><th>Кол-во</th><th>Сумма</th></tr></thead>
+    <tbody>
+        {% for item in cart_items %}
+        <tr><td>{{ item.product.name }}</td><td>{{ item.quantity }}</td><td>{{ item.subtotal }} руб.</td></tr>
+        {% endfor %}
+        <tr><td colspan="2" style="text-align:right"><strong>Итого:</strong></td><td><strong>{{ total }} руб.</strong></td></tr>
+    </tbody>
+</table>
+<p><strong>Покупатель:</strong> {{ user.name }}, телефон: {{ user.phone }}</p>
+<form method="post">
+    <button type="submit" class="btn btn-success">Подтвердить заказ</button>
+    <a href="{{ url_for('view_cart') }}" class="btn btn-secondary">Назад</a>
+</form>
+{% else %}
+<p>Корзина пуста</p>
+{% endif %}
+{% endblock %}

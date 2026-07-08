@@ -1,0 +1,28 @@
+{% extends 'main/base.html' %}
+
+{% block title %}ЭлектроМаркет — Каталог{% endblock %}
+
+{% block content %}
+<h2>Каталог категорий</h2>
+<p style="color: var(--text-secondary); margin-bottom: 8px;">Выберите категорию для просмотра товаров</p>
+
+<div class="category-grid">
+    {% for category in categories %}
+        <a href="{% url 'main:category_detail' category.slug %}" class="category-card">
+            <div class="card" style="padding: 28px; text-align: center;">
+                <div style="margin-bottom: 12px;">
+                    {% if category.icon %}
+                        <img src="{{ category.icon.url }}" alt="{{ category.name }}" class="category-icon" style="width: 120px; height: 120px; object-fit: contain; border-radius: 16px;">
+                    {% else %}
+                        <div style="font-size: 80px;">📂</div>
+                    {% endif %}
+                </div>
+                <h5 class="card-title" style="font-size: 19px;">{{ category.name }}</h5>
+                <p class="card-text">{{ category.products.count }} {{ category.products.count|pluralize:"товар,твара,товаров" }}</p>
+            </div>
+        </a>
+    {% empty %}
+        <div class="alert alert-warning" style="grid-column: 1 / -1;">Категории еще не добавлены. Зайдите в панель администратора.</div>
+    {% endfor %}
+</div>
+{% endblock %}

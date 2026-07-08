@@ -1,0 +1,45 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Оформление заказа{% endblock %}
+
+{% block content %}
+<div class="form-card">
+    <h3 style="text-align: center; color: var(--accent-hover); margin-bottom: 6px;">📋 Оформление заказа</h3>
+    <p style="text-align:center;color:var(--text-secondary);font-size:14px;margin-bottom:24px;">
+        Заполните данные для доставки
+    </p>
+
+    <!-- Состав корзины -->
+    {% if cart %}
+    <div style="background:var(--bg-secondary);border-radius:8px;padding:16px;margin-bottom:20px;">
+        <div style="font-size:13px;color:var(--text-muted);margin-bottom:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;">
+            Состав заказа
+        </div>
+        {% for item in cart %}
+            <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:14px;color:var(--text-secondary);">
+                <span>{{ item.product.name }} × {{ item.quantity }}</span>
+                <span style="color:var(--text-primary);font-weight:600;">{{ item.total_price }} ₽</span>
+            </div>
+        {% endfor %}
+        <div style="display:flex;justify-content:space-between;padding-top:10px;margin-top:8px;border-top:1px solid var(--border);font-weight:700;color:#fff;">
+            <span>Итого</span>
+            <span style="color:var(--green);">{{ cart.get_total_price }} ₽</span>
+        </div>
+    </div>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="form-group">
+                <label>{{ field.label }}</label>
+                <input type="{% if field.name == 'email' %}email{% else %}text{% endif %}"
+                       name="{{ field.name }}" class="form-control" required>
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-success" style="margin-top: 15px;">Подтвердить заказ</button>
+    </form>
+
+    <a href="{% url 'cart:cart_detail' %}" class="btn btn-outline" style="width:100%;margin-top:10px;text-align:center;">← Вернуться в корзину</a>
+</div>
+{% endblock %}
