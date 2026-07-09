@@ -1,3 +1,5 @@
+# практика учеников
+
 import psycopg2
 from flask import Flask, request
 
@@ -24,7 +26,7 @@ def get_tasks():
 
 @app.route('/get_task/<int:task_id>', methods=['GET'])
 def get_task_by_id(task_id):
-    query = f"""
+    query = """
             select * from test.daily_planner where id = %s
         """
     cursor = conn.cursor()
@@ -42,7 +44,7 @@ def get_task_by_id(task_id):
 def add_task():
     task = request.get_json()
     if task:
-        query = f"""
+        query = """
             INSERT INTO test.daily_planner (title, info, date_plan)
             VALUES (%s, %s, %s)
                 """
@@ -59,7 +61,7 @@ def update_task(task_id):
     update_task = request.get_json()
 
     if update_task:
-        query = f"""
+        query = """
             UPDATE test.daily_planner 
             SET title = %s, info = %s, date_plan = %s
             WHERE id = %s
@@ -77,7 +79,7 @@ def update_task(task_id):
 
 @app.route('/delete_task/<int:task_id>', methods=['DELETE'])
 def delete_task(task_id):
-    query = f"""
+    query = """
             delete from test.daily_planner where id = %s
         """
     cursor = conn.cursor()

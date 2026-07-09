@@ -99,6 +99,17 @@
 				"database": "shop_db_hw3_1",
 				"username": "postgres",
 				"password": "admin"
+			},
+			{
+				"ssh": "Disabled",
+				"previewLimit": 50,
+				"server": "localhost",
+				"port": 5432,
+				"driver": "PostgreSQL",
+				"name": "flask_shop",
+				"database": "flask_shop",
+				"username": "postgres",
+				"password": "admin"
 			}
 		],
 		"sqlfluff.executablePath": "${workspaceFolder}/.venv/bin/sqlfluff",

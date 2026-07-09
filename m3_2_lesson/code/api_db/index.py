@@ -6,12 +6,13 @@ app = Flask(__name__)
 
 # Настройка подключения к PostgreSQL
 connection = psycopg2.connect(
-    host="localhost",
+    host="vm-perepechenko01.brg.loc",
     user="postgres",
-    password="postgres",
+    password="admin",
     database="flask_shop",
-    port="5433"
+    port="5432",
 )
+
 
 
 # ============= CRUD операции для item =============
