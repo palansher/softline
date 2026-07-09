@@ -106,6 +106,7 @@
 			"RF04",
 			"LT05",
 			"AM04"
-		]
+		],
+		"flashpost.saveDataToWorkspace": true
 	}
 }
