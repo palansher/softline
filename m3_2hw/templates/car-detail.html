@@ -1,0 +1,77 @@
+{% extends 'base-template.html' %}
+
+{% block title %} DriveX — {{ car.brand_name }} {{ car.model_name }} {% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('index') }}"
+                class="text-decoration-none text-secondary">Главная</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('catalog') }}"
+                class="text-decoration-none text-secondary">Каталог</a></li>
+        <li class="breadcrumb-item active text-dark fw-semibold" aria-current="page">{{ car.brand_name }} {{
+            car.model_name }}</li>
+    </ol>
+</nav>
+
+<div class="row g-5">
+    <div class="col-lg-7">
+        <div class="shadow-sm rounded-4 overflow-hidden bg-white">
+            <img src="{{ url_for('static', filename='img/catalog/%s' | format(car.image_big_path)) }}"
+                alt="{{ car.brand_name }} {{ car.model_name }}" class="img-fluid w-100 object-fit-cover"
+                style="max-height: 480px;" onerror="this.src='/static/img/no-photo-600x400.svg';">
+        </div>
+    </div>
+
+    <div class="col-lg-5 d-flex flex-column justify-content-between">
+        <div>
+            <span class="text-uppercase text-warning fw-bold tracking-wider small bg-dark px-3 py-1 rounded-pill">{{
+                car.brand_name }}</span>
+            <h1 class="display-5 fw-bold text-dark mt-3 mb-2">{{ car.model_name }}</h1>
+
+            <div class="d-flex gap-2 my-4">
+                <span
+                    class="badge bg-white text-dark border border-secondary-subtle px-3 py-2 rounded-3 fs-6 fw-normal">
+                    📅 <strong>Год:</strong> {{ car.year_produced }}
+                </span>
+                <span
+                    class="badge bg-white text-dark border border-secondary-subtle px-3 py-2 rounded-3 fs-6 fw-normal">
+                    🛣️ <strong>Пробег:</strong> {% if car.mileage == 0 %}Новый{% else %}{{
+                    "{:,}".format(car.mileage).replace(",", " ") }} км{% endif %}
+                </span>
+            </div>
+
+            <hr class="text-muted my-4">
+
+            <div class="p-4 bg-white rounded-4 shadow-sm border border-light-subtle mb-4">
+                <div class="text-muted small text-uppercase fw-semibold tracking-wider mb-1">Финальная стоимость</div>
+                <div class="display-6 fw-bold text-dark">{{ car.price | format_price }}</div>
+            </div>
+        </div>
+
+        <div class="d-flex flex-column gap-2 w-100">
+            <button class="btn btn-warning btn-lg fw-bold rounded-3 py-3 text-dark btn-buy" data-id="{{ car.car_id }}">
+                ⚡ Добавить в корзину
+            </button>
+            <a href="tel:+78007775555" class="btn btn-outline-dark btn-lg fw-bold rounded-3 py-3">
+                📞 Заказать обратный звонок
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-lg-10">
+        <div class="bg-white p-4 p-md-5 rounded-4 shadow-sm border border-light-subtle">
+            <h3 class="fw-bold text-dark mb-4 position-relative pb-2"
+                style="border-bottom: 2px solid #ffc107; width: max-content;">
+                Описание автомобиля
+            </h3>
+            <!-- <p class="text-secondary leading-relaxed fs-5"></p> -->
+            <!-- <p class="text-secondary leading-relaxed fs-5" style="white-space: pre-line;"> -->
+            <p class="text-secondary leading-relaxed fs-5" style="white-space: pre-line;">{{ car.full_info }}</p>
+            <!-- {{ car.full_info }} -->
+        </div>
+    </div>
+</div>
+{% endblock %}
