@@ -19,7 +19,7 @@
         <div class="shadow-sm rounded-4 overflow-hidden bg-white">
             <img src="{{ url_for('static', filename='img/catalog/%s' | format(car.image_big_path)) }}"
                 alt="{{ car.brand_name }} {{ car.model_name }}" class="img-fluid w-100 object-fit-cover"
-                style="max-height: 480px;" onerror="this.src='/static/img/no-photo-600x400.svg';">
+                style="max-height: 480px;" onerror="this.src=this.dataset.fallback;" data-fallback="{{ url_for('static', filename='img/no-photo-600x400.svg') }}">
         </div>
     </div>
 

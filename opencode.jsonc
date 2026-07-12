@@ -1,6 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "model": "ollama/qwen2.5-coder:14b",
+  "model": "ollama/qwen3.6:27b-q4_K_M",
   "provider": {
     "ollama": {
       "name": "Ollama (local)",
@@ -9,13 +9,14 @@
         "baseURL": "http://localhost:11434/v1"
       },
       "models": {
-        "qwen2.5-coder:14b": {
-          "name": "qwen2.5-coder:14b",
+        "qwen3.6:27b-q4_K_M": {
+          "name": "qwen3.6:27b-q4_K_M",
+          // "_launch": true
           // "limit": {
           //   "context": 8192,
           //   "output": 4096
           // },
-          // "options": {
+          // "options": {              
           //   "temperature": 0.1,
           //   "num_ctx": 8192
           // }

@@ -22,7 +22,7 @@ def contacts() -> str:
 
 
 @app.route("/catalog")
-def catalog():
+def catalog() -> str:
 
     sql = "SELECT * FROM v_catalog_display ORDER BY price DESC;"
     # cursor.execute(sql)
@@ -37,7 +37,7 @@ def catalog():
 
 
 @app.route("/catalog/<int:car_id>")
-def car_detail(car_id: int):
+def car_detail(car_id: int) -> str:
     # Запрашиваем из VIEW конкретную машину по id
     sql = "SELECT * FROM v_catalog_display WHERE car_id = %s;"
 
