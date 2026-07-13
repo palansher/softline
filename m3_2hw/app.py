@@ -1,65 +1,80 @@
-from flask import Flask, render_template
-from psycopg2.extras import RealDictCursor
+from flask import Flask
+from routes import main_bp
+from connect_db import init_pool, close_db
 
-# from connect_db import cursor  # , connection
-from connect_db import connection  # Импортируем соединение вместо курсора
-
-app = Flask(__name__)
-
-
-@app.route("/")
-def index() -> str:
-    return render_template("main.html")
-
-
-@app.route("/contacts")
-def contacts() -> str:
-    return render_template("contacts.html")
-
-
+# from flask import Flask, render_template
+# from psycopg2.extras import RealDictCursor
+# 
+# # from connect_db import cursor  # , connection
+# from connect_db import connection  # Импортируем соединение вместо курсора
+# 
+# app = Flask(__name__)
+# 
+# 
+# @app.route("/")
+# def index() -> str:
+#     return render_template("main.html")
+# 
+# 
+# @app.route("/contacts")
+# def contacts() -> str:
+#     return render_template("contacts.html")
+# 
+# @app.route("/catalog")
 # def catalog() -> str:
-#     return render_template("catalog.html")
+# 
+#     sql = "SELECT * FROM v_catalog_display ORDER BY price DESC;"
+#     # cursor.execute(sql)
+# 
+#     # Создаем локальный курсор для конкретного запроса
+#     with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+#         cursor.execute(sql)
+#         data = cursor.fetchall()
+# 
+#     # Здесь курсор уже автоматически и безопасно закрылся
+#     return render_template("catalog.html", items=data)
+# 
+# 
+# @app.route("/catalog/<int:car_id>")
+# def car_detail(car_id: int):
+#     # Запрашиваем из VIEW конкретную машину по id
+#     sql = "SELECT * FROM v_catalog_display WHERE car_id = %s;"
+# 
+#     # Создаем локальный курсор для конкретного просмотра машины
+#     with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+#         cursor.execute(sql, (car_id,))
+#         car = cursor.fetchone()
+# 
+#     # Если машина не найдена (например, ввели неверный ID в URL), отдаем ошибку 404
+#     if not car:
+#         return "Автомобиль не найден", 404
+# 
+#     return render_template("car-detail.html", car=car)
+# 
+# 
+# @app.template_filter("format_price")
+# def format_price(value):
+#     if value is None:
+#         return "0 ₽"
+#     # Форматируем число с разделением тысяч пробелами, без копеек
+#     return f"{int(value):,}".replace(",", " ") + " ₽"
 
+def create_app():
+    app = Flask(__name__)
 
-@app.route("/catalog")
-def catalog() -> str:
+    # Инициализируем пул соединений при старте приложения
+    with app.app_context():
+        init_pool()
 
-    sql = "SELECT * FROM v_catalog_display ORDER BY price DESC;"
-    # cursor.execute(sql)
+    # Регистрируем маршруты через Blueprint
+    app.register_blueprint(main_bp)
 
-    # Создаем локальный курсор для конкретного запроса
-    with connection.cursor(cursor_factory=RealDictCursor) as cursor:
-        cursor.execute(sql)
-        data = cursor.fetchall()
+    # Регистрируем функцию закрытия соединения
+    app.teardown_appcontext(close_db)
 
-    # Здесь курсор уже автоматически и безопасно закрылся
-    return render_template("catalog.html", items=data)
+    return app
 
-
-@app.route("/catalog/<int:car_id>")
-def car_detail(car_id: int) -> str:
-    # Запрашиваем из VIEW конкретную машину по id
-    sql = "SELECT * FROM v_catalog_display WHERE car_id = %s;"
-
-    # Создаем локальный курсор для конкретного просмотра машины
-    with connection.cursor(cursor_factory=RealDictCursor) as cursor:
-        cursor.execute(sql, (car_id,))
-        car = cursor.fetchone()
-
-    # Если машина не найдена (например, ввели неверный ID в URL), отдаем ошибку 404
-    if not car:
-        return "Автомобиль не найден", 404
-
-    return render_template("car-detail.html", car=car)
-
-
-@app.template_filter("format_price")
-def format_price(value):
-    if value is None:
-        return "0 ₽"
-    # Форматируем число с разделением тысяч пробелами, без копеек
-    return f"{int(value):,}".replace(",", " ") + " ₽"
-
+app = create_app()
 
 """
 Поскольку Flask работает в многопоточном режиме (debug=True), он постоянно держит коннект к базе.

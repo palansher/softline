@@ -1,27 +1,27 @@
 {
-  "$schema": "https://opencode.ai/config.json",
-  "model": "ollama/qwen3.6:27b-q4_K_M",
-  "provider": {
-    "ollama": {
-      "name": "Ollama (local)",
-      "npm": "@ai-sdk/openai-compatible",
-      "options": {
-        "baseURL": "http://localhost:11434/v1"
-      },
-      "models": {
-        "qwen3.6:27b-q4_K_M": {
-          "name": "qwen3.6:27b-q4_K_M",
-          // "_launch": true
-          // "limit": {
-          //   "context": 8192,
-          //   "output": 4096
-          // },
-          // "options": {              
-          //   "temperature": 0.1,
-          //   "num_ctx": 8192
-          // }
-        }
-      }
-    }
-  }
+  // "$schema": "https://opencode.ai/config.json",
+  // "model": "ollama/qwen3.6:27b-q4_K_M",
+  // "provider": {
+  //   "ollama": {
+  //     "name": "Ollama (local)",
+  //     "npm": "@ai-sdk/openai-compatible",
+  //     "options": {
+  //       "baseURL": "http://localhost:11434/v1"
+  //     },
+  //     "models": {
+  //       "qwen3.6:27b-q4_K_M": {
+  //         "name": "qwen3.6:27b-q4_K_M",
+  //         // "_launch": true
+  //         // "limit": {
+  //         //   "context": 8192,
+  //         //   "output": 4096
+  //         // },
+  //         // "options": {              
+  //         //   "temperature": 0.1,
+  //         //   "num_ctx": 8192
+  //         // }
+  //       }
+  //     }
+  //   }
+  // }
 }
