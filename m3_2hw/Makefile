@@ -8,3 +8,7 @@ SHELL := /bin/bash
 # pg-create-db-structure:
 # 	@cd .infra/db
 # 	bash create-db-structure.sh
+
+
+postgres-up:
+	docker compose -f .infra/postgres-db-init/docker-compose.yml up -d
