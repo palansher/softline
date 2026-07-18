@@ -17,10 +17,6 @@ def contacts() -> str:
     return render_template("contacts.html")
 
 
-# def catalog() -> str:
-#     return render_template("catalog.html")
-
-
 @app.route("/catalog")
 def catalog():
 
@@ -60,22 +56,6 @@ def format_price(value):
     # Форматируем число с разделением тысяч пробелами, без копеек
     return f"{int(value):,}".replace(",", " ") + " ₽"
 
-
-"""
-Поскольку Flask работает в многопоточном режиме (debug=True), он постоянно держит коннект к базе.
-В конце каждого HTTP-запроса транзакцию нужно обязательно закрывать (commit или rollback), чтобы снимать блокировки.
-Это специальный хук Flask, который будет автоматически закрывать транзакции после каждого отданного ответа
-"""
-
-# @app.teardown_appcontext
-# def shutdown_session(exception=None):
-#     """Автоматически закрывает/откатывает транзакцию после каждого запроса"""
-#     if connection:
-#         try:
-#             # Откатываем транзакцию, чтобы освободить таблицы от LOCK
-#             connection.rollback()
-#         except Exception:
-#             pass
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=8082)

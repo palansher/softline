@@ -15,6 +15,13 @@ exclude_rules = layout.long_lines
 indented_joins = false
 
 
+# [sqlfluff:rules:references.keywords]
+# # Чтобы линтер не ругался на регистр ключевых слов, если используешь разные
+# capitalisation_policy = consistent
+
+# [sqlfluff:rules:layout.end_of_file]
+# single_trailing_newline = true
+
 # [sqlfluff:rules:layout.long_lines]
 # Отключаем строгое ограничение на длину строки для всего файла
 # ignore_words = '*'

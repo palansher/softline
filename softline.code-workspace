@@ -95,19 +95,8 @@
 				"server": "vm-perepechenko01.brg.loc",
 				"port": 5432,
 				"driver": "PostgreSQL",
-				"name": "docker shop_db_hw3_1",
-				"database": "shop_db_hw3_1",
-				"username": "postgres",
-				"password": "admin"
-			},
-			{
-				"ssh": "Disabled",
-				"previewLimit": 50,
-				"server": "localhost",
-				"port": 5432,
-				"driver": "PostgreSQL",
-				"name": "flask_shop",
-				"database": "flask_shop",
+				"name": "docker shop_db_hw3_2",
+				"database": "shop_db_hw3_2",
 				"username": "postgres",
 				"password": "admin"
 			}
@@ -159,6 +148,23 @@
 		"llama-vscode.endpoint": "http://127.0.0.1:11434",
 		"llama-vscode.openai_client_model": "",
 		"llama-vscode.ai_model": "",
-		"ollama-autocoder.model": "qwen2.5-coder:1.5b-base"
+		"ollama-autocoder.model": "qwen2.5-coder:1.5b-base",
+		"sqlfluff.dialect": "postgres",
+		"sqlfluff.linter.run": "onType",
+		"python.terminal.useEnvFile": true,
+		"sqlfluff.codeActions.noqa": [],
+		"sqlfluff.format.languages": [
+			"sql",
+			"sql-bigquery",
+			"jinja-sql",
+			"postgres",
+			"snowflake-sql"
+		],
+		"sqlfluff.ignoreParsing": false,
+		"sqlfluff.linter.arguments": [],
+		"python.createEnvironment.contentButton": "show",
+		"python.useEnvironmentsExtension": true,
+		"python.terminal.activateEnvInCurrentTerminal": true,
+		"python.defaultInterpreterPath": "/home/vp/code/learn-python/.venv/bin/python"
 	}
 }
