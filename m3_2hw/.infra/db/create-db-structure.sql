@@ -269,14 +269,18 @@ INSERT INTO roles (id, name, description) VALUES
 (2, 'moderator', 'Модератор контента')
 ON CONFLICT (id) DO NOTHING;
 
--- Добавляем первого и единственного администратора системы (ID сгенерируется автоматически)
+-- Добавляем первого администратора системы (ID сгенерируется автоматически)
+/*
+python -c "from werkzeug.security import generate_password_hash; print(generate_password_hash('ваш_пароль'))"
+*/
 INSERT INTO users (email, password_hash, full_name, phone, address, role_id) VALUES
 (
     'admin@shop.com',
-    '$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31tG', -- Демонстрационный хэш пароля (admin)
+    -- Демонстрационный хэш пароля (admin)
+    'scrypt:32768:8:1$aes6Ee07axzzOWJJ$46d6ef7204e8ae08bf0ec187fe444ba8391648176daa546e5b370c64aa335b36647ba88455fa8957f211ed3c0b360e6e45c49f1d01d2baf6cf8acd0a186eb798',
     'Главный Администратор',
     '+7 (999) 111-22-33',
-    'Центральный офис',
+    'Приют для бездомных людей при храме Свв. мцц. Веры, Надежды, Любови и матери их Софии, г. Ожерелье , Московская область, Каширский район, г. Ожерелье, 1-я Больничная улица, д.2',
     1 -- Ссылка на роль 'admin' (id = 1)
 )
 ON CONFLICT (email) DO NOTHING;

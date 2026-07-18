@@ -1,0 +1,51 @@
+{% extends 'base-template.html' %}
+
+{% block title %} DriveX — Регистрация {% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white">
+            <h2 class="text-center fw-bold mb-4">Регистрация нового пользователя</h2>
+            
+            <form method="POST" action="{{ url_for('register') }}">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="email" class="form-label fw-semibold">Email адрес</label>
+                        <input type="email" class="form-control rounded-3 py-2" id="email" name="email" placeholder="email@example.com" required>
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                        <label for="password" class="form-label fw-semibold">Пароль</label>
+                        <input type="password" class="form-control rounded-3 py-2" id="password" name="password" placeholder="Придумайте надежный пароль" required>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="full_name" class="form-label fw-semibold">ФИО / Полное имя</label>
+                    <input type="text" class="form-control rounded-3 py-2" id="full_name" name="full_name" placeholder="Иванов Иван Иванович" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="phone" class="form-label fw-semibold">Телефон</label>
+                    <input type="tel" class="form-control rounded-3 py-2" id="phone" name="phone" placeholder="+7 (999) 111-22-33" required>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="address" class="form-label fw-semibold">Адрес доставки</label>
+                    <textarea class="form-control rounded-3 py-2" id="address" name="address" rows="3" placeholder="Укажите ваш полный адрес доставки автомобиля" required></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-warning w-100 fw-bold rounded-3 py-2 text-dark">
+                    Зарегистрироваться
+                </button>
+            </form>
+            
+            <div class="text-center mt-4">
+                <span class="text-muted">Уже зарегистрированы?</span>
+                <a href="{{ url_for('login') }}" class="text-warning fw-bold text-decoration-none ms-1">Войти в аккаунт</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

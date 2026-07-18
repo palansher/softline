@@ -50,9 +50,13 @@
         </div>
 
         <div class="d-flex flex-column gap-2 w-100">
-            <button class="btn btn-warning btn-lg fw-bold rounded-3 py-3 text-dark btn-buy" data-id="{{ car.car_id }}">
-                ⚡ Добавить в корзину
-            </button>
+            {% if session.get('user_email') %}
+            <form method="POST" action="{{ url_for('add_to_cart', car_id=car.car_id) }}">
+                <button type="submit" class="btn btn-warning btn-lg fw-bold rounded-3 py-3 text-dark w-100">
+                    ⚡ Добавить в корзину
+                </button>
+            </form>
+            {% endif %}
             <a href="tel:+78007775555" class="btn btn-outline-dark btn-lg fw-bold rounded-3 py-3">
                 📞 Заказать обратный звонок
             </a>

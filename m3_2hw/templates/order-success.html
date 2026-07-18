@@ -1,0 +1,83 @@
+{% extends 'base-template.html' %}
+
+{% block title %} DriveX — Заказ оформлен {% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white text-center mb-4">
+            <div class="fs-1 text-success mb-3">🎉</div>
+            <h2 class="fw-bold mb-3 text-dark">Спасибо за заказ!</h2>
+            <p class="text-secondary fs-5 mb-4">Ваш заказ <strong>#{{ order.id }}</strong> успешно оформлен и уже передан в обработку.</p>
+            
+            <div class="badge bg-warning text-dark px-4 py-2 rounded-pill fs-6 fw-bold mb-4">
+                Статус заказа: {{ order.status_name | upper }}
+            </div>
+        </div>
+        
+        <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4">
+            <h4 class="fw-bold mb-4 text-dark">Детали заказа</h4>
+            
+            <div class="row mb-3">
+                <div class="col-sm-4 text-secondary">Дата заказа:</div>
+                <div class="col-sm-8 fw-semibold text-dark">{{ order.created_at.strftime('%d.%m.%Y %H:%M') }}</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-4 text-secondary">Адрес доставки:</div>
+                <div class="col-sm-8 text-dark">{{ order.shipping_address }}</div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-sm-4 text-secondary">Итоговая сумма:</div>
+                <div class="col-sm-8 fw-bold text-warning fs-5">{{ order.total_amount | format_price }}</div>
+            </div>
+            
+            <hr class="text-muted mb-4">
+            
+            <h5 class="fw-bold mb-3 text-dark">Содержимое заказа</h5>
+            <div class="table-responsive">
+                <table class="table align-middle">
+                    <thead>
+                        <tr class="text-muted small text-uppercase">
+                            <th scope="col">Фото</th>
+                            <th scope="col">Автомобиль</th>
+                            <th scope="col" class="text-center">Кол-во</th>
+                            <th scope="col">Цена за шт.</th>
+                            <th scope="col">Итого</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in items %}
+                        <tr>
+                            <td>
+                                <div class="rounded overflow-hidden" style="width: 60px; height: 45px;">
+                                    <img src="{{ url_for('static', filename='img/catalog/%s' | format(item.image_small_path) ) }}" 
+                                         alt="{{ item.brand_name }} {{ item.model_name }}" 
+                                         class="w-100 h-100 object-fit-cover"
+                                         onerror="this.src=this.dataset.fallback;" 
+                                         data-fallback="{{ url_for('static', filename='img/no-photo-600x400.svg') }}">
+                                </div>
+                            </td>
+                            <td class="fw-semibold text-dark">
+                                {{ item.brand_name }} {{ item.model_name }}
+                            </td>
+                            <td class="text-center">{{ item.quantity }}</td>
+                            <td>{{ item.price | format_price }}</td>
+                            <td class="fw-bold text-dark">{{ (item.price * item.quantity) | format_price }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="text-center">
+            <a href="{{ url_for('catalog') }}" class="btn btn-outline-dark fw-bold rounded-3 px-4 py-2 me-2">
+                Вернуться в каталог
+            </a>
+            <a href="{{ url_for('index') }}" class="btn btn-warning fw-bold rounded-3 px-4 py-2 text-dark">
+                На главную
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
