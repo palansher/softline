@@ -38,35 +38,37 @@
                 </ul>
             </nav>
 
-            <!-- Dropdown для аватара и меню авторизации -->
-            <div class="dropdown mb-3 mb-md-0">
-                <button class="btn btn-link text-white text-decoration-none dropdown-toggle d-flex align-items-center p-0 border-0" type="button" id="userMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle text-warning {% if session.get('user_email') %}me-2{% endif %}" viewBox="0 0 16 16">
-                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                    </svg>
-                    {% if session.get('user_email') %}
-                        <span class="small text-white-50 d-none d-sm-inline">{{ session.get('user_email') }}</span>
-                    {% endif %}
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-3 mt-2" aria-labelledby="userMenuButton">
-                    {% if session.get('user_email') %}
-                        <li><span class="dropdown-item-text text-muted small border-bottom pb-2 mb-2 d-block text-truncate" style="max-width: 200px;">{{ session.get('user_email') }}</span></li>
-                        <li><a class="dropdown-item" href="{{ url_for('cart.cart') }}">🛒 Корзина</a></li>
-                        {% if session.get('role_id') == 1 %}
-                            <li><a class="dropdown-item" href="{{ url_for('admin.admin') }}">⚙️ Админка</a></li>
+            <div class="d-flex align-items-center mb-3 mb-md-0">
+                <!-- Dropdown для аватара и меню авторизации -->
+                <div class="dropdown me-4 me-lg-5">
+                    <button class="btn btn-link text-white text-decoration-none dropdown-toggle d-flex align-items-center p-0 border-0" type="button" id="userMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle text-warning {% if session.get('user_email') %}me-2{% endif %}" viewBox="0 0 16 16">
+                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                        </svg>
+                        {% if session.get('user_email') %}
+                            <span class="small text-white-50 d-none d-sm-inline">{{ session.get('user_email') }}</span>
                         {% endif %}
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-danger" href="{{ url_for('auth.logout') }}">🚪 Выйти</a></li>
-                    {% else %}
-                        <li><a class="dropdown-item" href="{{ url_for('auth.login') }}">🔑 Вход</a></li>
-                        <li><a class="dropdown-item" href="{{ url_for('auth.register') }}">📝 Регистрация</a></li>
-                    {% endif %}
-                </ul>
-            </div>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-3 mt-2" aria-labelledby="userMenuButton">
+                        {% if session.get('user_email') %}
+                            <li><span class="dropdown-item-text text-muted small border-bottom pb-2 mb-2 d-block text-truncate" style="max-width: 200px;">{{ session.get('user_email') }}</span></li>
+                            <li><a class="dropdown-item" href="{{ url_for('cart.cart') }}">🛒 Корзина</a></li>
+                            {% if session.get('role_id') == 1 %}
+                                <li><a class="dropdown-item" href="{{ url_for('admin.admin') }}">⚙️ Админка</a></li>
+                            {% endif %}
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-danger" href="{{ url_for('auth.logout') }}">🏃 Выйти</a></li>
+                        {% else %}
+                            <li><a class="dropdown-item" href="{{ url_for('auth.login') }}">🔑 Вход</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('auth.register') }}">📝 Регистрация</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
 
-            <div class="fs-5 fw-semibold mb-3 mb-md-0">
-                <a href="tel:+78007775555" class="text-white text-decoration-none">+7(800)777-5555</a>
+                <div class="fs-5 fw-semibold">
+                    <a href="tel:+78007775555" class="text-white text-decoration-none">+7(800)777-5555</a>
+                </div>
             </div>
         </div>
     </header>
