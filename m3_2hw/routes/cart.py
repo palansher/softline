@@ -221,7 +221,7 @@ def place_order() -> Any:
         # Отключаем autocommit, чтобы выполнить создание заказа и очистку корзины в одной транзакции
         connection.autocommit = False
         with connection.cursor(cursor_factory=RealDictCursor) as cursor:
-            # 1. Создаем заказ
+            # Создаем заказ
             sql_insert_order = """
                 INSERT INTO orders (user_id, status, total_amount, discount_amount, shipping_address)
                 VALUES (%s, 0, %s, 0.00, %s)
@@ -230,7 +230,7 @@ def place_order() -> Any:
             cursor.execute(sql_insert_order, (user_id, total_amount, shipping_address))
             order_id: int = cursor.fetchone()["id"]  # type: ignore
 
-            # 2. Переносим товары из корзины в order_items
+            # Переносим товары из корзины в order_items
             sql_insert_item = """
                 INSERT INTO order_items (order_id, catalog_id, price, quantity)
                 VALUES (%s, %s, %s, %s);
@@ -238,7 +238,7 @@ def place_order() -> Any:
             for item in cart_items:
                 cursor.execute(sql_insert_item, (order_id, item["item_id"], item["price"], item["quantity"]))
 
-            # 3. Очищаем корзину
+            # Очищаем корзину
             sql_clear_cart = "DELETE FROM cart_items WHERE cart_id = %s;"
             cursor.execute(sql_clear_cart, (cart_id,))
 
