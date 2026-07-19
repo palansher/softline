@@ -5,9 +5,9 @@
 {% block content %}
 <nav aria-label="breadcrumb" class="mb-4">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ url_for('index') }}"
+        <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}"
                 class="text-decoration-none text-secondary">Главная</a></li>
-        <li class="breadcrumb-item"><a href="{{ url_for('catalog') }}"
+        <li class="breadcrumb-item"><a href="{{ url_for('catalog.catalog') }}"
                 class="text-decoration-none text-secondary">Каталог</a></li>
         <li class="breadcrumb-item active text-dark fw-semibold" aria-current="page">{{ car.brand_name }} {{
             car.model_name }}</li>
@@ -51,7 +51,7 @@
 
         <div class="d-flex flex-column gap-2 w-100">
             {% if session.get('user_email') %}
-            <form method="POST" action="{{ url_for('add_to_cart', car_id=car.car_id) }}">
+            <form method="POST" action="{{ url_for('cart.add_to_cart', car_id=car.car_id) }}">
                 <button type="submit" class="btn btn-warning btn-lg fw-bold rounded-3 py-3 text-dark w-100">
                     ⚡ Добавить в корзину
                 </button>

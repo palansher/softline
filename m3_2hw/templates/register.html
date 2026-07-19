@@ -8,7 +8,7 @@
         <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white">
             <h2 class="text-center fw-bold mb-4">Регистрация нового пользователя</h2>
             
-            <form method="POST" action="{{ url_for('register') }}">
+            <form method="POST" action="{{ url_for('auth.register') }}">
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="email" class="form-label fw-semibold">Email адрес</label>
@@ -43,7 +43,7 @@
             
             <div class="text-center mt-4">
                 <span class="text-muted">Уже зарегистрированы?</span>
-                <a href="{{ url_for('login') }}" class="text-warning fw-bold text-decoration-none ms-1">Войти в аккаунт</a>
+                <a href="{{ url_for('auth.login') }}" class="text-warning fw-bold text-decoration-none ms-1">Войти в аккаунт</a>
             </div>
         </div>
     </div>

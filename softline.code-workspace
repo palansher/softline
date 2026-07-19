@@ -165,6 +165,7 @@
 		"python.createEnvironment.contentButton": "show",
 		"python.useEnvironmentsExtension": true,
 		"python.terminal.activateEnvInCurrentTerminal": true,
-		"python.defaultInterpreterPath": "/home/vp/code/learn-python/.venv/bin/python"
+		"python.defaultInterpreterPath": "/home/vp/code/learn-python/.venv/bin/python",
+		"terminal.integrated.env.linux": {}
 	}
 }
