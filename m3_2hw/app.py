@@ -1,9 +1,14 @@
+import os
 from flask import Flask
+from dotenv import load_dotenv  # Импортируем загрузчик переменных окружения
 
 from routes import main_bp, auth_bp, catalog_bp, cart_bp, admin_bp
 
+load_dotenv(dotenv_path="secrets.env")
+
 app = Flask(__name__)
-app.secret_key = "drivex_super_secret_session_key_2026"
+# app.secret_key = "drivex_super_secret_session_key_2026"
+app.secret_key = os.getenv("FLASK_SECRET_KEY", "fallback_development_key")
 
 # Регистрация Blueprints
 app.register_blueprint(main_bp)
