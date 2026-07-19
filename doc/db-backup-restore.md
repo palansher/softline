@@ -1,14 +1,34 @@
 # Postgres database backup restore
 
+- [Postgres database backup restore](#postgres-database-backup-restore)
+  - [backup](#backup)
+    - [просто бэкап](#просто-бэкап)
+    - [вырезает строки с secure метками из файла](#вырезает-строки-с-secure-метками-из-файла)
+    - [в zip архиве](#в-zip-архиве)
+    - [аргументы](#аргументы)
+      - [pg\_dump](#pg_dump)
+      - [Docker](#docker)
+    - [бэкап ТОЛЬКО структуры](#бэкап-только-структуры)
+    - [бэкап ТОЛЬКО данных (без таблиц)](#бэкап-только-данных-без-таблиц)
+  - [restore](#restore)
+
 ## backup
 
-`docker exec -t postgres-learn-py pg_dump -U postgres -d shop_db_hw3_2 -F p --inserts > app-db-backup.sql`
+### просто бэкап
 
-`docker exec -t postgres-learn-py pg_dump -U postgres -d shop_db_hw3_2 -F p --inserts > app-db-backup_$(date +%Y-%m-%d_%H-%M-%S).sql`
+`docker exec postgres-learn-py pg_dump -U postgres -d shop_db_hw3_2 -F p --inserts > app-db-backup_$(date +%Y-%m-%d_%H-%M-%S).sql`
+
+### вырезает строки с secure метками из файла
+
+`docker exec postgres-learn-py pg_dump -U postgres -d shop_db_hw3_2 -F p --inserts | sed '/^\\restrict/d; /^\\unrestrict/d' > app-db-backup_$(date +%Y-%m-%d_%H-%M-%S).sql`
+
+### в zip архиве
+
+`docker exec postgres-learn-py pg_dump -U postgres -d shop_db_hw3_2 -F p --inserts | sed '/^\\restrict/d; /^\\unrestrict/d' | zip > app-db-backup_$(date +%Y-%m-%d_%H-%M-%S).zip`
 
 ### аргументы
 
-#### pg_dump 
+#### pg_dump
 
 -U postgres — имя пользователя
 
@@ -34,7 +54,6 @@ docker exec -t имя_контейнера — даёт команду Docker з
 Добавьте флаг -s (schema-only):
 
 `pg_dump -U postgres -d shop_db_hw3_2 -F p -s -f structure.sql`
-
 
 ### бэкап ТОЛЬКО данных (без таблиц)
 
