@@ -4,7 +4,7 @@
   - [backup](#backup)
     - [просто бэкап](#просто-бэкап)
     - [вырезает строки с secure метками из файла](#вырезает-строки-с-secure-метками-из-файла)
-    - [в zip архиве](#в-zip-архиве)
+      - [в zip архив](#в-zip-архив)
     - [аргументы](#аргументы)
       - [pg\_dump](#pg_dump)
       - [Docker](#docker)
@@ -16,13 +16,19 @@
 
 ### просто бэкап
 
-`docker exec postgres-learn-py pg_dump -U postgres -d shop_db_hw3_2 -F p --inserts > app-db-backup_$(date +%Y-%m-%d_%H-%M-%S).sql`
+`docker exec -t postgres-learn-py pg_dump -U postgres -d shop_db_hw3_2 -F p --inserts > app-db-backup_$(date +%Y-%m-%d_%H-%M-%S).sql`
 
 ### вырезает строки с secure метками из файла
 
+https://www.postgresql.org/docs/17/app-psql.html#APP-PSQL-META-COMMAND-RESTRICT
+
+https://dba.stackexchange.com/questions/348076/what-does-restrict-mean-in-a-psql-dump
+
+https://github.com/rails/rails/pull/55510
+
 `docker exec postgres-learn-py pg_dump -U postgres -d shop_db_hw3_2 -F p --inserts | sed '/^\\restrict/d; /^\\unrestrict/d' > app-db-backup_$(date +%Y-%m-%d_%H-%M-%S).sql`
 
-### в zip архиве
+#### в zip архив
 
 `docker exec postgres-learn-py pg_dump -U postgres -d shop_db_hw3_2 -F p --inserts | sed '/^\\restrict/d; /^\\unrestrict/d' | zip > app-db-backup_$(date +%Y-%m-%d_%H-%M-%S).zip`
 
@@ -43,7 +49,7 @@
 #### Docker
 
 Разбор отличий для Docker:
-docker exec -t имя_контейнера — даёт команду Docker запустить процесс внутри работающего контейнера.
+docker exec -t имя_контейнера — даёт команду Docker запустить процесс внутри работающего контейнера (Похоже, что и без нее работает).
 
 > вместо -f — знак перенаправления потока >. Утилита pg_dump выводит весь текст в консоль контейнера, а этот знак перехватывает его и сохраняет в файл backup.sql уже на вашей реальной машине (в той папке, где сейчас открыт терминал).
 
