@@ -8,7 +8,12 @@ load_dotenv(dotenv_path="secrets.env")
 
 app = Flask(__name__)
 # app.secret_key = "drivex_super_secret_session_key_2026"
+
+# Загрузка ключа из env
 app.secret_key = os.getenv("FLASK_SECRET_KEY", "fallback_development_key")
+
+# МЕНЯЕМ ИМЯ КУКИ
+app.config["SESSION_COOKIE_NAME"] = "drivex_session"
 
 # Регистрация Blueprints
 app.register_blueprint(main_bp)
