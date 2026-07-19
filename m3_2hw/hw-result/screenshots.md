@@ -18,6 +18,18 @@
 
 ---
 
+## Карточка товара(no-auth)
+
+![Карточка товара(no-auth)](DriveX-—-BMW-M5-Competition(noauth).jpg)
+
+---
+
+## Карточка товара(auth)
+
+![Карточка товара(auth)](DriveX-—-BMW-M5-Competition(auth).jpg)
+
+---
+
 ## Корзина
 
 ![Корзина](DriveX-—-Корзина.jpg)
@@ -39,3 +51,7 @@
 ## Cockie появляются в броузере
 
 ![Cockie появляются в броузере](cookie-in-browser.jpg)
+
+## Cockie data
+
+![Cockie data](coockie-data.jpg)
