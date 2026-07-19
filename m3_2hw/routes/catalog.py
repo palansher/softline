@@ -9,7 +9,7 @@ catalog_bp = Blueprint("catalog", __name__)
 @catalog_bp.route("/catalog")
 def catalog() -> str:
     """
-    Displays the catalog of available cars.
+    Отображает каталог доступных автомобилей.
     """
     sql = "SELECT * FROM v_catalog_display ORDER BY price DESC;"
 
@@ -24,7 +24,7 @@ def catalog() -> str:
 @catalog_bp.route("/catalog/<int:car_id>")
 def car_detail(car_id: int) -> str | tuple[str, int]:
     """
-    Displays details for a specific car.
+    Отображает подробную информацию о конкретном автомобиле.
     """
     sql = "SELECT * FROM v_catalog_display WHERE car_id = %s;"
 

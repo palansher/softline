@@ -10,8 +10,8 @@ cart_bp = Blueprint("cart", __name__)
 @cart_bp.route("/cart")
 def cart() -> Any:
     """
-    Displays the user's shopping cart.
-    Redirects unauthenticated users to the login page.
+    Отображает корзину покупок пользователя.
+    Перенаправляет неавторизованных пользователей на страницу входа.
     """
     if not session.get("user_email"):
         flash("Пожалуйста, войдите в систему, чтобы просмотреть корзину.", "warning")
@@ -70,8 +70,8 @@ def cart() -> Any:
 @cart_bp.route("/cart/add/<int:car_id>", methods=["POST"])
 def add_to_cart(car_id: int) -> Any:
     """
-    Adds a car to the user's cart.
-    If the car is already in the cart, increments the quantity.
+    Добавляет автомобиль в корзину пользователя.
+    Если автомобиль уже в корзине, увеличивает количество.
     """
     if not session.get("user_email"):
         flash("Пожалуйста, войдите в систему, чтобы добавлять товары в корзину.", "warning")
@@ -113,7 +113,7 @@ def add_to_cart(car_id: int) -> Any:
 @cart_bp.route("/cart/remove/<int:cart_item_id>", methods=["POST"])
 def remove_from_cart(cart_item_id: int) -> Any:
     """
-    Removes an item from the cart.
+    Удаляет товар из корзины.
     """
     if not session.get("user_email"):
         return redirect(url_for("auth.login"))
@@ -136,8 +136,8 @@ def remove_from_cart(cart_item_id: int) -> Any:
 @cart_bp.route("/cart/update/<int:cart_item_id>", methods=["POST"])
 def update_cart_quantity(cart_item_id: int) -> Any:
     """
-    Updates the quantity of a specific item in the cart.
-    If the requested quantity is 0 or less, the item is removed from the cart.
+    Обновляет количество конкретного товара в корзине.
+    Если запрошенное количество 0 или меньше, товар удаляется из корзины.
     """
     if not session.get("user_email"):
         return redirect(url_for("auth.login"))
@@ -175,8 +175,8 @@ def update_cart_quantity(cart_item_id: int) -> Any:
 @cart_bp.route("/cart/order", methods=["POST"])
 def place_order() -> Any:
     """
-    Places an order from the user's shopping cart.
-    Creates records in orders and order_items tables, and clears cart_items.
+    Оформляет заказ из корзины покупок пользователя.
+    Создает записи в таблицах orders и order_items, а также очищает cart_items.
     """
     if not session.get("user_email"):
         return redirect(url_for("auth.login"))
@@ -256,7 +256,7 @@ def place_order() -> Any:
 @cart_bp.route("/order-success/<int:order_id>")
 def order_success(order_id: int) -> Any:
     """
-    Displays the order success page with current order details and its status.
+    Отображает страницу успешного оформления заказа с текущими деталями заказа и его статусом.
     """
     if not session.get("user_email"):
         return redirect(url_for("auth.login"))

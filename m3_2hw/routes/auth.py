@@ -11,9 +11,9 @@ auth_bp = Blueprint("auth", __name__)
 @auth_bp.route("/register", methods=["GET", "POST"])
 def register() -> Any:
     """
-    Handles user registration.
-    Saves user email (in lowercase), password (hashed), full_name, phone, address.
-    Assigns role_id = 0 (user) and creates a cart in the same transaction.
+    Обрабатывает регистрацию пользователей.
+    Сохраняет email пользователя (в нижнем регистре), пароль (hashed), full_name, phone, address.
+    Присваивает role_id = 0 (user) и создает корзину в той же транзакции.
     """
     if session.get("user_email"):
         return redirect(url_for("main.index"))
@@ -77,9 +77,9 @@ def register() -> Any:
 @auth_bp.route("/login", methods=["GET", "POST"])
 def login() -> Any:
     """
-    Handles user authentication.
-    Validates user credentials against password hash.
-    Saves user_id, user_email (in lowercase), and role_id in session upon successful login.
+    Обрабатывает аутентификацию пользователей.
+    Проверяет учетные данные пользователя по хэшу пароля.
+    Сохраняет user_id, user_email (в нижнем регистре) и role_id в сессии при успешном входе.
     """
     if session.get("user_email"):
         return redirect(url_for("main.index"))
@@ -113,7 +113,7 @@ def login() -> Any:
 @auth_bp.route("/logout")
 def logout() -> Any:
     """
-    Logs out the user by clearing the session data.
+    Выходит из системы, очищая данные сессии.
     """
     session.clear()
     flash("Вы успешно вышли из системы.", "info")

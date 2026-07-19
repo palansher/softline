@@ -7,7 +7,7 @@ main_bp = Blueprint("main", __name__)
 @main_bp.route("/")
 def index() -> str:
     """
-    Renders the home page of the website.
+    Рендерит главную страницу сайта.
     """
     return render_template("main.html")
 
@@ -15,6 +15,6 @@ def index() -> str:
 @main_bp.route("/contacts")
 def contacts() -> str:
     """
-    Renders the contacts page of the website.
+    Рендерит страницу контактов сайта.
     """
     return render_template("contacts.html")

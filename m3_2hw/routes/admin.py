@@ -10,8 +10,8 @@ admin_bp = Blueprint("admin", __name__)
 @admin_bp.route("/admin")
 def admin() -> Any:
     """
-    Displays the admin panel showing all orders with buyer details and item details.
-    Restricted to users with role_id = 1.
+    Отображает панель администратора со всеми заказами, данными покупателей и информацией о товарах.
+    Доступ ограничен пользователями с role_id = 1.
     """
     
     # Выводим всё содержимое сессии в консоль терминала для отладки
