@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template
 
-# Создаем Blueprint для основных страниц
+# Создаем Blueprint для простых страниц без кода
 main_bp = Blueprint("main", __name__)
 
 
