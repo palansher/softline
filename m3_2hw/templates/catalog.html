@@ -29,7 +29,7 @@
                     <div class="text-muted small">Стоимость</div>
                     <div class="fs-4 fw-bold text-dark mb-3">{{ item.price | format_price }}</div>
                     {% if session.get('user_email') %}
-                    <form method="POST" action="{{ url_for('cart.add_to_cart', car_id=item.car_id) }}">
+                    <form method="post" action="{{ url_for('cart.add_to_cart', car_id=item.car_id) }}">
                         <button type="submit" class="btn btn-outline-dark w-100 fw-bold rounded-3">
                             Добавить в корзину
                         </button>

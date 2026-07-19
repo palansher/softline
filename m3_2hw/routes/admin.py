@@ -13,6 +13,17 @@ def admin() -> Any:
     Displays the admin panel showing all orders with buyer details and item details.
     Restricted to users with role_id = 1.
     """
+    
+    # Выводим всё содержимое сессии в консоль терминала для отладки
+    print("--- ТЕКУЩАЯ СЕССИЯ Flask ---")
+    print(dict(session)) 
+    print("----------------------------")
+
+    # Или проверяем конкретные ключи
+    user_email = session.get("user_email")
+    role_id = session.get("role_id")
+    print(f"Пользователь: {user_email}, Роль: {role_id}")
+    
     if not session.get("user_email"):
         flash("Пожалуйста, войдите в систему.", "warning")
         return redirect(url_for("auth.login"))

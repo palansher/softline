@@ -51,7 +51,7 @@
 
         <div class="d-flex flex-column gap-2 w-100">
             {% if session.get('user_email') %}
-            <form method="POST" action="{{ url_for('cart.add_to_cart', car_id=car.car_id) }}" class="w-100 m-0 p-0">
+            <form method="post" action="{{ url_for('cart.add_to_cart', car_id=car.car_id) }}" class="w-100 m-0 p-0">
                 <button type="submit" class="btn btn-warning btn-lg fw-bold rounded-3 py-3 text-dark w-100">
                     ⚡ Добавить в корзину
                 </button>

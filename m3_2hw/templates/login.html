@@ -8,7 +8,7 @@
         <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white">
             <h2 class="text-center fw-bold mb-4">Вход в аккаунт</h2>
             
-            <form method="POST" action="{{ url_for('auth.login') }}">
+            <form method="post" action="{{ url_for('auth.login') }}">
                 <div class="mb-3">
                     <label for="email" class="form-label fw-semibold">Email адрес</label>
                     <input type="email" class="form-control rounded-3 py-2" id="email" name="email" placeholder="example@domain.com" required>
