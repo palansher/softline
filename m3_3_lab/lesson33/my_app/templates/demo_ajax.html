@@ -39,7 +39,7 @@
                         'csrfmiddlewaretoken': csrftoken
                     },
                     success: function (answer) {
-                        $('div').html(`<h1>Ответ: ${answer}</h1>`)
+                        $('div#result').html(`<h1>Ответ: ${answer}</h1>`)
                     }
                 });
             })
@@ -49,7 +49,7 @@
 
 <body>
 
-    <div></div>
+    <div id="result"></div>
 
     <p>Введите 1 число</p>
     <input type="text" id="n1">

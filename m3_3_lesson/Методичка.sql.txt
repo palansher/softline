@@ -22,6 +22,7 @@ django-admin startproject lesson3
 5) Создание модуля
 python manage.py startapp my_app
 
+
 6) Для запуска проекта используем:
 python manage.py runserver
 
