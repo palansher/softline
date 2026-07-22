@@ -1,33 +1,16 @@
 [sqlfluff]
 dialect = postgres
 templater = jinja
-# Игнорируем ошибку слишком длинных строк (актуально для full_info)
-# ignore = parsing, lexing
-
-# Полностью отключаем проверку длинных строк (layout.long_lines)
-# А также исключаем структуру кода inside dollar-quoted strings, если нужно
-# exclude_rules = layout.long_lines
-exclude_rules = layout.long_lines
-
-
+sql_file_exts = .sql,.psql,.sql.j2,.dml,.ddl
+rules = core
+exclude_rules = LT01, L031, L034, PRS
+max_line_length = 150
+large_file_skip_byte_limit = 30000
+ 
 [sqlfluff:indentation]
-# Настройки отступов, чтобы он не ломал структуру при переносе строк в INSERT
-indented_joins = false
-
-
-# [sqlfluff:rules:references.keywords]
-# # Чтобы линтер не ругался на регистр ключевых слов, если используешь разные
-# capitalisation_policy = consistent
-
-# [sqlfluff:rules:layout.end_of_file]
-# single_trailing_newline = true
-
-# [sqlfluff:rules:layout.long_lines]
-# Отключаем строгое ограничение на длину строки для всего файла
-# ignore_words = '*'
-
-
-# На случай, если exclude_rules где-то переопределится, 
-# выставляем лимит длины строки в бесконечность (0 или очень большое число)
-# max_line_length = 0
-
+indented_joins = False
+indented_ctes = False
+indented_using_on = True
+indented_on_contents = False
+template_blocks_indent = True
+tab_space_size = 4

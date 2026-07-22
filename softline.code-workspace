@@ -166,6 +166,37 @@
 		"python.useEnvironmentsExtension": true,
 		"python.terminal.activateEnvInCurrentTerminal": true,
 		"python.defaultInterpreterPath": "/home/vp/code/learn-python/.venv/bin/python",
-		"terminal.integrated.env.linux": {}
+		"terminal.integrated.env.linux": {},
+		"sqlfluff.codeActions.excludeRules.global": true,
+		"sqlfluff.codeActions.excludeRules.workspace": true,
+		"pgsql.serverGroups": [
+			{
+				"name": "Servers",
+				"id": "39447C0C-D5FE-4A4A-8DF6-37FA17C80C9D",
+				"isDefault": true
+			}
+		],
+		"pgsql.connections": [
+			{
+				"id": "209A99A0-577D-4229-A32B-C039071577C0",
+				"groupId": "39447C0C-D5FE-4A4A-8DF6-37FA17C80C9D",
+				"authenticationType": "SqlLogin",
+				"connectTimeout": 15,
+				"applicationName": "vscode-pgsql",
+				"clientEncoding": "utf8",
+				"sslmode": "disable",
+				"sshSavePassword": true,
+				"savePassword": true,
+				"sslRootCertMode": "none",
+				"server": "vm-perepechenko01.brg.loc",
+				"user": "postgres",
+				"password": "",
+				"profileName": "vm-perepechenko01.brg.loc, <default> (postgres)",
+				"expiresOn": 0,
+				"sshPassword": "",
+				"profileSource": 0,
+				"displayName": "vm-perepechenko01.brg.loc, <default> (postgres)"
+			}
+		]
 	}
 }
