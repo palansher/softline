@@ -35,15 +35,35 @@ urlpatterns = [
     path('parse_data/', views.demo_parse_data_in_template),
     # http://127.0.0.1:8000/catalog
     path('catalog/', views.catalog),
+    
+    # http://127.0.0.1:8000/card
     path('card/', views.card),
-    # path('add_car/', views.add_car),
-    # path('show_cars/', views.show_cars),
-    # path('get_cars/', views.get_cars),
-    # path('simple_catalog/', views.simple_catalog),
-    # path('create_query/', views.create_query),
-    # path('update/', views.demo_update),
-    # path('demo_delete/', views.demo_delete),
-    # path('get_car/', views.get_car)
-
+    
+    # http://127.0.0.1:8000/add_car
+    path('add_car/', views.add_car),
+    
+    # http://127.0.0.1:8000/show_cars
+    path('show_cars/', views.show_cars),
+    
+    # http://127.0.0.1:8000/get_cars
+    path('get_cars/', views.get_cars),
+    
+    # http://127.0.0.1:8000/simple_catalog
+    path('simple_catalog/', views.simple_catalog),
+    
+    # http://127.0.0.1:8000/create_query
+    path('create_query/', views.create_query),
+    
+    # http://127.0.0.1:8000/update
+    path('update/', views.demo_update),
+    
+    # http://127.0.0.1:8000/demo_delete
+    path('demo_delete/', views.demo_delete),
+    
+    # http://127.0.0.1:8000/get_car/?id=1
+    path('get_car/', views.get_car),
+    
+    # http://127.0.0.1:8000/test_cursor
+    path('test_cursor/', views.test_cursor)
 
 ]
