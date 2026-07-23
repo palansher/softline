@@ -197,6 +197,7 @@
 				"profileSource": 0,
 				"displayName": "vm-perepechenko01.brg.loc, <default> (postgres)"
 			}
-		]
+		],
+		"djlint.useVenv": false
 	}
 }
