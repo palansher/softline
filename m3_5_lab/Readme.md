@@ -568,7 +568,7 @@ import pandas as pd
 from sqlalchemy import create_engine
 
 # Создаем подключение (например, к SQLite или удаленному серверу)
-engine = create_engine('postgresql://postgres:admin@localhost/m3_4_lab') 
+engine = create_engine('postgresql://postgres:admin@localhost/m3_4_lab')
 
 # Загружаем данные из БД сразу в DataFrame
 df = pd.read_sql("SELECT * FROM person", engine)
