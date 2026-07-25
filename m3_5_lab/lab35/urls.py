@@ -17,7 +17,7 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
-from my_app.views import generate_form, form_to_db, success
+from my_app.views import create_cookie, form_to_db, generate_form, success, use_cookie
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -26,6 +26,10 @@ urlpatterns = [
     
     # Без названия маршрута не работало name="success"
     path("success/", success, name="success"),
-    # path("create_cookie", create_cookie),
-    # path("use_cookie", use_cookie),
+    
+    # http://127.0.0.1:8000/create_cookie
+    path("create_cookie", create_cookie),
+    
+    # http://127.0.0.1:8000/use_cookie
+    path("use_cookie", use_cookie),
 ]
