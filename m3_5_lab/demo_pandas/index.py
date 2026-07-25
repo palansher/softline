@@ -1,14 +1,25 @@
-# import matplotlib.pyplot as plt
+# В файле с кодом добавьте спец-комментарий # %% перед вашим кодом, чтобы превратить его в «ячейку» (как в Jupyter)
+# Это для примера визуализация данных ниже. Для остальных примеров не нужен.
+# %%
+
+from pathlib import Path
+
+import matplotlib.pyplot as plt
 import pandas as pd
+
+# Получаем путь к папке, где лежит текущий скрипт
+script_dir = Path(__file__).parent
+
+
 # from pandas.core.interchange.dataframe_protocol import DataFrame
 
 # Пример №1 (Создание простого объекта DataFrame)
 
 
-data = {
-    'apples':[2,3,1,5],
-    'oranges':[3,1,2,7]
-}
+# data = {
+#     'apples':[2,3,1,5],
+#     'oranges':[3,1,2,7]
+# }
 
 # Эти данные мы хотим конвертировать в объект датафрейм.
 # Этот датафрейм затем уже можем перекинуть в любой формат.
@@ -20,15 +31,15 @@ data = {
 
 # Пример №2 (Поменяем индексы на ключи (Имена покупателей.))
 
-df = pd.DataFrame(data,index=['Иван','Анна','Олег','Игорь'])
+# df = pd.DataFrame(data,index=['Иван','Анна','Олег','Игорь'])
 # print(df)
 
 # получим, например, информацию о покупках Анны.
 # используем свойство loc (location)
 
-print(df.loc['Анна'])
+# print(df.loc['Анна'])
 
-# # Пример №3 (фильтрация)
+# Пример №3 (фильтрация)
 # info = {
 #     "Имя":['Анна','Игорь','Алексей','Андрей'],
 #     "Город":['Москва','Саратов','Омск','Москва'],
@@ -37,28 +48,46 @@ print(df.loc['Анна'])
 
 # df = pd.DataFrame(info)
 
-# # Фильтрация по возрасту
+# print("\nПечатаем Dataset:\n")
+# print(df)
 
-# # print(df[df['Возраст'] > 25])
+# Фильтрация по возрасту
+# print("\nФильтрация по возрасту (>25):\n")
+# print(df[df['Возраст'] > 25])
 
-# # Найдем средни возраст по городам
-# # Группировка данных
-# # print(df.groupby('Город')['Возраст'].mean())
+# Найдем средни возраст по городам
+# Группировка данных
+# print("\nГруппировка данных (средний возраст по городам):\n")
+# print(df.groupby('Город')['Возраст'].mean())
 
-# # Работа с внешними данными
-# animals = pd.read_csv('animals.csv')
-# # print(animals.info()) #мета информация о полученных данных
+### Работа с внешними данными ###
+animals = pd.read_csv(script_dir / "animals.csv")
+# animals = pd.read_csv('./animals.csv')
+# print(animals) # просто выводим содержимое
+# print("\n" * 2, end="")
+# print(animals.info()) #мета информация о полученных данных
 
-# # Визуализация данных
-# # animals['water_need'].plot.box()
-# # plt.title('Тестовый график')
-# # plt.show()
+## Визуализация данных ##
+# Строит графики, требует пакет matplotlib
+# VS Code умеет выполнять код блоками и перехватывать вывод Matplotlib прямо в интерфейсе.
+# Установите на удаленном сервере пакет ipykernel
+# В файле с кодом добавьте спец-комментарий # %% перед вашим кодом, чтобы превратить его в «ячейку» (как в Jupyter)
+# Над строчкой # %% появится надпись Run Cell. Нажмите её (или нажмите Shift + Enter).
+# VS Code предложит выбрать Python Kernel, откроет справа панель Interactive и нарисует график прямо там с возможностью зума, копирования и сохранения.
 
-# # Базовые операции с DataFrame
-# # print(animals.count()) #получим количество элементов в каждом столбце
-# # print(animals.water_need.max()) #макс. значение в столбце water_need
-# # print(animals.water_need.mean())
-# # print(animals['water_need'].value_counts()) #количество повторений элементов
+# animals["water_need"].plot.box()
+# plt.title("Тестовый график")
+# plt.show()
 
-# # print(animals.head(3)) #Берем первые 3 строки
-# print(animals.tail(3)) #Берем последние 3 строки
+## Базовые операции с DataFrame ##
+# print(animals.count()) # получим количество элементов в каждом столбце
+# print(animals.water_need.max()) # макс. значение в столбце water_need
+# print(animals.water_need.mean()) # среднее значение в столбце water_need
+
+# количество повторений элементов
+# видим сколько раз повторяется ( встречается ) каждое значение
+# print(animals['water_need'].value_counts())
+
+# print(animals.head(3)) #Берем первые 3 строки
+print(animals.tail(3)) #Берем последние 3 строки
+# %%
