@@ -1,0 +1,10 @@
+name: lab35
+channels:
+  - defaults
+dependencies:
+  - python=3.14
+  - pandas
+  - numpy
+  - jupyter
+  - matplotlib
+prefix: /home/vp/miniconda3/envs/lab35
