@@ -8,29 +8,31 @@
     - [Форма form\_to\_db](#форма-form_to_db)
     - [Как откатить миграцию](#как-откатить-миграцию)
     - [Coockies](#coockies)
-  - [Pandas подготовка](#pandas-подготовка)
-    - [Mini anaconda](#mini-anaconda)
-    - [устанавливаем Conda на Ubuntu](#устанавливаем-conda-на-ubuntu)
+  - [Anaconda](#anaconda)
+    - [устанавливаем Mini Conda на Ubuntu](#устанавливаем-mini-conda-на-ubuntu)
     - [Создайте изолированное окружение для вашего проекта](#создайте-изолированное-окружение-для-вашего-проекта)
       - [To accept these channels' Terms of Service](#to-accept-these-channels-terms-of-service)
       - [создаем окружение](#создаем-окружение)
       - [Активируйте созданное окружение](#активируйте-созданное-окружение)
-      - [Установите Pandas и ядро для графического отображения (ipykernel)](#установите-pandas-и-ядро-для-графического-отображения-ipykernel)
+  - [Подготовка среды для Jupiter и pandas](#подготовка-среды-для-jupiter-и-pandas)
+    - [Установите Pandas и ядро для графического отображения (ipykernel)](#установите-pandas-и-ядро-для-графического-отображения-ipykernel)
     - [Настройка Visual Studio Code на Windows](#настройка-visual-studio-code-на-windows)
       - [Установите расширения](#установите-расширения)
       - [Запуск графического интерфейса (Jupyter)](#запуск-графического-интерфейса-jupyter)
         - [Создать и запустить файл блокнота](#создать-и-запустить-файл-блокнота)
-    - [Работа с виртуальными окружениями с помощью Conda](#работа-с-виртуальными-окружениями-с-помощью-conda)
-      - [Методичка](#методичка)
-        - [Windows](#windows)
-        - [окружение](#окружение)
-        - [установка пакетов в окружение](#установка-пакетов-в-окружение)
-        - [IDE для аналитиков](#ide-для-аналитиков)
-          - [Jupyter](#jupyter)
-          - [Jupyter Notebook, более старый](#jupyter-notebook-более-старый)
-          - [Jupyter Lab](#jupyter-lab)
-          - [SQL запросы к базам в расширении Jupyter в VS Code](#sql-запросы-к-базам-в-расширении-jupyter-в-vs-code)
-  - [Pandas работа](#pandas-работа)
+  - [Conda - продолжение вебинара](#conda---продолжение-вебинара)
+    - [Conda на Windows](#conda-на-windows)
+    - [создание виртуального окружения](#создание-виртуального-окружения)
+    - [активация виртуального окружения](#активация-виртуального-окружения)
+    - [установка пакетов в окружение](#установка-пакетов-в-окружение)
+  - [Jupyter - IDE для аналитиков](#jupyter---ide-для-аналитиков)
+    - [установка](#установка)
+    - [Jupyter Notebook, более старый](#jupyter-notebook-более-старый)
+    - [Jupyter Lab](#jupyter-lab)
+    - [SQL запросы к базам в расширении Jupyter в VS Code](#sql-запросы-к-базам-в-расширении-jupyter-в-vs-code)
+  - [Pandas использование](#pandas-использование)
+    - [использование датафрейм](#использование-датафрейм)
+    - [Фильтрация данных](#фильтрация-данных)
 
 ## Anaconda distribution
 
@@ -163,15 +165,13 @@ python manage.py migrate my_app 0001
 
 1:01:07
 
-## Pandas подготовка
+## Anaconda
 
 1:15:10
 
 переменные пути для установки конды на Windows
 
 ![alt text](demo_pandas/doc/conda-windows-env.png)
-
-### Mini anaconda
 
 Делал самостоятельно на Ubuntu, так как на вебинаре использовался пакет для Windows.
 
@@ -181,7 +181,7 @@ https://www.anaconda.com/docs/getting-started/miniconda/install/linux-install
 
 **устанавливаем Conda на Ubuntu, а работаем на Windows удаленно через Jupiter Notebook Visual Studio Code.**
 
-### устанавливаем Conda на Ubuntu
+### устанавливаем Mini Conda на Ubuntu
 
 ```bash
 curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
@@ -337,7 +337,9 @@ WARNING conda.conda_pypi.main:notify_externally_managed_future(156):
 
 ```
 
-#### Установите Pandas и ядро для графического отображения (ipykernel)
+## Подготовка среды для Jupiter и pandas
+
+### Установите Pandas и ядро для графического отображения (ipykernel)
 
 Термин ядро (kernel) в контексте Jupyter означает не графический движок операционной системы, а интерпретатор кода,
 который работает в фоновом режиме на Ubuntu.Пакет ipykernel — это невидимый мост, который связывает
@@ -436,7 +438,7 @@ df
 
 VSCode на Windows покажет вам красивую интерактивную графическую таблицу со строками и столбцами, хотя сам код выполнился на удаленной Ubuntu!
 
-### Работа с виртуальными окружениями с помощью Conda
+## Conda - продолжение вебинара
 
 продолжаем вебинар
 1:26:07
@@ -447,31 +449,33 @@ VSCode на Windows покажет вам красивую интерактив�
 
 Если работаем с бигдата, то одного пандас недостаточно. Нужен еще nampy (для работы с векторами или AI).
 
-Аналитики данных не работают в обычном программистском IDE, они работают, например, в Jupyter - в специализированных средах.
+Аналитики данных не работают в обычном программистском IDE, они работают в специализированных средах, например, в Jupyter.
 
-#### Методичка
+Jupyter - это интерактивная web IDE.
 
-##### Windows
+### Conda на Windows
 
 при установке Conda на Windows появляется много команд и средств, например, Conda Prompt или Conda PowerShell. PyCharm может глючить, поэтому команды лучше запускать в Conda Prompt.
 
-##### окружение
+### создание виртуального окружения
 
 ```bash
-# создание виртуального окружения
 # conda create --name lesson5 python=3.14
 
 # conda deactivate
 
 conda create --name lab35 python=3.14
 
-# активация виртуального окружения
-# conda activate lesson5
+```
 
+### активация виртуального окружения
+
+```bash
+# conda activate lesson5
 conda activate lab35
 ```
 
-##### установка пакетов в окружение
+### установка пакетов в окружение
 
 ```bash
 conda install numpy pandas
@@ -488,17 +492,15 @@ import numpy as np
 import pandas as pd
 ```
 
-##### IDE для аналитиков
+## Jupyter - IDE для аналитиков
 
-###### Jupyter
-
-установка
+### установка
 
 `conda install jupyter`
 
 Есть два вида Jupyter: старый и новый.
 
-###### Jupyter Notebook, более старый
+### Jupyter Notebook, более старый
 
 запускать `jupyter notebook`
 
@@ -512,7 +514,7 @@ To access the server, open this file in a browser:
 
 открываем веб-интерфейс http://localhost:8888/tree?token=f54e2812673a4c845d66528a91784624646ef31cbcb92c01
 
-###### Jupyter Lab
+### Jupyter Lab
 
 запускать `jupyter lab`
 
@@ -544,7 +546,7 @@ $S=\pi*r^2$
 
 $\frac{1}{3}$
 
-###### SQL запросы к базам в расширении Jupyter в VS Code
+### SQL запросы к базам в расширении Jupyter в VS Code
 
 pip install ipython-sql SQLAlchemy
 
@@ -566,7 +568,7 @@ df = pd.read_sql("SELECT * FROM person", engine)
 df.head()
 ```
 
-## Pandas работа
+## Pandas использование
 
 1:58:04
 
@@ -580,8 +582,9 @@ Pandas — это такой модуль, который позволяет р�
 
 см m3_5_lab/demo_pandas/index.py
 
-использование датафрейм
+### использование датафрейм
 
-остановился
+### Фильтрация данных
 
-Фильтрация данных 2:04:25
+2:04:25
+
