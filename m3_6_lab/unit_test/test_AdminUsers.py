@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-from unit_test.AdminUsers import AdminUsers
-from unit_test.User import User
+from m3_6_lab.unit_test.AdminUsers import AdminUsers
+from m3_6_lab.unit_test.User import User
 
 
 class TestAdminUsers(TestCase):
@@ -24,4 +24,3 @@ class TestAdminUsers(TestCase):
 
     def tearDown(self):
         """Метод запускается после всех тестов"""
-        pass

@@ -21,4 +21,14 @@ Pylance будет автоматически применять правила 
         }
     ]
 }
+
 */
+
+{
+    "executionEnvironments": [
+        {
+            // "root": "m3_6_lab/_name_"
+            "root": "m3_6_lab/unit_test"
+        }
+    ]
+}
