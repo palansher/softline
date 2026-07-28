@@ -205,7 +205,10 @@ https://docs.docker.com/desktop/setup/install/windows-install/
 1:26:05
 
 Исключения- что не тестировать и не включать в репорт
+
 .coveragerc
+
+https://coverage.readthedocs.io/en/latest/config.html
 
 #### pyrightconfig.json
 

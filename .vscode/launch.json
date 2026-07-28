@@ -1,0 +1,19 @@
+{
+    "configurations": [
+        {
+            "name": "Containers: Python - Flask Lab 3.7",
+            "type": "docker",
+            "request": "launch",
+            "preLaunchTask": "docker-run: debug",
+            "python": {
+                "pathMappings": [
+                    {
+                        "localRoot": "${workspaceFolder}/m3_7_lab/service2image",
+                        "remoteRoot": "/app"
+                    }
+                ],
+                "projectType": "flask"
+            }
+        }
+    ]
+}
