@@ -1,3 +1,10 @@
+# универсальный Docker файл как для прода, так и для отладки.
+# По умолчанию это боевой режим. 
+# отладку можно запустить через файл compose.debug.yaml который переопределит CMD
+
+# Собираем образ с флагом --no-cache прямо из текущей директории
+# docker build --no-cache -t learnpython:latest .
+
 # For more information, please refer to https://aka.ms/vscode-docker-python
 FROM python:3-slim
 
@@ -9,11 +16,12 @@ ENV PYTHONDONTWRITEBYTECODE=1
 # Turns off buffering for easier container logging
 ENV PYTHONUNBUFFERED=1
 
+WORKDIR /app
+
 # Install pip requirements
 COPY requirements.txt .
 RUN python -m pip install -r requirements.txt
 
-WORKDIR /app
 COPY . /app
 
 # Creates a non-root user with an explicit UID and adds permission to access the /app folder
@@ -22,4 +30,4 @@ RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /
 USER appuser
 
 # During debugging, this entry point will be overridden. For more information, please refer to https://aka.ms/vscode-docker-python-debug
-CMD ["gunicorn", "--bind", "0.0.0.0:5002", "m3_7_lab.service2image/app:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:5002", "--workers", "4", "--threads", "2", "app:app"]

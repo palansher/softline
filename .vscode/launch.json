@@ -14,6 +14,22 @@
                 ],
                 "projectType": "flask"
             }
+        },
+        {
+            "name": "Python: Attach to Docker (Compose)",
+            "type": "debugpy",
+            "request": "attach",
+            "connect": {
+                "host": "localhost",
+                "port": 5678
+            },
+            "pathMappings": [
+                {
+                    "localRoot": "${workspaceFolder}/m3_7_lab/service2image",
+                    "remoteRoot": "/app"
+                }
+            ],
+            "justMyCode": true
         }
     ]
 }

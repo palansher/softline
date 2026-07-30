@@ -1,12 +1,31 @@
+# compose.debug.yaml
 services:
   learnpython:
-    image: learnpython
-    build:
-      context: .
-      dockerfile: ./Dockerfile
-    command: ["sh", "-c", "pip install debugpy -t /tmp && python /tmp/debugpy --wait-for-client --listen 0.0.0.0:5678 -m flask run --no-debugger --no-reload --host 0.0.0.0 --port 5002"]
+    image: service2image-debug
+    container_name: service2image-debug
+    restart: "no"
+    build: .
+    # Переопределяем CMD из Dockerfile только на время отладки
+
+    # -X frozen_modules=off - опциональный параметр.
+    # Если заметили, что VS Code игнорирует брейкпоинты в глубоких библиотеках или на старте приложения.
+    # Рекомендуемый от Python: Отключить сами замороженные модули, передав флаг -Xfrozen_modules=off интерпретатору (или через переменные, см environment:)
+    command: [
+        "sh",
+        "-c",
+        "pip install debugpy -t /tmp &&
+        python -X frozen_modules=off /tmp/debugpy --wait-for-client --listen 0.0.0.0:5678 -m flask run --no-debugger --no-reload --host 0.0.0.0 --port 5002",
+      ]
     ports:
-      - 5002:5002
-      - 5678:5678
+      - "5002:5002"
+      - "5678:5678"
     environment:
       - FLASK_APP=m3_7_lab/service2image/app.py
+      # # Отключаем заморозку, чтобы Python честно отдавал отладчику все события:
+      # - PYTHONPYCACHEPREFIX=/tmp
+      # - PYTHONUNBUFFERED=1
+      # - PYTHONLEGACYWINDOWSSTDIO=0
+      # - PYTHONDEVMODE=0
+      # - PYTHONBreakpoints=0
+      # # Само отключение:
+      # - PYTHONFLAGS=-Xfrozen_modules=off
