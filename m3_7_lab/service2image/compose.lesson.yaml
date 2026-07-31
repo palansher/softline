@@ -1,8 +1,0 @@
-services:
-  learnpython:
-    image: learnpython
-    build:
-      context: .
-      dockerfile: ./Dockerfile.lesson
-    ports:
-      - 5002:5002

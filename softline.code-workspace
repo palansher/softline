@@ -250,6 +250,9 @@
 			".",
 			"-p",
 			"test_*.py"
-		]
+		],
+		"terminal.integrated.gpuAcceleration": "off",
+		"terminal.explorerKind": "integrated",
+		"chat.tools.terminal.terminalProfile.windows": {},
 	}
 }

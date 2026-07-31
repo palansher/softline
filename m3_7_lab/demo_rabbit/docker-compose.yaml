@@ -1,0 +1,25 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: ${COMPOSE_PROJECT_NAME}_rabbitmq
+    restart: "no"
+    ports:
+      - "${RABBITMQ_PORT:-5672}:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+      - rabbitmq_log:/var/log/rabbitmq
+    networks:
+      - app_net
+
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASS}
+
+networks:
+  app_net:
+    driver: bridge
+
+volumes:
+  rabbitmq_data:
+  rabbitmq_log:
