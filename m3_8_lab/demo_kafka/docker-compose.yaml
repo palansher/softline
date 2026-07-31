@@ -1,6 +1,6 @@
 services:
   kafka:
-    image: apache/kafka:4.0.0
+    image: apache/kafka:4.3.1
     container_name: kafka
     ports:
       - "9092:9092"
@@ -19,12 +19,17 @@ services:
       CLUSTER_ID: "MkU3OEVBNTcwNTJENDM2Qk"
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "/opt/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --list >/dev/null 2>&1"]
+      # Вывести список топиков.
+      test:
+        [
+          "CMD-SHELL",
+          "/opt/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --list >/dev/null 2>&1",
+        ]
       interval: 10s
       timeout: 5s
       retries: 5
 
-# Админка
+  # админка
   kafdrop:
     image: obsidiandynamics/kafdrop:latest
     container_name: kafdrop
