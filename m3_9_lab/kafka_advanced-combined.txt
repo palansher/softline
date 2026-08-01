@@ -1,0 +1,549 @@
+==================================================
+File below: /home/vp/code/learn-python/m3_9_lab/kafka_advanced/consumer/config.py :
+==================================================
+"""Модуль конфигурации Kafka Consumer."""
+
+import os
+from dataclasses import dataclass
+from typing import Any
+
+
+@dataclass(frozen=True)
+class ConsumerConfig:
+    """Конфигурация подключения и параметров Kafka Consumer."""
+
+    topic: str = os.getenv("KAFKA_TOPIC", "topic2")
+    group_id: str = os.getenv("KAFKA_GROUP_ID", "person_group")
+    client_id: str = os.getenv("KAFKA_CLIENT_ID", "person_client")
+    bootstrap_servers: str = os.getenv(
+        "KAFKA_BOOTSTRAP_SERVERS", "localhost:9091,localhost:9092,localhost:9093"
+    )
+
+    def get_consumer_config(self) -> dict[str, Any]:
+        """Возвращает словарь настроек для инициализации KafkaConsumer."""
+        return {
+            "bootstrap_servers": [
+                server.strip() for server in self.bootstrap_servers.split(",") if server.strip()
+            ],
+            "group_id": self.group_id,
+            "client_id": self.client_id,
+            "auto_offset_reset": "earliest",
+            "enable_auto_commit": True,
+            "auto_commit_interval_ms": 1000,
+            "max_poll_records": 500,
+            "session_timeout_ms": 30000,
+        }
+
+
+==================================================
+File below: /home/vp/code/learn-python/m3_9_lab/kafka_advanced/consumer/consumer.py :
+==================================================
+"""Основной модуль чтения сообщений из Apache Kafka."""
+
+import logging
+import signal
+from typing import Any
+
+from config import ConsumerConfig
+from kafka import KafkaConsumer
+from kafka.errors import KafkaError
+from key_deserializer import KeyDeserializer
+from person import Person
+from person_deserializer import PersonDeserializer
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+)
+logger = logging.getLogger(__name__)
+
+MAX_MESSAGES = 10
+
+
+class KafkaConsumerApp:
+    """Приложение для чтения и обработки событий Person из Kafka."""
+
+    def __init__(self, config: ConsumerConfig | None = None) -> None:
+        self.config = config or ConsumerConfig()
+        self.key_deserializer = KeyDeserializer()
+        self.value_deserializer = PersonDeserializer()
+        self.consumer: KafkaConsumer | None = None
+        self._running = True
+
+    def _setup_signal_handlers(self) -> None:
+        """Настройка обработчиков сигналов для корректного завершения (Graceful Shutdown)."""
+
+        def handle_signal(sig: int, frame: Any) -> None:
+            logger.info("Получен сигнал остановки (%s). Завершение работы...", sig)
+            self._running = False
+
+        signal.signal(signal.SIGINT, handle_signal)
+        signal.signal(signal.SIGTERM, handle_signal)
+
+    def run(self) -> None:
+        """Основной цикл чтения сообщений из Kafka."""
+        self._setup_signal_handlers()
+
+        try:
+            self.consumer = KafkaConsumer(
+                self.config.topic,
+                **self.config.get_consumer_config(),
+                key_deserializer=self.key_deserializer,
+                value_deserializer=self.value_deserializer,
+                consumer_timeout_ms=1000,  # Таймаут итератора 1 сек для проверки флага _running
+            )
+            logger.info("Kafka Consumer успешно запущен. Ожидание сообщений...")
+            messages_received = 0
+
+            while self._running:
+                for message in self.consumer:
+                    if not self._running:
+                        break
+
+                    person: Person | None = message.value
+                    key: int | None = message.key
+
+                    if person is None:
+                        logger.warning(
+                            "Получено пустое сообщение (tombstone) или не удалось десериализовать. Offset: %d",
+                            message.offset,
+                        )
+                        continue
+
+                    messages_received += 1
+                    logger.info(
+                        "Сообщение #%d | Partition: %d | Offset: %d | Key: %s | Person: id=%d, name='%s %s', salary=%d",
+                        messages_received,
+                        message.partition,
+                        message.offset,
+                        key,
+                        person.id,
+                        person.firstname,
+                        person.lastname,
+                        person.salary,
+                    )
+
+                    if messages_received >= MAX_MESSAGES:
+                        logger.info(
+                            "Достигнут лимит сообщений (%d). Завершение работы.", MAX_MESSAGES
+                        )
+                        self._running = False
+                        break
+
+            if messages_received == 0 and self._running:
+                logger.warning("Сообщения не получены за время ожидания.")
+
+        except KafkaError as err:
+            logger.error("Ошибка уровня Kafka: %s", err)
+        except Exception as err:
+            logger.exception("Непредвиденная ошибка в работе Consumer: %s", err)
+        finally:
+            if self.consumer is not None:
+                self.consumer.close()
+                logger.info("Kafka Consumer закрыт.")
+
+
+if __name__ == "__main__":
+    app = KafkaConsumerApp()
+    app.run()
+
+
+==================================================
+File below: /home/vp/code/learn-python/m3_9_lab/kafka_advanced/consumer/key_deserializer.py :
+==================================================
+"""Модуль десериализации ключей Kafka."""
+
+
+class KeyDeserializer:
+    """Десериализатор ключей сообщений Kafka из байтов UTF-8 в int."""
+
+    def __call__(self, data: bytes | None) -> int | None:
+        """Преобразует байтовый ключ в целое число."""
+        if not data:
+            return None
+        try:
+            return int(data.decode("utf-8"))
+        except (UnicodeDecodeError, ValueError) as err:
+            raise RuntimeError(f"Ошибка при десериализации ключа Kafka: {err}") from err
+
+
+==================================================
+File below: /home/vp/code/learn-python/m3_9_lab/kafka_advanced/consumer/person_deserializer.py :
+==================================================
+"""Модуль десериализации JSON в объект Person."""
+
+import json
+
+from person import Person
+
+
+class PersonDeserializer:
+    """Десериализатор сообщений Kafka из JSON-байтов в объект Person."""
+
+    def __call__(self, data: bytes | None) -> Person | None:
+        """Преобразует JSON-байты в объект Person."""
+        if not data:
+            return None
+        try:
+            data_str = data.decode("utf-8")
+            data_dict = json.loads(data_str)
+            return Person(
+                id=data_dict["id"],
+                firstname=data_dict["firstname"],
+                lastname=data_dict["lastname"],
+                salary=data_dict["salary"],
+            )
+        except (UnicodeDecodeError, json.JSONDecodeError, KeyError, TypeError) as err:
+            raise RuntimeError(f"Ошибка при десериализации данных Person: {err}") from err
+
+
+==================================================
+File below: /home/vp/code/learn-python/m3_9_lab/kafka_advanced/consumer/person.py :
+==================================================
+"""Модель данных Person."""
+
+from dataclasses import asdict, dataclass
+from typing import Any
+
+
+@dataclass(slots=True, frozen=True)
+class Person:
+    """Сущность человека, получаемая из Kafka."""
+
+    id: int
+    firstname: str
+    lastname: str
+    salary: int
+
+    def to_dict(self) -> dict[str, Any]:
+        """Преобразует объект Person в словарь."""
+        return asdict(self)
+
+
+==================================================
+File below: /home/vp/code/learn-python/m3_9_lab/kafka_advanced/docker-compose.yaml :
+==================================================
+# 1. Якорь для общих переменных окружения
+x-kafka-env: &kafka-env
+  KAFKA_PROCESS_ROLES: "broker,controller"
+  KAFKA_CONTROLLER_QUORUM_VOTERS: "1@kafka1:29091,2@kafka2:29092,3@kafka3:29093"
+  KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT,CONTROLLER:PLAINTEXT"
+  KAFKA_CONTROLLER_LISTENER_NAMES: "CONTROLLER"
+  KAFKA_INTER_BROKER_LISTENER_NAME: "INTERNAL"
+  KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: "3"
+  KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: "3"
+  KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: "2"
+  KAFKA_DEFAULT_REPLICATION_FACTOR: "3"
+  KAFKA_MIN_INSYNC_REPLICAS: "2"
+  KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: "0"
+  KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+  CLUSTER_ID: "MkU3OEVBNTcwNTJENDM2Qk"
+
+# 2. Якорь для общих настроек сервиса
+x-kafka-common: &kafka-common
+  image: apache/kafka:4.3.1
+  restart: unless-stopped
+  networks:
+    - kafka-net
+
+services:
+  kafka1:
+    <<: *kafka-common
+    container_name: kafka1
+    ports:
+      - "9091:9091"
+    environment:
+      <<: *kafka-env
+      KAFKA_NODE_ID: "1"
+      KAFKA_LISTENERS: "INTERNAL://0.0.0.0:19091,EXTERNAL://0.0.0.0:9091,CONTROLLER://0.0.0.0:29091"
+      KAFKA_ADVERTISED_LISTENERS: "INTERNAL://kafka1:19091,EXTERNAL://localhost:9091"
+    volumes:
+      - kafka1-data:/var/lib/kafka/data
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "/opt/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9091 --list >/dev/null 2>&1",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+
+  kafka2:
+    <<: *kafka-common
+    container_name: kafka2
+    ports:
+      - "9092:9092"
+    environment:
+      <<: *kafka-env
+      KAFKA_NODE_ID: "2"
+      KAFKA_LISTENERS: "INTERNAL://0.0.0.0:19092,EXTERNAL://0.0.0.0:9092,CONTROLLER://0.0.0.0:29092"
+      KAFKA_ADVERTISED_LISTENERS: "INTERNAL://kafka2:19092,EXTERNAL://localhost:9092"
+    volumes:
+      - kafka2-data:/var/lib/kafka/data
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "/opt/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --list >/dev/null 2>&1",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+
+  kafka3:
+    <<: *kafka-common
+    container_name: kafka3
+    ports:
+      - "9093:9093"
+    environment:
+      <<: *kafka-env
+      KAFKA_NODE_ID: "3"
+      KAFKA_LISTENERS: "INTERNAL://0.0.0.0:19093,EXTERNAL://0.0.0.0:9093,CONTROLLER://0.0.0.0:29093"
+      KAFKA_ADVERTISED_LISTENERS: "INTERNAL://kafka3:19093,EXTERNAL://localhost:9093"
+    volumes:
+      - kafka3-data:/var/lib/kafka/data
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "/opt/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9093 --list >/dev/null 2>&1",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+
+  kafdrop:
+    image: obsidiandynamics/kafdrop:4.0.1
+    container_name: kafdrop
+    ports:
+      - "9000:9000"
+    networks:
+      - kafka-net
+    environment:
+      KAFKA_BROKERCONNECT: "kafka1:19091,kafka2:19092,kafka3:19093"
+      JVM_OPTS: "-Xms32M -Xmx64M"
+    depends_on:
+      kafka1:
+        condition: service_healthy
+      kafka2:
+        condition: service_healthy
+      kafka3:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  kafka1-data:
+  kafka2-data:
+  kafka3-data:
+
+networks:
+  kafka-net:
+    driver: bridge
+
+
+==================================================
+File below: /home/vp/code/learn-python/m3_9_lab/kafka_advanced/producer/config.py :
+==================================================
+"""Модуль конфигурации Kafka Producer."""
+
+import os
+from dataclasses import dataclass
+from typing import Any
+
+
+@dataclass(frozen=True)
+class ProducerConfig:
+    """Конфигурация подключения и параметров Kafka Producer."""
+
+    topic: str = os.getenv("KAFKA_TOPIC", "topic2")
+    partition: int | None = None
+    bootstrap_servers: str = os.getenv(
+        "KAFKA_BOOTSTRAP_SERVERS", "localhost:9091,localhost:9092,localhost:9093"
+    )
+
+    def get_producer_config(self) -> dict[str, Any]:
+        """Возвращает словарь настроек для инициализации KafkaProducer."""
+        return {
+            "bootstrap_servers": [
+                server.strip() for server in self.bootstrap_servers.split(",") if server.strip()
+            ],
+            "acks": "all",
+            "request_timeout_ms": 5000,
+            "batch_size": 8192,
+            "max_block_ms": 120000,
+            "client_id": "person-kafka-producer",
+            "retries": 3,
+            "max_in_flight_requests_per_connection": 1,
+        }
+
+
+==================================================
+File below: /home/vp/code/learn-python/m3_9_lab/kafka_advanced/producer/key_serializer.py :
+==================================================
+"""Модуль сериализации ключей для Kafka."""
+
+from typing import Any
+
+
+class KeySerializer:
+    """Сериализатор ключей сообщений Kafka в байты UTF-8."""
+
+    def __call__(self, key: Any) -> bytes:
+        """Преобразует ключ в байты."""
+        if key is None:
+            return b""
+        return str(key).encode("utf-8")
+
+
+==================================================
+File below: /home/vp/code/learn-python/m3_9_lab/kafka_advanced/producer/person.py :
+==================================================
+"""Модель данных Person."""
+
+from dataclasses import asdict, dataclass
+from typing import Any
+
+
+@dataclass(slots=True, frozen=True)
+class Person:
+    """Сущность человека для передачи в систему Kafka."""
+
+    id: int
+    firstname: str
+    lastname: str
+    salary: int
+
+    def to_dict(self) -> dict[str, Any]:
+        """Преобразует объект Person в словарь."""
+        return asdict(self)
+
+
+==================================================
+File below: /home/vp/code/learn-python/m3_9_lab/kafka_advanced/producer/person_serializer.py :
+==================================================
+"""Модуль сериализации объектов Person в JSON-байты."""
+
+import json
+from typing import Any
+
+
+class PersonSerializer:
+    """Сериализатор объектов Person или словарей в формат JSON (bytes)."""
+
+    def __call__(self, data: Any) -> bytes:
+        """Сериализует входной объект в JSON-строку, закодированную в UTF-8."""
+        try:
+            data_dict = data.to_dict() if hasattr(data, "to_dict") else data
+            return json.dumps(data_dict, ensure_ascii=False).encode("utf-8")
+        except (TypeError, ValueError) as err:
+            raise RuntimeError(f"Ошибка при сериализации данных {data}: {err}") from err
+
+
+==================================================
+File below: /home/vp/code/learn-python/m3_9_lab/kafka_advanced/producer/producer.py :
+==================================================
+"""Основной модуль отправки сообщений в Apache Kafka."""
+
+import logging
+from datetime import datetime
+from typing import Any
+
+from config import ProducerConfig
+from kafka import KafkaProducer
+from kafka.errors import KafkaError
+from key_serializer import KeySerializer
+from person import Person
+from person_serializer import PersonSerializer
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+)
+logger = logging.getLogger(__name__)
+
+MAX_MESSAGES = 10
+
+
+class KafkaProducerApp:
+    """Приложение для генерации и отправки событий Person в Kafka."""
+
+    def __init__(self, config: ProducerConfig | None = None) -> None:
+        self.config = config or ProducerConfig()
+        self.value_serializer = PersonSerializer()
+        self.key_serializer = KeySerializer()
+        self.producer: KafkaProducer | None = None
+
+    @staticmethod
+    def create_person(index: int) -> Person:
+        """Создает тестовый объект Person."""
+        current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        return Person(
+            id=index,
+            firstname=f"firstname-{current_time}",
+            lastname=f"lastname {index}",
+            salary=(index + 1) * 10,
+        )
+
+    def _on_send_success(self, record_metadata: Any) -> None:
+        """Callback при успешной доставке сообщения в Kafka."""
+        logger.info(
+            "Сообщение доставлено в топик '%s' [партиция %d, оффсет %d]",
+            record_metadata.topic,
+            record_metadata.partition,
+            record_metadata.offset,
+        )
+
+    def _on_send_error(self, exc: Exception) -> None:
+        """Callback при ошибке отправки сообщения."""
+        logger.error("Ошибка при отправке сообщения в Kafka: %s", exc, exc_info=True)
+
+    def run(self) -> None:
+        """Основной цикл отправки сообщений."""
+        try:
+            self.producer = KafkaProducer(
+                **self.config.get_producer_config(),
+                key_serializer=self.key_serializer,
+                value_serializer=self.value_serializer,
+            )
+
+            for i in range(MAX_MESSAGES):
+                person = self.create_person(i)
+                logger.info("Подготовка к отправке сообщения #%d (ID: %d)", i, person.id)
+
+                send_kwargs: dict[str, Any] = {
+                    "topic": self.config.topic,
+                    "timestamp_ms": int(datetime.now().timestamp() * 1000),
+                    "key": person.id,
+                    "value": person,
+                }
+                if self.config.partition is not None:
+                    send_kwargs["partition"] = self.config.partition
+
+                future = self.producer.send(**send_kwargs)
+                future.add_callback(self._on_send_success).add_errback(self._on_send_error)
+
+            logger.info(
+                "Сброс буфера (flush) и ожидание доставки всех %d сообщений...", MAX_MESSAGES
+            )
+            self.producer.flush()
+            logger.info("Все %d сообщений успешно обработаны.", MAX_MESSAGES)
+
+        except KafkaError as err:
+            logger.error("Ошибка уровня Kafka: %s", err)
+        except Exception as err:
+            logger.exception("Непредвиденная ошибка в работе Producer: %s", err)
+        finally:
+            if self.producer is not None:
+                self.producer.close()
+                logger.info("Kafka Producer закрыт.")
+
+
+if __name__ == "__main__":
+    app = KafkaProducerApp()
+    app.run()
+
+
+==================================================
+Всего выведено текстовых файлов: 11
+

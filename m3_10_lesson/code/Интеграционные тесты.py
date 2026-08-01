@@ -1,9 +1,9 @@
-import unittest
 import time
-
+import unittest
 
 import docker
 import psycopg2
+
 
 class MyTestIntegrationForCrudTest(unittest.TestCase):
     @classmethod

@@ -76,6 +76,24 @@
 		// пригодится, если вы в будущем решите использовать встроенную в VS Code кнопку Run, а не Code Runner
 		"python.envFile": "${workspaceFolder}/.env",
 		"python.analysis.useNearestConfiguration": true,
+		// --- 1. PYLANCE: Интеллект и типы ---
+		"python.languageServer": "Pylance",
+		"python.analysis.typeCheckingMode": "standard", // Варианты: "off", "basic", "standard", "strict"
+		"python.analysis.autoImportCompletions": true,
+		"python.analysis.indexing": true,
+		// --- 2. RUFF: Форматирование и автоисправления ---
+		"[python]": {
+			"editor.defaultFormatter": "charliermarsh.ruff",
+			"editor.formatOnSave": true,
+			"editor.codeActionsOnSave": {
+				// Сортировка импортов силами Ruff при сохранении
+				"source.organizeImports.ruff": "explicit",
+				// Автоисправление доступных ошибок (unused imports, syntax upgrades и т.д.)
+				// "source.fixAll.ruff": "explicit"
+				// Отключаем автоматический фикс ошибок при сохранении
+				"source.fixAll.ruff": "never",
+			},
+		},
 		"code-runner.runInTerminal": true,
 		"editor.guides.bracketPairs": true,
 		"sqltools.format": {
@@ -108,47 +126,6 @@
 			"AM04"
 		],
 		"flashpost.saveDataToWorkspace": true,
-		"llama-vscode.completion_models_list": [
-			{
-				"name": "vpl llama qwen2.5-coder:1.5b-base",
-				"localStartCommand": "",
-				"endpoint": "http://127.0.0.1:11434",
-				"aiModel": "qwen2.5-coder:1.5b-base",
-				"isKeyRequired": false
-			},
-			{
-				"name": "Qwen2.5-Coder-1.5B-Q8_0-GGUF (<= 8GB VRAM)",
-				"localStartCommand": "llama serve --fim-qwen-1.5b-default -ngl 99 --port 8012",
-				"endpoint": "http://localhost:8012",
-				"aiModel": "",
-				"isKeyRequired": false
-			},
-			{
-				"name": "Qwen2.5-Coder-3B-Q8_0-GGUF (<= 16GB VRAM)",
-				"localStartCommand": "llama serve --fim-qwen-3b-default -ngl 99 --port 8012",
-				"endpoint": "http://localhost:8012",
-				"aiModel": "",
-				"isKeyRequired": false
-			},
-			{
-				"name": "Qwen2.5-Coder-7B-Q8_0-GGUF (> 16GB VRAM)",
-				"localStartCommand": "llama serve --fim-qwen-7b-default -ngl 99 --port 8012",
-				"endpoint": "http://localhost:8012",
-				"aiModel": "",
-				"isKeyRequired": false
-			},
-			{
-				"name": "Qwen2.5-Coder-1.5B-Q8_0-GGUF (CPU Only)",
-				"localStartCommand": "llama serve -hf ggml-org/Qwen2.5-Coder-1.5B-Q8_0-GGUF -ub 1024 -b 1024 -dt 0.1 --ctx-size 0 --cache-reuse 256 --port 8012",
-				"endpoint": "http://localhost:8012",
-				"aiModel": "",
-				"isKeyRequired": false
-			}
-		],
-		"llama-vscode.endpoint": "http://127.0.0.1:11434",
-		"llama-vscode.openai_client_model": "",
-		"llama-vscode.ai_model": "",
-		"ollama-autocoder.model": "qwen2.5-coder:1.5b-base",
 		"sqlfluff.dialect": "postgres",
 		"sqlfluff.linter.run": "onType",
 		"python.terminal.useEnvFile": false,
@@ -219,7 +196,6 @@
 		"terminal.integrated.automationProfile.linux": null,
 		"terminal.integrated.copyOnSelection": true,
 		"terminal.integrated.profiles.linux": {
-
 			"bash": {
 				"path": "bash",
 				"icon": "terminal-bash"
