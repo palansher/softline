@@ -1,11 +1,13 @@
-# Задание 3.9 - Запись и чтение объектов в/из Kafka
+# Задание 3.9 - Запись и чтение объектов в/из Kafka (confluent-kafka)
 
-- [Задание 3.9 - Запись и чтение объектов в/из Kafka](#задание-39---запись-и-чтение-объектов-виз-kafka)
+- [Задание 3.9 - Запись и чтение объектов в/из Kafka (confluent-kafka)](#задание-39---запись-и-чтение-объектов-виз-kafka-confluent-kafka)
   - [Что делать](#что-делать)
     - [Создать 2 класса](#создать-2-класса)
     - [Отправить в Kafka 10 сообщений](#отправить-в-kafka-10-сообщений)
     - [Считать из Kafka полученные сообщения](#считать-из-kafka-полученные-сообщения)
+  - [Требования](#требования)
   - [Особенности реализации](#особенности-реализации)
+    - [kafka module](#kafka-module)
     - [id Объекта - UUID](#id-объекта---uuid)
       - [Как это работает](#как-это-работает)
   - [создание фейковых автомобилей](#создание-фейковых-автомобилей)
@@ -30,7 +32,15 @@
 
 ### Считать из Kafka полученные сообщения
 
+## Требования
+
+`pip install confluent-kafka`
+
 ## Особенности реализации
+
+### kafka module
+
+Использована современная и более быстрая confluent-kafka. Лучше подходит для продакшен.
 
 ### id Объекта - UUID
 
@@ -63,90 +73,46 @@
 ### Producer
 
 ```text
-/home/vp/code/learn-python/.venv/bin/python /home/vp/code/learn-python/m3_9_hw/producer.py
-2026-08-02 15:24:42,764 [INFO] kafka.conn: <BrokerConnection node_id=bootstrap-1 host=localhost:9091 <connecting> [IPv4 ('127.0.0.1', 9091)]>: connecting to localhost:9091 [('127.0.0.1', 9091) IPv4]
-2026-08-02 15:24:42,765 [INFO] kafka.conn: Probing node bootstrap-1 broker version
-2026-08-02 15:24:42,765 [INFO] kafka.conn: <BrokerConnection node_id=bootstrap-1 host=localhost:9091 <connecting> [IPv4 ('127.0.0.1', 9091)]>: Connection complete.
-2026-08-02 15:24:42,871 [INFO] kafka.conn: Broker version identified as 2.6.0
-2026-08-02 15:24:42,872 [INFO] kafka.conn: Set configuration api_version=(2, 6, 0) to skip auto check_version requests on startup
-2026-08-02 15:24:42,874 [INFO] __main__: Подготовка к отправке сообщения #0 (ID: 71b0b213-029f-4eab-b2a6-a801fc0d5429)
-2026-08-02 15:24:42,876 [INFO] __main__: Подготовка к отправке сообщения #1 (ID: a5b4ac78-83e1-42a3-bb57-0376e274a98e)
-2026-08-02 15:24:42,876 [INFO] __main__: Подготовка к отправке сообщения #2 (ID: 84ba1e83-2096-4738-ba62-7e225ab00615)
-2026-08-02 15:24:42,876 [INFO] __main__: Подготовка к отправке сообщения #3 (ID: 13d94287-257f-41f5-8b6b-b2e18f334463)
-2026-08-02 15:24:42,876 [INFO] __main__: Подготовка к отправке сообщения #4 (ID: 14a537e5-4dae-4a1a-8f6f-569ae449fa0b)
-2026-08-02 15:24:42,877 [INFO] __main__: Подготовка к отправке сообщения #5 (ID: 590a3403-d18a-4970-bdcd-0bf2bbdf91e0)
-2026-08-02 15:24:42,877 [INFO] __main__: Подготовка к отправке сообщения #6 (ID: 071f5e6e-3402-4e60-8ac3-342307dc431b)
-2026-08-02 15:24:42,878 [INFO] kafka.conn: <BrokerConnection node_id=2 host=localhost:9092 <connecting> [IPv4 ('127.0.0.1', 9092)]>: connecting to localhost:9092 [('127.0.0.1', 9092) IPv4]
-2026-08-02 15:24:42,878 [INFO] kafka.conn: <BrokerConnection node_id=2 host=localhost:9092 <connecting> [IPv4 ('127.0.0.1', 9092)]>: Connection complete.
-2026-08-02 15:24:42,878 [INFO] kafka.conn: <BrokerConnection node_id=bootstrap-1 host=localhost:9091 <connected> [IPv4 ('127.0.0.1', 9091)]>: Closing connection. 
-2026-08-02 15:24:42,879 [INFO] __main__: Подготовка к отправке сообщения #7 (ID: 3e14d595-465c-42df-a463-fa90385ff57c)
-2026-08-02 15:24:42,880 [INFO] __main__: Подготовка к отправке сообщения #8 (ID: 88d59673-c1fc-4d07-8e67-3fb3a5fc7340)
-2026-08-02 15:24:42,880 [INFO] __main__: Подготовка к отправке сообщения #9 (ID: 4f14038c-b580-48ad-a3f2-ec5c4299bce7)
-2026-08-02 15:24:42,880 [INFO] __main__: Сброс буфера (flush) и ожидание доставки всех 10 сообщений...
-2026-08-02 15:24:42,887 [INFO] __main__: Сообщение доставлено в топик 'car_shop' [партиция 0, оффсет 60]
-2026-08-02 15:24:42,888 [INFO] __main__: Сообщение доставлено в топик 'car_shop' [партиция 0, оффсет 61]
-2026-08-02 15:24:42,888 [INFO] __main__: Сообщение доставлено в топик 'car_shop' [партиция 0, оффсет 62]
-2026-08-02 15:24:42,888 [INFO] __main__: Сообщение доставлено в топик 'car_shop' [партиция 0, оффсет 63]
-2026-08-02 15:24:42,889 [INFO] __main__: Сообщение доставлено в топик 'car_shop' [партиция 0, оффсет 64]
-2026-08-02 15:24:42,889 [INFO] __main__: Сообщение доставлено в топик 'car_shop' [партиция 0, оффсет 65]
-2026-08-02 15:24:42,889 [INFO] __main__: Сообщение доставлено в топик 'car_shop' [партиция 0, оффсет 66]
-2026-08-02 15:24:42,894 [INFO] __main__: Сообщение доставлено в топик 'car_shop' [партиция 0, оффсет 67]
-2026-08-02 15:24:42,894 [INFO] __main__: Сообщение доставлено в топик 'car_shop' [партиция 0, оффсет 68]
-2026-08-02 15:24:42,894 [INFO] __main__: Сообщение доставлено в топик 'car_shop' [партиция 0, оффсет 69]
-2026-08-02 15:24:42,895 [INFO] __main__: Все 10 сообщений успешно обработаны.
-2026-08-02 15:24:42,895 [INFO] kafka.producer.kafka: Closing the Kafka producer with 9223372036.0 secs timeout.
-2026-08-02 15:24:42,895 [INFO] kafka.conn: <BrokerConnection node_id=2 host=localhost:9092 <connected> [IPv4 ('127.0.0.1', 9092)]>: Closing connection. 
-2026-08-02 15:24:42,895 [INFO] __main__: Kafka Producer закрыт.
+/home/vp/code/learn-python/.venv/bin/python /home/vp/code/learn-python/m3_9_hw/confluent-kafka/producer.py
+2026-08-02 16:11:03,191 [INFO] __main__: Подготовка к отправке сообщения #0 (ID: 111f7ffa-b4cd-440e-8a60-9de3904a43ea)
+2026-08-02 16:11:03,191 [INFO] __main__: Подготовка к отправке сообщения #1 (ID: b241c89b-17e6-4253-b5f4-e696ebb22514)
+2026-08-02 16:11:03,191 [INFO] __main__: Подготовка к отправке сообщения #2 (ID: 46d5d09a-e789-41c1-8820-61c7df616da8)
+2026-08-02 16:11:03,192 [INFO] __main__: Подготовка к отправке сообщения #3 (ID: 3c277037-b691-479c-bd56-5d936ecaf6e3)
+2026-08-02 16:11:03,192 [INFO] __main__: Подготовка к отправке сообщения #4 (ID: aa3d7c2a-f60a-4ba0-8fcf-956dd890548b)
+2026-08-02 16:11:03,192 [INFO] __main__: Подготовка к отправке сообщения #5 (ID: 317c67ff-ccba-4045-ad2e-fd4eff179b52)
+2026-08-02 16:11:03,192 [INFO] __main__: Подготовка к отправке сообщения #6 (ID: 9bfaed18-5e1f-415d-b51d-52e7570d169f)
+2026-08-02 16:11:03,192 [INFO] __main__: Подготовка к отправке сообщения #7 (ID: ee3d3c26-c900-44a9-8dc8-32946ca53d7e)
+2026-08-02 16:11:03,193 [INFO] __main__: Подготовка к отправке сообщения #8 (ID: 7170581c-b8d6-4aa2-9724-817b52d70c2b)
+2026-08-02 16:11:03,193 [INFO] __main__: Подготовка к отправке сообщения #9 (ID: 0b3d513e-e2b3-46fa-9325-ea0a0d27cd42)
+2026-08-02 16:11:03,193 [INFO] __main__: Сброс буфера (flush) и ожидание доставки всех 10 сообщений...
+2026-08-02 16:11:03,197 [INFO] __main__: Сообщение доставлено в топик 'car_shop' [партиция 0, оффсет 80]
+2026-08-02 16:11:03,198 [INFO] __main__: Сообщение доставлено в топик 'car_shop' [партиция 0, оффсет 81]
+2026-08-02 16:11:03,198 [INFO] __main__: Сообщение доставлено в топик 'car_shop' [партиция 0, оффсет 82]
+2026-08-02 16:11:03,198 [INFO] __main__: Сообщение доставлено в топик 'car_shop' [партиция 0, оффсет 83]
+2026-08-02 16:11:03,198 [INFO] __main__: Сообщение доставлено в топик 'car_shop' [партиция 0, оффсет 84]
+2026-08-02 16:11:03,198 [INFO] __main__: Сообщение доставлено в топик 'car_shop' [партиция 0, оффсет 85]
+2026-08-02 16:11:03,198 [INFO] __main__: Сообщение доставлено в топик 'car_shop' [партиция 0, оффсет 86]
+2026-08-02 16:11:03,198 [INFO] __main__: Сообщение доставлено в топик 'car_shop' [партиция 0, оффсет 87]
+2026-08-02 16:11:03,198 [INFO] __main__: Сообщение доставлено в топик 'car_shop' [партиция 0, оффсет 88]
+2026-08-02 16:11:03,198 [INFO] __main__: Сообщение доставлено в топик 'car_shop' [партиция 0, оффсет 89]
+2026-08-02 16:11:03,198 [INFO] __main__: Все 10 сообщений успешно обработаны.
 ```
 
 ### Consumer
 
 ```text
-/home/vp/code/learn-python/.venv/bin/python /home/vp/code/learn-python/m3_9_hw/consumer.py
-2026-08-02 15:24:29,005 [INFO] kafka.conn: <BrokerConnection node_id=bootstrap-1 host=localhost:9091 <connecting> [IPv4 ('127.0.0.1', 9091)]>: connecting to localhost:9091 [('127.0.0.1', 9091) IPv4]
-2026-08-02 15:24:29,005 [INFO] kafka.conn: Probing node bootstrap-1 broker version
-2026-08-02 15:24:29,005 [INFO] kafka.conn: <BrokerConnection node_id=bootstrap-1 host=localhost:9091 <connecting> [IPv4 ('127.0.0.1', 9091)]>: Connection complete.
-2026-08-02 15:24:29,107 [INFO] kafka.conn: Broker version identified as 2.6.0
-2026-08-02 15:24:29,107 [INFO] kafka.conn: Set configuration api_version=(2, 6, 0) to skip auto check_version requests on startup
-2026-08-02 15:24:29,108 [INFO] kafka.consumer.subscription_state: Updating subscribed topics to: ('car_shop',)
-2026-08-02 15:24:29,108 [INFO] __main__: Kafka Consumer успешно запущен. Ожидание сообщений...
-2026-08-02 15:24:29,109 [INFO] kafka.conn: <BrokerConnection node_id=bootstrap-0 host=localhost:9093 <connecting> [IPv4 ('127.0.0.1', 9093)]>: connecting to localhost:9093 [('127.0.0.1', 9093) IPv4]
-2026-08-02 15:24:29,109 [INFO] kafka.conn: <BrokerConnection node_id=bootstrap-0 host=localhost:9093 <connecting> [IPv4 ('127.0.0.1', 9093)]>: Connection complete.
-2026-08-02 15:24:29,109 [INFO] kafka.cluster: Group coordinator for car_group is BrokerMetadata(nodeId='coordinator-3', host='localhost', port=9093, rack=None)
-2026-08-02 15:24:29,109 [INFO] kafka.coordinator: Discovered coordinator coordinator-3 for group car_group
-2026-08-02 15:24:29,109 [INFO] kafka.coordinator: Starting new heartbeat thread
-2026-08-02 15:24:29,110 [INFO] kafka.coordinator.consumer: Revoking previously assigned partitions set() for group car_group
-2026-08-02 15:24:29,110 [INFO] kafka.conn: <BrokerConnection node_id=coordinator-3 host=localhost:9093 <connecting> [IPv4 ('127.0.0.1', 9093)]>: connecting to localhost:9093 [('127.0.0.1', 9093) IPv4]
-2026-08-02 15:24:29,110 [INFO] kafka.conn: <BrokerConnection node_id=coordinator-3 host=localhost:9093 <connecting> [IPv4 ('127.0.0.1', 9093)]>: Connection complete.
-2026-08-02 15:24:29,110 [INFO] kafka.conn: <BrokerConnection node_id=bootstrap-1 host=localhost:9091 <connected> [IPv4 ('127.0.0.1', 9091)]>: Closing connection. 
-2026-08-02 15:24:29,111 [INFO] kafka.conn: <BrokerConnection node_id=bootstrap-0 host=localhost:9093 <connected> [IPv4 ('127.0.0.1', 9093)]>: Closing connection. 
-2026-08-02 15:24:29,211 [INFO] kafka.coordinator: (Re-)joining group car_group
-2026-08-02 15:24:29,212 [INFO] kafka.conn: <BrokerConnection node_id=bootstrap-2 host=localhost:9092 <connecting> [IPv4 ('127.0.0.1', 9092)]>: connecting to localhost:9092 [('127.0.0.1', 9092) IPv4]
-2026-08-02 15:24:29,212 [INFO] kafka.conn: <BrokerConnection node_id=bootstrap-2 host=localhost:9092 <connecting> [IPv4 ('127.0.0.1', 9092)]>: Connection complete.
-2026-08-02 15:24:29,214 [INFO] kafka.coordinator: Elected group leader -- performing partition assignments using range
-2026-08-02 15:24:29,216 [INFO] kafka.coordinator: Successfully joined group car_group with generation 19
-2026-08-02 15:24:29,216 [INFO] kafka.consumer.subscription_state: Updated partition assignment: [TopicPartition(topic='car_shop', partition=0)]
-2026-08-02 15:24:29,217 [INFO] kafka.coordinator.consumer: Setting newly assigned partitions {TopicPartition(topic='car_shop', partition=0)} for group car_group
-2026-08-02 15:24:29,218 [INFO] kafka.conn: <BrokerConnection node_id=2 host=localhost:9092 <connecting> [IPv4 ('127.0.0.1', 9092)]>: connecting to localhost:9092 [('127.0.0.1', 9092) IPv4]
-2026-08-02 15:24:29,218 [INFO] kafka.conn: <BrokerConnection node_id=2 host=localhost:9092 <connecting> [IPv4 ('127.0.0.1', 9092)]>: Connection complete.
-2026-08-02 15:24:29,218 [INFO] kafka.conn: <BrokerConnection node_id=bootstrap-2 host=localhost:9092 <connected> [IPv4 ('127.0.0.1', 9092)]>: Closing connection. 
-2026-08-02 15:24:29,368 [INFO] kafka.conn: <BrokerConnection node_id=3 host=localhost:9093 <connecting> [IPv4 ('127.0.0.1', 9093)]>: connecting to localhost:9093 [('127.0.0.1', 9093) IPv4]
-2026-08-02 15:24:29,368 [INFO] kafka.conn: <BrokerConnection node_id=3 host=localhost:9093 <connecting> [IPv4 ('127.0.0.1', 9093)]>: Connection complete.
-2026-08-02 15:24:42,886 [INFO] __main__: Сообщение #1 | Partition: 0 | Offset: 60 | Key: 71b0b213-029f-4eab-b2a6-a801fc0d5429 | Car: Car(brand={'name': 'Mercury'}, model='Grand Marquis', year=2009, category='Pickup', vin='PTKWSSF00NK7E0426', color='DodgerBlue', id='71b0b213-029f-4eab-b2a6-a801fc0d5429')
-2026-08-02 15:24:42,886 [INFO] __main__: Сообщение #2 | Partition: 0 | Offset: 61 | Key: a5b4ac78-83e1-42a3-bb57-0376e274a98e | Car: Car(brand={'name': 'GMC'}, model='Sierra 2500 HD Extended Cab', year=2010, category='Pickup', vin='V0ZLZPAW113XG6825', color='MediumAquaMarine', id='a5b4ac78-83e1-42a3-bb57-0376e274a98e')
-2026-08-02 15:24:42,886 [INFO] __main__: Сообщение #3 | Partition: 0 | Offset: 62 | Key: 84ba1e83-2096-4738-ba62-7e225ab00615 | Car: Car(brand={'name': 'Mercedes-Benz'}, model='CL-Class', year=2012, category='Sedan', vin='EY5RMLUC6ZJJ35687', color='GhostWhite', id='84ba1e83-2096-4738-ba62-7e225ab00615')
-2026-08-02 15:24:42,886 [INFO] __main__: Сообщение #4 | Partition: 0 | Offset: 63 | Key: 13d94287-257f-41f5-8b6b-b2e18f334463 | Car: Car(brand={'name': 'Dodge'}, model='D350 Club Cab', year=1993, category='SUV', vin='KPK76EH80M8FT7593', color='LightSeaGreen', id='13d94287-257f-41f5-8b6b-b2e18f334463')
-2026-08-02 15:24:42,886 [INFO] __main__: Сообщение #5 | Partition: 0 | Offset: 64 | Key: 14a537e5-4dae-4a1a-8f6f-569ae449fa0b | Car: Car(brand={'name': 'Suzuki'}, model='SX4', year=2013, category='Coupe', vin='XVUP0ZWUXAJ4X0676', color='PaleGoldenRod', id='14a537e5-4dae-4a1a-8f6f-569ae449fa0b')
-2026-08-02 15:24:42,887 [INFO] __main__: Сообщение #6 | Partition: 0 | Offset: 65 | Key: 590a3403-d18a-4970-bdcd-0bf2bbdf91e0 | Car: Car(brand={'name': 'Nissan'}, model='Sentra', year=1998, category='Pickup', vin='G0ZU9BNL7WDEB1562', color='LightCyan', id='590a3403-d18a-4970-bdcd-0bf2bbdf91e0')
-2026-08-02 15:24:42,887 [INFO] __main__: Сообщение #7 | Partition: 0 | Offset: 66 | Key: 071f5e6e-3402-4e60-8ac3-342307dc431b | Car: Car(brand={'name': 'Volkswagen'}, model='Cabrio', year=1998, category='Pickup', vin='MAT2RGUP9U4W45207', color='SeaGreen', id='071f5e6e-3402-4e60-8ac3-342307dc431b')
-2026-08-02 15:24:42,895 [INFO] __main__: Сообщение #8 | Partition: 0 | Offset: 67 | Key: 3e14d595-465c-42df-a463-fa90385ff57c | Car: Car(brand={'name': 'Ford'}, model='Mustang', year=2017, category='Pickup', vin='R28JB64A6F7HS3937', color='Turquoise', id='3e14d595-465c-42df-a463-fa90385ff57c')
-2026-08-02 15:24:42,895 [INFO] __main__: Сообщение #9 | Partition: 0 | Offset: 68 | Key: 88d59673-c1fc-4d07-8e67-3fb3a5fc7340 | Car: Car(brand={'name': 'BMW'}, model='3 Series', year=2000, category='Coupe', vin='E403X11C9HCXW4556', color='Lavender', id='88d59673-c1fc-4d07-8e67-3fb3a5fc7340')
-2026-08-02 15:24:42,895 [INFO] __main__: Сообщение #10 | Partition: 0 | Offset: 69 | Key: 4f14038c-b580-48ad-a3f2-ec5c4299bce7 | Car: Car(brand={'name': 'Lexus'}, model='CT', year=2017, category='Pickup', vin='RHF76BX11M7WE2699', color='Tomato', id='4f14038c-b580-48ad-a3f2-ec5c4299bce7')
-2026-08-02 15:24:42,895 [INFO] __main__: Достигнут лимит сообщений (10). Завершение работы.
-2026-08-02 15:24:42,899 [INFO] kafka.coordinator: Stopping heartbeat thread
-2026-08-02 15:24:42,900 [INFO] kafka.coordinator: Leaving consumer group (car_group).
-2026-08-02 15:24:42,908 [INFO] kafka.conn: <BrokerConnection node_id=coordinator-3 host=localhost:9093 <connected> [IPv4 ('127.0.0.1', 9093)]>: Closing connection. 
-2026-08-02 15:24:42,908 [INFO] kafka.conn: <BrokerConnection node_id=2 host=localhost:9092 <connected> [IPv4 ('127.0.0.1', 9092)]>: Closing connection. 
-2026-08-02 15:24:42,908 [INFO] kafka.conn: <BrokerConnection node_id=3 host=localhost:9093 <connected> [IPv4 ('127.0.0.1', 9093)]>: Closing connection. 
-2026-08-02 15:24:42,908 [INFO] __main__: Kafka Consumer закрыт.
+/home/vp/code/learn-python/.venv/bin/python /home/vp/code/learn-python/m3_9_hw/confluent-kafka/consumer.py
+2026-08-02 16:12:06,673 [INFO] __main__: Kafka Consumer успешно запущен. Ожидание сообщений...
+2026-08-02 16:12:06,732 [INFO] __main__: Сообщение #1 | Partition: 0 | Offset: 80 | Key: 111f7ffa-b4cd-440e-8a60-9de3904a43ea | Car: Car(brand={'name': 'Isuzu'}, model='Impulse', year=1992, category='Sedan', vin='WHXK8ZYUXUS899770', color='MediumVioletRed', id='111f7ffa-b4cd-440e-8a60-9de3904a43ea')
+2026-08-02 16:12:06,732 [INFO] __main__: Сообщение #2 | Partition: 0 | Offset: 81 | Key: b241c89b-17e6-4253-b5f4-e696ebb22514 | Car: Car(brand={'name': 'Hyundai'}, model='Genesis', year=2009, category='Sedan, Hatchback', vin='R139W7P72JTAG3486', color='DarkSlateBlue', id='b241c89b-17e6-4253-b5f4-e696ebb22514')
+2026-08-02 16:12:06,732 [INFO] __main__: Сообщение #3 | Partition: 0 | Offset: 82 | Key: 46d5d09a-e789-41c1-8820-61c7df616da8 | Car: Car(brand={'name': 'Dodge'}, model='Stealth', year=1995, category='SUV', vin='LUVJL9UK0D9MR5400', color='SlateGray', id='46d5d09a-e789-41c1-8820-61c7df616da8')
+2026-08-02 16:12:06,732 [INFO] __main__: Сообщение #4 | Partition: 0 | Offset: 83 | Key: 3c277037-b691-479c-bd56-5d936ecaf6e3 | Car: Car(brand={'name': 'Kia'}, model='Rondo', year=2009, category='Pickup', vin='G1PZAFVF7RWDY8453', color='SlateBlue', id='3c277037-b691-479c-bd56-5d936ecaf6e3')
+2026-08-02 16:12:06,732 [INFO] __main__: Сообщение #5 | Partition: 0 | Offset: 84 | Key: aa3d7c2a-f60a-4ba0-8fcf-956dd890548b | Car: Car(brand={'name': 'Lexus'}, model='LS', year=2009, category='SUV', vin='5V87YG2J6MJLZ0668', color='PowderBlue', id='aa3d7c2a-f60a-4ba0-8fcf-956dd890548b')
+2026-08-02 16:12:06,733 [INFO] __main__: Сообщение #6 | Partition: 0 | Offset: 85 | Key: 317c67ff-ccba-4045-ad2e-fd4eff179b52 | Car: Car(brand={'name': 'Pontiac'}, model='GTO', year=2005, category='SUV', vin='STC0X71CX1YUG8618', color='Coral', id='317c67ff-ccba-4045-ad2e-fd4eff179b52')
+2026-08-02 16:12:06,733 [INFO] __main__: Сообщение #7 | Partition: 0 | Offset: 86 | Key: 9bfaed18-5e1f-415d-b51d-52e7570d169f | Car: Car(brand={'name': 'INFINITI'}, model='G', year=2009, category='SUV', vin='FJABGUY0122S03917', color='DarkOrange', id='9bfaed18-5e1f-415d-b51d-52e7570d169f')
+2026-08-02 16:12:06,733 [INFO] __main__: Сообщение #8 | Partition: 0 | Offset: 87 | Key: ee3d3c26-c900-44a9-8dc8-32946ca53d7e | Car: Car(brand={'name': 'Toyota'}, model='Corolla', year=2012, category='Van/Minivan', vin='FKG2CJKH8VV7J0527', color='MediumSeaGreen', id='ee3d3c26-c900-44a9-8dc8-32946ca53d7e')
+2026-08-02 16:12:06,733 [INFO] __main__: Сообщение #9 | Partition: 0 | Offset: 88 | Key: 7170581c-b8d6-4aa2-9724-817b52d70c2b | Car: Car(brand={'name': 'FIAT'}, model='500', year=2018, category='SUV', vin='1W0ASK9K10GR17514', color='MediumVioletRed', id='7170581c-b8d6-4aa2-9724-817b52d70c2b')
+2026-08-02 16:12:06,733 [INFO] __main__: Сообщение #10 | Partition: 0 | Offset: 89 | Key: 0b3d513e-e2b3-46fa-9325-ea0a0d27cd42 | Car: Car(brand={'name': 'Cadillac'}, model='Catera', year=2000, category='Pickup', vin='UTYPTY277H3W41619', color='Beige', id='0b3d513e-e2b3-46fa-9325-ea0a0d27cd42')
+2026-08-02 16:12:06,733 [INFO] __main__: Достигнут лимит сообщений (10). Завершение работы.
+2026-08-02 16:12:06,739 [INFO] __main__: Kafka Consumer закрыт.
 ```

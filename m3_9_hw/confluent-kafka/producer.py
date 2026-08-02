@@ -1,13 +1,10 @@
-"""Основной модуль отправки сообщений в Apache Kafka."""
+"""Основной модуль отправки сообщений в Apache Kafka (confluent-kafka)."""
 
 import logging
-from datetime import datetime
 from typing import Any
 
-# from car import Car
 from car_creater import generate_random_car
-from kafka import KafkaProducer
-from kafka.errors import KafkaError
+from confluent_kafka import Producer
 from key_serializer import KeySerializer
 from producer_config import ProducerConfig
 from serializer import ObjSerializer
@@ -22,78 +19,66 @@ MAX_MESSAGES = 10
 
 
 class KafkaProducerApp:
-    """Приложение для генерации и отправки событий Car в Kafka."""
+    """Приложение для генерации и отправки событий Car в Kafka с помощью confluent-kafka."""
 
     def __init__(self, config: ProducerConfig | None = None) -> None:
         self.config = config or ProducerConfig()
         self.value_serializer = ObjSerializer()
         self.key_serializer = KeySerializer()
-        self.producer: KafkaProducer | None = None
+        self.producer: Producer | None = None
 
-    def _on_send_success(self, record_metadata: Any) -> None:
-        """Callback при успешной подтвержденной доставке сообщения в Kafka."""
-        logger.info(
-            "Сообщение доставлено в топик '%s' [партиция %d, оффсет %d]",
-            record_metadata.topic,
-            record_metadata.partition,
-            record_metadata.offset,
-        )
+    def _delivery_report(self, err: Any, msg: Any) -> None:
+        """Callback доставки сообщения на брокер.
 
-    def _on_send_error(self, exc: Exception) -> None:
-        """Callback при неисправимой ошибке отправки сообщения."""
-        logger.error("Ошибка при отправке сообщения в Kafka: %s", exc, exc_info=True)
+        В confluent-kafka передаются 2 аргумента: err (ошибка) и msg (объект Message).
+        """
+        if err is not None:
+            logger.error("Ошибка при отправке сообщения в Kafka: %s", err)
+        else:
+            logger.info(
+                "Сообщение доставлено в топик '%s' [партиция %d, оффсет %d]",
+                msg.topic(),
+                msg.partition(),
+                msg.offset(),
+            )
 
     def run(self) -> None:
         """Основной цикл отправки сообщений."""
         try:
-            self.producer = KafkaProducer(
-                **self.config.get_producer_config(),
-                key_serializer=self.key_serializer,
-                value_serializer=self.value_serializer,
-            )
+            self.producer = Producer(self.config.get_producer_config())
 
             for i in range(MAX_MESSAGES):
                 car = generate_random_car()
                 logger.info("Подготовка к отправке сообщения #%d (ID: %s)", i, car.id)
 
-                # ПРОДАКШЕН-ПРАКТИКА: Распределение по партициям.
-                # Мы передаем `key=car.id`, но НЕ передаем жесткий `partition`.
-                # Kafka автоматически применит хэширование (Murmur2) к ключу:
-                # `partition = hash(key) % total_partitions`.
-                # Это гарантирует, что события с одинаковым key попадут в одну партицию.
-                send_kwargs: dict[str, Any] = {
+                # Сериализуем ключ и значение в байты перед передачей в librdkafka
+                key_bytes = self.key_serializer(car.id)
+                val_bytes = self.value_serializer(car)
+
+                produce_kwargs: dict[str, Any] = {
                     "topic": self.config.topic,
-                    "timestamp_ms": int(datetime.now().timestamp() * 1000),
-                    "key": car.id,
-                    "value": car,
+                    "key": key_bytes,
+                    "value": val_bytes,
+                    "on_delivery": self._delivery_report,
                 }
                 if self.config.partition is not None:
-                    send_kwargs["partition"] = self.config.partition
+                    produce_kwargs["partition"] = self.config.partition
 
-                # Вызов send() НЕ отправляет сообщение сразу в сеть!
-                # Он кладет его в локальный батч-буфер и возвращает Future.
-                future = self.producer.send(**send_kwargs)
+                # Вызов produce() асинхронно помещает сообщение в внутренний буфер librdkafka
+                self.producer.produce(**produce_kwargs)
 
-                # Асинхронная обработка результатов через колбэки
-                future.add_callback(self._on_send_success).add_errback(self._on_send_error)
+                # poll(0) вызывает обработку служебных событий и асинхронных колбэков delivery_report
+                self.producer.poll(0)
 
             logger.info(
                 "Сброс буфера (flush) и ожидание доставки всех %d сообщений...", MAX_MESSAGES
             )
-            # ПРОДАКШЕН-ПРАКТИКА: flush() принудительно отправляет все накопленные батчи
-            # из памяти на брокер и блокирует поток до получения ответов (acks).
+            # flush() блокирует поток до тех пор, пока все сообщения из буфера не будут отправлены
             self.producer.flush()
             logger.info("Все %d сообщений успешно обработаны.", MAX_MESSAGES)
 
-        except KafkaError as err:
-            logger.error("Ошибка уровня Kafka: %s", err)
         except Exception as err:
             logger.exception("Непредвиденная ошибка в работе Producer: %s", err)
-        finally:
-            # ПРОДАКШЕН-ПРАКТИКА: Гарантированное освобождение ресурсов и закрытие сокетов.
-            if self.producer is not None:
-                self.producer.close()
-                logger.info("Kafka Producer закрыт.")
 
 
 if __name__ == "__main__":
