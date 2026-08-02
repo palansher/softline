@@ -9,8 +9,6 @@ class Test(TestCase):
         self.assertEqual(get_sum(2, 3), 5)
         self.assertEqual(get_sum(-2, -3), -5)
         self.assertEqual(get_sum(0, 0), 0)
-        
-            
 
     def test_get_mult(self):
         self.assertEqual(get_mult(2, 2), 4)

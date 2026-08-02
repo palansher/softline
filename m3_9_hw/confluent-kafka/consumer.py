@@ -4,12 +4,12 @@ import logging
 import signal
 from typing import Any
 
-from config import ConsumerConfig
+from car import Car
+from car_deserializer import CarDeserializer
+from consumer_config import ConsumerConfig
 from kafka import KafkaConsumer
 from kafka.errors import KafkaError
 from key_deserializer import KeyDeserializer
-from person import Person
-from person_deserializer import PersonDeserializer  # <-- Теперь всё четко!
 
 logging.basicConfig(
     level=logging.INFO,
@@ -21,12 +21,12 @@ MAX_MESSAGES = 10
 
 
 class KafkaConsumerApp:
-    """Приложение для чтения и обработки событий Person из Kafka."""
+    """Приложение для чтения и обработки событий Car из Kafka."""
 
     def __init__(self, config: ConsumerConfig | None = None) -> None:
         self.config = config or ConsumerConfig()
         self.key_deserializer = KeyDeserializer()
-        self.value_deserializer = PersonDeserializer()
+        self.value_deserializer = CarDeserializer()
         self.consumer: KafkaConsumer | None = None
         self._running = True
 
@@ -39,18 +39,6 @@ class KafkaConsumerApp:
         """
 
         def handle_signal(sig: int, _frame: Any) -> None:
-            """
-            Причина наличия аргумента _frame исключительно формальная: этого строго требует сигнатура функции-обработчика в модуле signal.
-            Когда Python перехватывает сигнал от операционной системы (SIGINT, SIGTERM и т.д.),
-            его внутренний диспетчер всегда вызывает вашу функцию и принудительно передаёт туда ровно два позиционных аргумента:
-            sig (или signum) — номер полученного сигнала (например, 2 для SIGINT / Ctrl+C или 15 для SIGTERM).
-            frame — текущий объект фрейма стека вызовов (frame object), указывающий на место в коде, где процесс был прерван сигналом.
-            Зачем вообще нужен frame?
-            Объект frame содержит полный контекст выполнения на момент прерывания (текущий файл, номер строки, локальные переменные, стек вызовов).
-            В 99% сценариев корректного завершения (graceful shutdown) он действительно не нужен.
-            Но он может пригодиться, например, для продвинутого логирования или профилирования — чтобы напечатать trace того места,
-            где именно висел процесс в момент получения сигнала.
-            """
             logger.info("Получен сигнал остановки (%s). Завершение работы...", sig)
             self._running = False
 
@@ -86,10 +74,10 @@ class KafkaConsumerApp:
                     if not self._running:
                         break
 
-                    person: Person | None = message.value
-                    key: int | None = message.key
+                    car: Car | None = message.value
+                    key: str | None = message.key
 
-                    if person is None:
+                    if car is None:
                         logger.warning(
                             "Получено пустое сообщение (tombstone) или не удалось десериализовать. Offset: %d",
                             message.offset,
@@ -97,16 +85,15 @@ class KafkaConsumerApp:
                         continue
 
                     messages_received += 1
+
                     logger.info(
-                        "Сообщение #%d | Partition: %d | Offset: %d | Key: %s | Person: id=%d, name='%s %s', salary=%d",
+                        # Через стандартное представление dataclass (__repr__)
+                        "Сообщение #%d | Partition: %d | Offset: %d | Key: %s | Car: %s",
                         messages_received,
                         message.partition,
                         message.offset,
                         key,
-                        person.id,
-                        person.firstname,
-                        person.lastname,
-                        person.salary,
+                        car,  # Выведет: Car(id=1, brand=CarBrand(id=10, name='Toyota'), model='Camry', ...)
                     )
 
                     if messages_received >= MAX_MESSAGES:
