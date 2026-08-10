@@ -3,6 +3,7 @@
 import json
 
 from car import Car
+from car_brand import CarBrand
 
 
 class CarDeserializer:
@@ -24,7 +25,8 @@ class CarDeserializer:
                 category=data_dict["category"],
                 vin=data_dict["vin"],
                 color=data_dict["color"],
-                brand=data_dict["brand"],
+                # brand=data_dict["brand"],
+                brand=CarBrand(name=data_dict["brand"]["name"]),
             )
         except (UnicodeDecodeError, json.JSONDecodeError, KeyError, TypeError) as err:
             raise RuntimeError(f"Ошибка при десериализации данных Car: {err}") from err

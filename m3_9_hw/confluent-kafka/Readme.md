@@ -16,6 +16,10 @@
   - [Лог результатов](#лог-результатов)
     - [Producer](#producer)
     - [Consumer](#consumer)
+  - [Доработки по замечаниям преподавателя](#доработки-по-замечаниям-преподавателя)
+    - [в Car.__init__ параметр brand ожидает объект CarBrand](#в-carinit-параметр-brand-ожидает-объект-carbrand)
+    - [Нет таймаута на общее время работы consumer](#нет-таймаута-на-общее-время-работы-consumer)
+    - [KeySerializer и KeyDeserializer не согласованы](#keyserializer-и-keydeserializer-не-согласованы)
 
 ## Что делать
 
@@ -36,6 +40,8 @@
 ## Требования
 
 `pip install confluent-kafka`
+
+`docker compose -f docker-compose.yaml up -d`
 
 ## Особенности реализации
 
@@ -125,3 +131,48 @@
 2026-08-02 16:12:06,733 [INFO] __main__: Достигнут лимит сообщений (10). Завершение работы.
 2026-08-02 16:12:06,739 [INFO] __main__: Kafka Consumer закрыт.
 ```
+
+## Доработки по замечаниям преподавателя
+
+### в Car.__init__ параметр brand ожидает объект CarBrand
+
+В файле car_deserializer.py в Car.__init__ параметр brand ожидает объект CarBrand, а вы передаете строку brand=data_dict["brand"], лучше сделать
+
+```python
+brand=CarBrand(name=data_dict["brand"]["name"])
+```
+
+### Нет таймаута на общее время работы consumer
+
+В consumer.py цикл работает вечно, если топик пуст. Нет таймаута на общее время работы. Лучше так
+
+```python
+import time
+start_time = time.time()
+TIMEOUT_SECONDS = 30
+
+while self._running and (time.time() - start_time) < TIMEOUT_SECONDS:
+```
+
+### KeySerializer и KeyDeserializer не согласованы
+
+- KeySerializer принимает UUID и кодирует его в строку
+- KeyDeserializer возвращает строку, а не UUID
+
+Исправить можно так
+
+```python
+# key_deserializer.py
+
+import uuid
+
+def __call__(self, data: bytes | None) -> uuid.UUID | None:
+    if not data:
+        return None
+    try:
+        return uuid.UUID(data.decode("utf-8"))
+    except ValueError as err:
+        raise RuntimeError(f"Ошибка при десериализации ключа: {err}") from err
+```
+
+В остальном всё хорошо, поздравляю!

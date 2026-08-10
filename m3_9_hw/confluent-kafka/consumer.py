@@ -2,6 +2,7 @@
 
 import logging
 import signal
+import time
 from typing import Any
 
 from car import Car
@@ -50,7 +51,11 @@ class KafkaConsumerApp:
             logger.info("Kafka Consumer успешно запущен. Ожидание сообщений...")
             messages_received = 0
 
-            while self._running:
+            start_time = time.time()
+            timeout_seconds = 30
+
+            # while self._running:
+            while self._running and (time.time() - start_time) < timeout_seconds:
                 # poll(timeout=1.0) заменяет consumer_timeout_ms.
                 # Блокирует поток на 1 секунду в ожидании нового сообщения.
                 msg = self.consumer.poll(timeout=1.0)
