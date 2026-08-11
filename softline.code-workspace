@@ -224,6 +224,11 @@
 		],
 		"terminal.integrated.gpuAcceleration": "off",
 		"terminal.explorerKind": "integrated",
-		"chat.tools.terminal.terminalProfile.windows": {},
+		"chat.tools.terminal.terminalProfile.windows": null,
+		"python.analysis.pyreflyVersion": "3.12.3",
+		"markdown.copyFiles.destination": {
+			"**/*.md": "${documentDirName}/images/${documentBaseName}/"
+		},
+		"markdown.validate.enabled": true,
 	}
 }
