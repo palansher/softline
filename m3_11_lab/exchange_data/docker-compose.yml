@@ -1,0 +1,12 @@
+services:
+  producer:
+    build: producer
+    ports:
+      - "4000:4000"
+    depends_on:
+      - consumer
+
+  consumer:
+    build: consumer
+    ports:
+       - "4001:4001"
