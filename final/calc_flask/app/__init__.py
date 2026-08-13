@@ -10,6 +10,17 @@ def create_app() -> Flask:
     app = Flask(__name__)
     calc_service = Calculator()
 
+    # --- Роут для иконки ---
+    @app.route("/favicon.ico")
+    def favicon() -> Response:
+        svg_content = """
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+            <rect width="100" height="100" rx="22" fill="#0078D4"/>
+            <text x="50" y="68" font-size="55" text-anchor="middle" fill="white" font-family="sans-serif">🧮</text>
+        </svg>
+        """
+        return Response(svg_content, mimetype="image/svg+xml")
+
     @app.route("/")
     def index() -> str:
         """Отображает главную страницу с калькулятором."""
@@ -31,7 +42,7 @@ def create_app() -> Flask:
         except CalculatorError as err:
             """
             Перехватит и DivisionByZeroError, и InvalidExpressionError!
-            Это гарантирует, что мы отловим только наши бизнес-ошибки вычислений и отдадим их пользователю в понятном виде,
+            Это гарантирует, что мы отловим только бизнес-ошибки вычислений и отдадим их пользователю в понятном виде,
             но при этом случайно не скроем критические системные сбои Python.
             """
             return jsonify({"status": "error", "message": str(err)}), 400

@@ -1,5 +1,9 @@
 import pytest
-from app.core.calculator import Calculator, DivisionByZeroError, InvalidExpressionError
+from app.core.calculator import (
+    Calculator,
+    DivisionByZeroError,
+    InvalidExpressionError,
+)
 
 
 @pytest.fixture

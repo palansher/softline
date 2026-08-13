@@ -1,6 +1,8 @@
-.venv
+.venv/
 .idea
-__pycache__
+__pycache__/
+*.py[cod]
+.pytest_cache/
 flask_session
 .ai
 AGENTS.md

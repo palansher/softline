@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const buttons = document.querySelectorAll('.btn');
     let isResultState = false;
 
+    // Обработка кликов по кнопкам мышкой
     buttons.forEach(button => {
         button.addEventListener('click', () => {
             const val = button.getAttribute('data-val');
@@ -20,8 +21,39 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Обработка нажатий клавиш на физической клавиатуре
+    document.addEventListener('keydown', (event) => {
+        const key = event.key;
+
+        // Цифры 0-9
+        if (/^[0-9]$/.test(key)) {
+            appendCharacter(key);
+        }
+        // Математические операторы
+        else if (['+', '-', '*', '/'].includes(key)) {
+            appendCharacter(key);
+        }
+        // Точка или запятая (для десятичных дробей)
+        else if (key === '.' || key === ',') {
+            appendCharacter('.');
+        }
+        // Enter или '=' для получения результата
+        else if (key === 'Enter' || key === '=') {
+            event.preventDefault(); // Предотвращаем случайную отправку форм/нажатия
+            calculateResult();
+        }
+        // Стирание последнего символа
+        else if (key === 'Backspace') {
+            handleBackspace();
+        }
+        // Сброс по Escape или 'c' / 'C'
+        else if (key === 'Escape' || key.toLowerCase() === 'c') {
+            clearDisplay();
+        }
+    });
+
     function appendCharacter(char) {
-        
+
         display.classList.remove('error-state');
 
         if (display.value === '0' || isResultState) {
