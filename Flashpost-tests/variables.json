@@ -1,0 +1,16 @@
+[
+  {
+    "id": "d10489a8-1810-4d70-9018-bc723e673ae4",
+    "name": "Global",
+    "is_active": 0,
+    "created_time": "09-Jul-2026 18:09:40",
+    "data": "[]"
+  },
+  {
+    "id": "97da49e7-9e99-47be-ba13-89c120c16624",
+    "name": "Application",
+    "is_active": 1,
+    "created_time": "03-Nov-2026 23:50:48",
+    "data": "[]"
+  }
+]
